@@ -6,8 +6,8 @@ pygments:         true
 permalink:        pretty
 
 # Setup
-title:            Principles of Software Construction
-tagline:          'A Jekyll theme'
+title:            EECE 210
+tagline:          'Principles of Software Construction'
 description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
 url:              http://gsathish.github.io/eece210/
 baseurl:          '/eece210/'
