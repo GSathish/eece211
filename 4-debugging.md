@@ -43,17 +43,13 @@ Although the diagrams in this course use examples from Java, the notation can be
 
 ### Primitive values
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/primitives.png" alt="primitive values in an instance diagram" width="300"></img>
-</div>
 
 Primitive values are represented by bare constants.  The incoming arrow is a reference to the value from a variable or an object field.
 
 ### Object values
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/objects.png" alt="object values in an instance diagram" width="400"></img>
-</div>
 
 An object value is a circle labeled by its type.  When we want to show more detail, we write field names inside it, with arrows pointing out to their values. For still more detail, the fields can include their declared types. Some people prefer to write `x:int` instead of `int x`, but both are fine.  
 
@@ -71,9 +67,7 @@ Java also gives us immutable references: variables that are assigned once and ne
 final int n = 5;
 {% endhighlight %}
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/final-reference.png" alt="final reference is a double arrow" width="200"></img>
-</div>
 
 If the Java compiler isn't convinced that your `final` variable will only be assigned once at runtime, then it will produce a compiler error.  So `final` gives you static checking for immutable references.
 
@@ -81,9 +75,7 @@ In an instance diagram, an immutable reference (`final`) is denoted by a double 
 
 ### Immutable Objects vs. Mutable Objects
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/reassignment.png" alt="reassigning a variable" width="200"></img>
-</div>
 
 String is *immutable*: once created, a String object always has the same value.  To add something to the end of a String, you have to create a new String object:
 {% highlight java %}
@@ -91,19 +83,14 @@ String s = "a";
 s = s.concat("b");    /// s+="b" and s=s+"b" mean the same thing as this call
 {% endhighlight %}
 
-<div class="clearfix"></div>
-
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/integer.png" alt="Integer is immutable" width="200"></img>
-</div>
+
 Immutable objects (intended by their designer to always represent the same value) are denoted by a double border.  For example, here's an Integer object, the result of `new Integer(7)`.  By design, this Integer object can never change value during its lifetime.  There is no method of Integer that will change it to a different integer value.
 
 
-<div class="clearfix"></div>
-
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/mutation.png" alt="mutating an object" width="200"></img>
-</div>
+
+
 By contrast, StringBuilder (another built-in Java class) is a *mutable* object that represents a string of characters.  It has methods that change the value of the object, rather than just returning new values:
 {% highlight java %}
 StringBuilder sb = new StringBuilder("a");
@@ -113,9 +100,11 @@ sb.append("b");
 StringBuilder has other methods as well, for deleting parts of the string, inserting in the middle, or changing individual characters.
 
 So what?  In both cases, you end up with `s` and `sb` referring to the string of characters "abcdef".  The difference between mutability and immutability doesn't matter much when there's only one reference to the object. But there are big differences in how they behave when there are *other* references to the object.  For example, when another variable `t` points to the same String object as `s`, and another variable `tb` points to the same StringBuilder as `sb`, then the differences between the immutable and mutable objects become more evident:
-<div class="panel panel-figure pull-right pull-margin">
+
+
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/string-vs-stringbuilder.png" alt="different behavior of String and StringBuilder" width="500"></img>
-</div>
+
+
 {% highlight java %}
   String t = s;
   t = t + "c";
