@@ -66,7 +66,7 @@ When you assign to the contents of a mutable value -- such as an array or list -
 Immutability (immunity from change) is a major design principle in this course. Immutable types are types whose values can never change once they have been created.
 
 Java also gives us immutable references: variables that are assigned once and never reassigned.To make a reference immutable, declare it with the keyword `final`:
-```java
+```
 final int n = 5;
 ```
 
@@ -85,7 +85,7 @@ In an instance diagram, an immutable reference (`final`) is denoted by a double 
 </div>
 
 String is *immutable*: once created, a String object always has the same value.  To add something to the end of a String, you have to create a new String object:
-```java
+```
 String s = "a";
 s = s.concat("b");    /// s+="b" and s=s+"b" mean the same thing as this call
 ```
@@ -104,7 +104,7 @@ Immutable objects (intended by their designer to always represent the same value
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/mutation.png" alt="mutating an object" width="200"></img>
 </div>
 By contrast, StringBuilder (another built-in Java class) is a *mutable* object that represents a string of characters.  It has methods that change the value of the object, rather than just returning new values:
-```java
+```
 StringBuilder sb = new StringBuilder("a");
 sb.append("b");
 ```
@@ -115,7 +115,7 @@ So what?  In both cases, you end up with `s` and `sb` referring to the string of
 <div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/string-vs-stringbuilder.png" alt="different behavior of String and StringBuilder" width="500"></img>
 </div>
-```java
+```
   String t = s;
   t = t + "c";
 
@@ -124,7 +124,7 @@ So what?  In both cases, you end up with `s` and `sb` referring to the string of
 ```
 
 Why do we need the mutable StringBuilder in programming?  A common use for it is to concatenate a large number of strings together, like this:
-```java
+```
 String s = "";
 for (int i = 0; i &lt; n; ++i) {
     s = s + n;
@@ -134,7 +134,7 @@ for (int i = 0; i &lt; n; ++i) {
 Using immutable Strings, this makes a lot of temporary copies -- the first number of the string ("0") is actually copied *n* times in the course of building up the final string, the second number is copied *n-1* times, and so on.  It actually costs *O(n^2)* time just to do all that copying, even though we only concatenated *n* elements.
 
 StringBuilder is designed to minimize this copying.  It uses a simple but clever internal data structure to avoid doing any copying at all until the very end, when you ask for the final String with a toString() call:
-```java
+```
 StringBuilder sb = new StringBuilder();
 for (int i = 0; i &lt; n; ++i) {
   sb.append(String.valueOf(n));
@@ -180,11 +180,11 @@ Strings can be passed around and shared without fear that they will be modified.
 As we saw above, Java also gives us *immutable references*: variables declared with the keyword `final`, which can be assigned once but never reassigned.  It's good practice to use `final` for declaring the parameters of a method and as many local variables as possible.  Like the type of the variable, these declarations are important documentation, useful to the reader of the code and statically checked by the compiler. 
 
 Consider this example:
-```java
+```
 final char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
 ```
 The `vowels` variable is declared final, but is it really unchanging?  Which of the following statements will be illegal (caught statically by the compiler), and which will be allowed?
-```java
+```
 vowels = new char[] { 'x', 'y', 'z' }; 
 vowels[0] = 'z';
 ```
@@ -199,7 +199,7 @@ When localized to a single method or small module, bugs may be found simply by s
 We already talked about **fail fast**: the earlier a problem is observed (the closer to its cause), the easier it is to fix.
 
 Let's begin with a simple example:
-```java
+```
 /**
  * @param x  requires x >= 0
  * @return approximation to square root of x
@@ -213,7 +213,7 @@ Since the caller has failed to satisfy the requirement that `x` should be nonneg
 Since the bad call indicates a bug in the caller, however, the most useful behavior would point out the bug as early as possible.
 We do this by inserting a runtime assertion that tests the precondition.
 Here is one way we might write the assertion:
-```java
+```
 /**
  * @param x  requires x >= 0
  * @return approximation to square root of x
@@ -234,7 +234,7 @@ Defensive programming offers a way to mitigate the effects of bugs even if you d
 ### Assertions
 
 It is common practice to define a procedure for these kinds of defensive checks, usually called `assert`:
-```java
+```
 assert (x >= 0);
 ```
 This approach abstracts away from what exactly happens when the assertion fails.
@@ -246,14 +246,14 @@ Unlike a comment, however, an assertion is executable code that enforces the ass
 
 In Java, runtime assertions are a built-in feature of the language.
 The simplest form of the assert statement takes a boolean expression, exactly as shown above, and throws AssertionError if the boolean expression evaluates to false:
-```java
+```
 assert x >= 0;
 ```
 
 An assert statement may also include a description expression, which is usually a string, but may also be a primitive type or a reference to an object.
 The description is printed in an error message when the assertion fails, so it can be used to provide additional details to the programmer about the cause of the failure.
 The description follows the asserted expression, separated by a colon. For example:
-```java
+```
 assert (x >= 0) : "x is " + x;
 ```
 
@@ -276,7 +276,7 @@ In Eclipse, you enable assertions by going to Run >> Run Configurations >> Argum
 
 It's a good idea to have assertions turned on when you're running JUnit tests.
 You can test that assertions are enabled using the following test case: 
-```java
+```
 @Test(expected=AssertionError.class)
 public void testAssertionsEnabled() {
     assert false;
@@ -287,7 +287,7 @@ For most applications, however, assertions are *not* expensive compared to the r
 So to make assertions that are *always* turned on, you can just use the `assertTrue` method in JUnit.
 Since it's a static method, you don't have to be writing a unit test to use `assertTrue`.
 Just call `Assert.assertTrue()`:
-```java
+```
 Assert.assertTrue(x >= 0);
 ```
 
@@ -299,7 +299,7 @@ Here are some things you should assert:
 **Method argument requirements**, like we saw for `sqrt`.
 
 **Method return value requirements.**  This kind of assertion is sometimes called a *self check*. For example, the sqrt method might square its result to check whether it is reasonably close to x:
-```java
+```
 public double sqrt(double x) {
     assert x >= 0;
     double r;
@@ -310,7 +310,7 @@ public double sqrt(double x) {
 ```
 
 **Covering all cases.** If a conditional statement or switch does not cover all the possible cases, it is good practice to use an assertion to block the illegal cases:
-```java
+```
 switch (vowel) {
   case 'a':
   case 'e':
@@ -333,7 +333,7 @@ Runtime assertions are not free.
 They can clutter the code, so they must be used judiciously.
 Avoid trivial assertions, just as you would avoid uninformative comments.
 For example:
-```java
+```
 // don't do this:
 x = y + 1;
 assert x == y+1;
@@ -364,12 +364,12 @@ Most assertions are cheap, so they should not be disabled in the official releas
 Since assertions may be disabled, the correctness of your program should never depend on whether or not the assertion expressions are executed.
 In particular, asserted expressions should not have *side-effects*.
 For example, if you want to assert that an element removed from a list was actually found in the list, don't write it like this:
-```java
+```
 // don't do this:
 assert list.remove(x);
 ```
 If assertions are disabled, the entire expression is skipped, and x is never removed from the list. Write it like this instead:
-```java
+```
 boolean found = list.remove(x);
 assert found;
 ```
@@ -402,7 +402,7 @@ We'll talk more about encapsulation using public and private modifiers when we g
 The *scope* of a variable is the portion of the program text over which that variable is defined, in the sense that expressions and statements can refer to the variable.
 Keeping variable scopes as small as possible makes it much easier to reason about where a bug might be in the program.
 For example, suppose you have a loop like this:
-```java
+```
 for (i = 0; i &lt; 100; ++i) {
     ...
     doSomeThings();
@@ -412,7 +412,7 @@ for (i = 0; i &lt; 100; ++i) {
 ...and you've discovered that this loop keeps running forever -- `i` never reaches 100.  Somewhere, somebody is changing `i`.
 But where?
 If `i` is declared as a global variable like this:
-```java
+```
 public static int i;
 ...
 for (i =0; i &lt; 100; ++i) {
@@ -424,7 +424,7 @@ for (i =0; i &lt; 100; ++i) {
 ...then its scope is the entire program.
 It might be changed anywhere in your program: by `doSomeThings()`, by some other method that `doSomeThings()` calls, by a concurrent thread running some completely different code.
 But if `i` is instead declared as a local variable with a narrow scope, like this:
-```java
+```
 for (int i = 0; i &lt; 100; ++i) {
     ...
     doSomeThings();
@@ -438,12 +438,12 @@ You don't even have to consider `doSomeThings()`, because `doSomeThings()` doesn
 Here are a few rules that are good for Java:
 
 + **Always declare a loop variable in the for-loop initializer.**  So rather than declaring it before the loop:
-```java
+```
 int i;
 for (i = 0; i &lt; 100; ++i) {
 ```
 which makes the scope of the variable the entire rest of the outer curly-brace block containing this code, you should do this:
-```java
+```
 for (int i = 0; i &lt; 100; ++i) {
 ```
 which makes the scope of `i` limited just to the for loop.
