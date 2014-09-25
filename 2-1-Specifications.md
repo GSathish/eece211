@@ -120,7 +120,6 @@ Documenting your specifications in Javadoc allows Eclipse to show you (and clien
 You can also refer to Oracle's **[How to Write Doc Comments]**.
 [Javadoc Comments]: http://javaworkshop.sourceforge.net/chapter4.html
 [How to Write Doc Comments]: http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
-</div>
 
 ### Null references
 
@@ -147,7 +146,7 @@ The length of an empty array or an empty string is 0.
 The length of a string variable that points to `null` throws a `NullPointer&shy;Exception`.
 
 Null values are troublesome and unsafe, so much so that you're well advised to remove them from your design vocabulary.
-In 6.005 --- and in fact in most good Java programming --- **null values are implicitly disallowed as parameters and return values**.
+For good Java programming --- **null values are implicitly disallowed as parameters and return values**.
 So every method implicitly has a precondition on its object and array parameters that they be non-null.
 Every method that returns an object or an array implicitly has a postcondition that its return value is non-null.
 If a method allows null values for a parameter, it should explicitly state it, or if it might return a null value as a result, it should explicitly state it.
