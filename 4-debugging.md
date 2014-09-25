@@ -151,9 +151,7 @@ But the convenience of mutable data comes with big risks.  Mutability makes it h
 
 ### Arrays and Lists
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Debugging/arrays-and-lists.png" alt="Arrays and Lists" width="500"></img>
-</div>
 
 
 Like other object values, arrays and lists are labeled with their type. In lieu of field names, we label the outgoing arrows with indexes 0, 1, 2, ...  When the sequence of elements is obvious, we may omit the index labels.
