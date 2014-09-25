@@ -66,6 +66,7 @@ When you assign to the contents of a mutable value -- such as an array or list -
 Immutability (immunity from change) is a major design principle in this course. Immutable types are types whose values can never change once they have been created.
 
 Java also gives us immutable references: variables that are assigned once and never reassigned.To make a reference immutable, declare it with the keyword `final`:
+
 ```
 final int n = 5;
 ```
