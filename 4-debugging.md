@@ -127,7 +127,7 @@ So what?  In both cases, you end up with `s` and `sb` referring to the string of
 Why do we need the mutable StringBuilder in programming?  A common use for it is to concatenate a large number of strings together, like this:
 {% highlight java %}
 String s = "";
-for (int i = 0; i &lt; n; ++i) {
+for (int i = 0; i < n; ++i) {
     s = s + n;
 }
 {% endhighlight %}
@@ -138,7 +138,7 @@ StringBuilder is designed to minimize this copying.  It uses a simple but clever
 
 {% highlight java %}
 StringBuilder sb = new StringBuilder();
-for (int i = 0; i &lt; n; ++i) {
+for (int i = 0; i < n; ++i) {
   sb.append(String.valueOf(n));
 }
 String s = sb.toString();
@@ -305,7 +305,7 @@ public double sqrt(double x) {
     assert x >= 0;
     double r;
     ... // compute result r
-    assert Math.abs(r*r - x) &lt; .0001;
+    assert Math.abs(r*r - x) < .0001;
     return r;
 }
 {% endhighlight %}
@@ -404,7 +404,7 @@ The *scope* of a variable is the portion of the program text over which that var
 Keeping variable scopes as small as possible makes it much easier to reason about where a bug might be in the program.
 For example, suppose you have a loop like this:
 {% highlight java %}
-for (i = 0; i &lt; 100; ++i) {
+for (i = 0; i < 100; ++i) {
     ...
     doSomeThings();
     ...
@@ -416,7 +416,7 @@ If `i` is declared as a global variable like this:
 {% highlight java %}
 public static int i;
 ...
-for (i =0; i &lt; 100; ++i) {
+for (i =0; i < 100; ++i) {
     ...
     doSomeThings();
     ...
@@ -426,7 +426,7 @@ for (i =0; i &lt; 100; ++i) {
 It might be changed anywhere in your program: by `doSomeThings()`, by some other method that `doSomeThings()` calls, by a concurrent thread running some completely different code.
 But if `i` is instead declared as a local variable with a narrow scope, like this:
 {% highlight java %}
-for (int i = 0; i &lt; 100; ++i) {
+for (int i = 0; i < 100; ++i) {
     ...
     doSomeThings();
     ...
@@ -441,11 +441,11 @@ Here are a few rules that are good for Java:
 + **Always declare a loop variable in the for-loop initializer.**  So rather than declaring it before the loop:
 {% highlight java %}
 int i;
-for (i = 0; i &lt; 100; ++i) {
+for (i = 0; i < 100; ++i) {
 {% endhighlight %}
 which makes the scope of the variable the entire rest of the outer curly-brace block containing this code, you should do this:
 {% highlight java %}
-for (int i = 0; i &lt; 100; ++i) {
+for (int i = 0; i < 100; ++i) {
 {% endhighlight %}
 which makes the scope of `i` limited just to the for loop.
 
