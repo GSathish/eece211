@@ -8,7 +8,7 @@ permalink:        pretty
 # Setup
 title:            EECE 210
 tagline:          'Principles of Software Construction'
-description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+description:      'Principles of Software Construction'
 url:              http://gsathish.github.io/eece210
 
 author:
@@ -21,4 +21,4 @@ paginate:         5
 version:          1.0.0
 
 github:
-  repo:           https://github.com/poole/lanyon
+  repo:           https://github.com/gsathish/eece210
