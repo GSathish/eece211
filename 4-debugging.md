@@ -146,7 +146,8 @@ String s = sb.toString();
 
 Getting good performance is one reason why we use mutable objects.  Another is convenient sharing: two parts of your program can communicate more conveniently by sharing a common mutable data structure.
 
-But the convenience of mutable data comes with big risks.  Mutability makes it harder to understand what your program is doing, and much harder to enforce contracts.  We'll see an example of that later in the lecture.
+But the convenience of mutable data comes with big risks.  Mutability makes it harder to understand what your program is doing, and much harder to enforce contracts. 
+
 
 ### Arrays and Lists
 
