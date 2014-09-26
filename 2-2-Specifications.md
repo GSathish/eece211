@@ -297,12 +297,10 @@ Instead, like the Java API classes, you should throw an exception.
 We have been using *public* for almost all of our methods, without really thinking about it. The decision to make a method `public` or `private` is actually a decision about the contract of the class.
 
 <span class="graybox">
-
 **Readings**
 
 * [**Packages**](http://docs.oracle.com/javase/tutorial/java/package/index.html) in the Java Tutorials.
 * [**Controlling Access**](http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html) in the Java Tutorials.
-
 </span>
 
 
