@@ -139,8 +139,6 @@ static int find4(int[] a, int val)
               or -1 if no such i
 </pre>
 
-<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig1.png"></img>
-
 ## Diagramming specifications
 
 Imagine (very abstractly) the space of all possible Java methods.
@@ -149,6 +147,7 @@ Each point in this space represents a method implementation.
 
 Here we'll diagram `findA` and `findB` defined [above](#deterministic_vs_underdetermined_specs).
 
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig1.png"></img>
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
 
 A specification defines a *region* in the space of all possible implementations.
