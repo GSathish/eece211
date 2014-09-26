@@ -38,8 +38,8 @@ Here is one possible specification of find:
 
 <pre>
 static int find(int[] a, int val)
-  *requires*: val occurs exactly once in a
-  *effects*:  returns index i such that a[i] = val
+  <em>requires</em>: val occurs exactly once in a
+  <em>effects</em>:  returns index i such that a[i] = val
 </pre>
 
 This specification is deterministic: when presented with a state satisfying the precondition, the outcome is determined.
@@ -51,8 +51,8 @@ Here is a slightly different specification:
 
 <pre>
 static int find(int[] a, int val)
-  *requires*: val occurs in a
-  *effects*:  returns index i such that a[i] = val
+  <em>requires</em>: val occurs in a
+  <em>effects</em>:  returns index i such that a[i] = val
 </pre>
 
 This specification is not deterministic.
@@ -75,7 +75,7 @@ Finally, here's a specification that distinguishes the two:
 
 <pre>
 static int find(int[] a, int val)
-  *effects*: returns largest index i such that
+  <em>effects</em>: returns largest index i such that
              a[i] = val, or -1 if no such i
 </pre>
 
@@ -113,29 +113,29 @@ And you can always strengthen the post-condition, which means making more promis
 For example, this spec for `find`:
 <pre>
 static int find1(int[] a, int val)
-  *requires*: val occurs exactly once in a
-  *effects*:  returns index i such that a[i] = val
+  <em>requires</em>: val occurs exactly once in a
+  <em>effects</em>:  returns index i such that a[i] = val
 </pre>
 can be replaced in any context by:
 <pre>
 static int findStronger2(int[] a, int val)
-  *requires*: val occurs at least once in a
-  *effects*:  returns index i such that a[i] = val
+  <em>requires</em>: val occurs at least once in a
+  <em>effects</em>:  returns index i such that a[i] = val
 </pre>
 which has a weaker precondition.
 This in turn can be replaced by:
 <pre>
 static int findStronger3(int[] a, int val)
-  *requires*: val occurs at least once in a
-  *effects*:  returns lowest index i such that a[i] = val
+  <em>requires</em>: val occurs at least once in a
+  <em>effects</em>:  returns lowest index i such that a[i] = val
 </pre>
 which has a stronger postcondition.  
 
 What about this specification:
 <pre>
 static int find4(int[] a, int val)
-  *requires*: nothing
-  *effects*:  returns index i such that a[i] = val,
+  <em>requires</em>: nothing
+  <em>effects</em>:  returns index i such that a[i] = val,
               or -1 if no such i
 </pre>
 
@@ -207,7 +207,7 @@ Consider this specification:
 
 <pre>
 static int minFind(int[] a, int[] b, int val)
-  *effects*: returns smallest index in arrays a and b at which
+  <em>effects</em>: returns smallest index in arrays a and b at which
              val appears
 </pre>
 
@@ -220,8 +220,8 @@ Consider the specification of a method that puts a value in a map:
 
 <pre>
 static V put (Map&lt;K,V> map, K key, V val)
-  *requires*: val may be null, and map may contain null values
-  *effects*:  inserts (key, val) into the mapping,
+  <em>requires</em>: val may be null, and map may contain null values
+  <em>effects</em>:  inserts (key, val) into the mapping,
               overriding any existing mapping for key, and
               returns old value for key, unless none,
               in which case it returns null
@@ -238,7 +238,7 @@ Here's a specification illustrating this flaw (and also written in an inappropri
 
 <pre>
 static void addAll(List&lt;T> list1, List&lt;T> list2)
-  *effects*: adds the elements of list2 to list1,
+  <em>effects</em>: adds the elements of list2 to list1,
              unless it encounters a null element,
              at which point it throws a NullPointerException
 </pre>
@@ -247,7 +247,7 @@ static void addAll(List&lt;T> list1, List&lt;T> list2)
 
 <pre>
 static File open(String filename)
-  *effects*: opens a file named filename
+  <em>effects</em>: opens a file named filename
 </pre>
 
 This is a bad specification.
@@ -263,7 +263,7 @@ Consider this specification:
 
 <pre>
 static ArrayList&lt;T> reverse(ArrayList&lt;T> list)
-  *effects*: returns a new list which is the reversal of list, i.e.
+  <em>effects</em>: returns a new list which is the reversal of list, i.e.
              newList[i] == list[n-i-1]
              for all 0 &lt;= i &lt; n, where n = list.size()
 </pre>
@@ -294,13 +294,17 @@ Instead, like the Java API classes, you should throw an exception.
 
 ## About access control
 
-**Readings**
-* [**Packages**](http://docs.oracle.com/javase/tutorial/java/package/index.html) in the Java Tutorials.
-* [**Controlling Access**](http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html) in the Java Tutorials.
-
 We have been using *public* for almost all of our methods, without really thinking about it. The decision to make a method `public` or `private` is actually a decision about the contract of the class.
 
+<div class=“graybox”>
+**Readings**
+
+* [**Packages**](http://docs.oracle.com/javase/tutorial/java/package/index.html) in the Java Tutorials.
+* [**Controlling Access**](http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html) in the Java Tutorials.
+</div>
+
 Public methods are freely accessible to other parts of the program. Making a method public advertises it as a service that your class is willing to provide. If you make all your methods public --- including helper methods that are really meant only for local use within the class --- then other parts of the program may come to depend on them, which will make it harder for you to change the internal implementation of the class in the future.
+
 Your code won't be as **ready for change**.  
 
 Making internal helper methods public will also add clutter to the visible interface your class offers.
