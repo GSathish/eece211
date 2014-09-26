@@ -189,11 +189,11 @@ Test cases must obey the contract, just like every other client.
 
 For example, suppose you are testing this specification of `find`:
 
-{% highlight java %}
+<pre class="no-markdown">
 static int find(int[] a, int val)
-  **requires**: val occurs in a
-  **effects**:  returns index i such that a[i] = val
-{% endhighlight %}
+  <em>requires</em>: val occurs in a
+  <em>effects</em>:  returns index i such that a[i] = val
+</pre>
 
 This spec has a strong precondition in the sense that `val` is required to be found; and it has a fairly weak postcondition in the sense that if `val` appears more than once in the array, this specification says nothing about which particular index of `val` is returned.
 Even if you implemented `find` so that it always returns the lowest index, your test case can't assume that specific behaviour:
