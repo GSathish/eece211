@@ -71,10 +71,10 @@ In order to make it possible to substitute one implementation for another, and t
 
 In this case, our specification might be:
 
-<pre>
+{% highlight %}
 *requires*: val occurs in a
 *effects*:  returns index i such that a[i] = val
-</pre>
+{% endhighlight %}
 
 ## Specification structure
 
