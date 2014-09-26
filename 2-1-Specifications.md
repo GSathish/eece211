@@ -239,15 +239,15 @@ Here is another example of a mutating method:
 <pre class="no-markdown">
 static void sort(List&lt;String> lst)
   <em>requires</em>: nothing
-  <em>effects</em>:  puts lst in sorted order, i.e. lst[i] &lt;= lst[j]
-              for all 0 &lt;= i &lt; j &lt; lst.size()</pre>
+  <em>effects</em>:  puts lst in sorted order, i.e. lst[i] <= lst[j]
+              for all 0 <= i < j < lst.size()</pre>
 
 And an example of a method that does not mutate its argument:
 
 <pre class="no-markdown">
-static List&lt;String> toLowerCase(List&lt;String> lst)
+static List<String> toLowerCase(List<String> lst)
   <em>requires</em>: nothing
   <em>effects</em>:  returns a new list t where t[i] = lst[i].toLowerCase()</pre>
 
 Just as we've said that `null` is implicitly disallowed unless stated otherwise, we will also use the convention that **mutation is disallowed unless stated otherwise**.
-The spec of `to&shy;Lower&shy;Case` could explicitly state as an *effect* that "lst is not modified", but in the absence of a postcondition describing mutation, we demand no mutation of the inputs.
+The spec of `toLowerCase` could explicitly state as an *effect* that "lst is not modified", but in the absence of a postcondition describing mutation, we demand no mutation of the inputs.
