@@ -71,10 +71,10 @@ In order to make it possible to substitute one implementation for another, and t
 
 In this case, our specification might be:
 
-{% highlight %}
-requires: val occurs in a
-effects:  returns index i such that a[i] = val
-{% endhighlight %}
+<pre class="no-markdown">
+<em>requires:</em> val occurs in a
+<em>effects:</em>  returns index i such that a[i] = val
+</pre>
 
 ## Specification structure
 
@@ -216,7 +216,7 @@ We previously discussed mutable vs. immutable objects, but our specifications of
 Here's a specification that describes a method that mutates an object:
 
 <pre class="no-markdown">
-static boolean addAll(List&lt;T> list1, List&lt;T> list2)
+static boolean addAll(List<T> list1, List<T> list2)
   <em>requires</em>: list1 != list2
   <em>effects</em>:  modifies list1 by adding the elements of list2 to the end of
               it, and returns true if list1 changed as a result of call</pre>
