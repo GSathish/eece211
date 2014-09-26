@@ -103,11 +103,11 @@ Java has a convention for [documentation comments](http://en.wikipedia.org/wiki/
 You should put the preconditions into `@param` where possible, and postconditions into `@return` and `@throws`.
 So a specification like this:
 
-<pre>
+{% highlight %}
 static int find(int[] a, int val)
-  *requires*: val occurs exactly once in a
-  *effects*:  returns index i such that a[i] = val
-</pre>
+  requires: val occurs exactly once in a
+  effects:  returns index i such that a[i] = val
+{% endhighlight %}
 
 ... might be rendered in Java like this:
 
