@@ -152,12 +152,12 @@ A given implementation either behaves according to the spec, satisfying the prec
 
 Both `findA` and `findB` satisfy *findStronger2*, so they are inside the region defined by that spec. 
 
-<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
-
 We can imagine clients looking in on this space: the specification acts as a firewall.
 Implementors have the freedom to move around inside the spec, changing their code without fear of upsetting a client.
 Clients don't know which implementation they will get.
 They must respect the spec, but also have the freedom to change how they're using the implementation without fear that it will suddenly break.
+
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
 
 How will similar specifications relate to one another?
 Suppose we start with specification **S1** and use it to create a new specification **S2**.
