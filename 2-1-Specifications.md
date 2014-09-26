@@ -191,8 +191,8 @@ For example, suppose you are testing this specification of `find`:
 
 {% highlight java %}
 static int find(int[] a, int val)
-  *requires*: val occurs in a
-  *effects*:  returns index i such that a[i] = val
+  **requires**: val occurs in a
+  **effects**:  returns index i such that a[i] = val
 {% endhighlight %}
 
 This spec has a strong precondition in the sense that `val` is required to be found; and it has a fairly weak postcondition in the sense that if `val` appears more than once in the array, this specification says nothing about which particular index of `val` is returned.
