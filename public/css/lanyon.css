@@ -555,4 +555,8 @@ a.pagination-item:hover {
 pre {
   font-size: 13px;
 }
+
+.graybox {
+  background: #eaeaea;
+}
 }
