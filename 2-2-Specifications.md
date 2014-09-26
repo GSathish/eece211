@@ -62,7 +62,7 @@ This can happen, for example, with concurrency: the scheduler chooses to run thr
 
 But a 'non-deterministic' specification doesn't call for such non-determinism in the code.
 The behaviour specified is not non-deterministic but *under-determined*.
-In this case, the specification doesn't say which index is returned if `val` occurs more than once; it simply says that if you look up the entry at the index given by the returned value, you'll find val.
+In this case, the specification doesn't say which index is returned if `val` occurs more than once; it simply says that if you look up the entry at the index given by the returned value, you'll find `val`.
 
 This specification is again satisfied by both `findA` and `findB`, each 'resolving' the under-determinedness in its own way.
 A client of find can't predict which index will be returned, but should not expect the behaviour to be truly non-deterministic.
