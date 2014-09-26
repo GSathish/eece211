@@ -45,6 +45,9 @@ html {
   }
 }
 
+pre {
+  font-size: 12px;
+}
 
 /*
  * Sidebar
