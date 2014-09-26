@@ -4,6 +4,7 @@ title: Home
 ---
 
 <div style="float: right;">
+<ol>
 {% assign pages_list = site.pages %}
     {% for node in pages_list %}
       {% if node.title != null %}
@@ -12,6 +13,7 @@ title: Home
         {% endif %}
       {% endif %}
     {% endfor %}
+</ol>
 </div>
 
 <!-- <div class="posts">
