@@ -139,7 +139,7 @@ static int find4(int[] a, int val)
               or -1 if no such i
 </pre>
 
-<object data="../figures/space1.svg"></object>
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig1.png"></img>
 
 ## Diagramming specifications
 
@@ -149,14 +149,12 @@ Each point in this space represents a method implementation.
 
 Here we'll diagram `findA` and `findB` defined [above](#deterministic_vs_underdetermined_specs).
 
-<object data="../figures/space2.svg"></object>
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
 
 A specification defines a *region* in the space of all possible implementations.
 A given implementation either behaves according to the spec, satisfying the precondition-implies-postcondition contract (it is inside the region), or it does not (outside the region).
 
 Both `findA` and `findB` satisfy *findStronger2*, so they are inside the region defined by that spec.
-
-<span class="clearfix"></span>
 
 We can imagine clients looking in on this space: the specification acts as a firewall.
 Implementors have the freedom to move around inside the spec, changing their code without fear of upsetting a client.
@@ -183,7 +181,7 @@ If **S2** is stronger than **S1**, how will these specs appear in our diagram?
   Implementations will have to handle new inputs that were previously excluded by the spec.
   If they behaved badly on those inputs before, we wouldn't have noticed, but now their bad behaviour is exposed.
 
-<object data="../figures/space3.svg"></object>
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig3.png"></img>
 
 We see that when **S2** is stronger than **S1**, it defines a *smaller* region in this diagram; a weaker specification defines a larger region.
 
