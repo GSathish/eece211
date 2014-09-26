@@ -6,9 +6,9 @@ pygments:         true
 permalink:        pretty
 
 # Setup
-title:            EECE 210
-tagline:          'Principles of Software Construction'
-description:      'Principles of Software Construction'
+title:            Principles of Software Construction
+tagline:          'EECE 210'
+description:      'EECE 210 --- UBC'
 url:              http://gsathish.github.io/eece210
 
 author:
