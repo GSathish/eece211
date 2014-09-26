@@ -562,6 +562,7 @@ pre {
 }
 
 img {
+  padding: 10px; 
   float: right; 
 }
 
