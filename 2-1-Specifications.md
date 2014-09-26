@@ -167,7 +167,7 @@ But these are in general not good ideas.
 There are extensions to Java that allow you to forbid `null` directly in the type declaration, e.g.:
 
 {% highlight java %}
-static boolean addAll(@NonNull List&lt;T> list1, @NonNull List&lt;T> list2)
+static boolean addAll(@NonNull List<T> list1, @NonNull List<T> list2)
 {% endhighlight %}
 
 where it can be [checked automatically](http://types.cs.washington.edu/checker-framework/) at compile time or runtime.
@@ -189,11 +189,11 @@ Test cases must obey the contract, just like every other client.
 
 For example, suppose you are testing this specification of `find`:
 
-<pre>
+{% highlight java %}
 static int find(int[] a, int val)
   *requires*: val occurs in a
   *effects*:  returns index i such that a[i] = val
-</pre>
+{% endhighlight %}
 
 This spec has a strong precondition in the sense that `val` is required to be found; and it has a fairly weak postcondition in the sense that if `val` appears more than once in the array, this specification says nothing about which particular index of `val` is returned.
 Even if you implemented `find` so that it always returns the lowest index, your test case can't assume that specific behaviour:
