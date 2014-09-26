@@ -72,8 +72,8 @@ In order to make it possible to substitute one implementation for another, and t
 In this case, our specification might be:
 
 {% highlight %}
-*requires*: val occurs in a
-*effects*:  returns index i such that a[i] = val
+requires: val occurs in a
+effects:  returns index i such that a[i] = val
 {% endhighlight %}
 
 ## Specification structure
