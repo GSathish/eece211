@@ -150,7 +150,9 @@ Here we'll diagram `findA` and `findB` defined [above](#deterministic_vs_underde
 A specification defines a *region* in the space of all possible implementations.
 A given implementation either behaves according to the spec, satisfying the precondition-implies-postcondition contract (it is inside the region), or it does not (outside the region). <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig1.png"></img>
 
-Both `findA` and `findB` satisfy *findStronger2*, so they are inside the region defined by that spec. <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
+Both `findA` and `findB` satisfy *findStronger2*, so they are inside the region defined by that spec. 
+
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Designing%20Specifications/fig2.png"></img>
 
 We can imagine clients looking in on this space: the specification acts as a firewall.
 Implementors have the freedom to move around inside the spec, changing their code without fear of upsetting a client.
