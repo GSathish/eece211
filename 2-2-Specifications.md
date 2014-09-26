@@ -1,10 +1,11 @@
 ---
-
+layout: page
 title: Designing Specifications
 ---
 
-In part 2 of the reading we'll look at different specs for similar behaviors, and talk about the tradeoffs between them.
-We'll look at three dimensions for comparing specs:
+Now, we will look at different specs for similar behaviours, and talk about the tradeoffs between them.
+
+We will look at three dimensions for comparing specs:
 
 + How **deterministic** it is.
   Does the spec define only a single possible output for a given input, or allow the implementor to choose from a set of legal outputs?
@@ -17,7 +18,7 @@ We'll look at three dimensions for comparing specs:
 
 Recall the two example implementations of `find` we began with in the previous part:
 
-```java
+{% highlight java %}
 static int findA(int[] a, int val) {
     for (int i = 0; i &lt; a.length; i++) {
         if (a[i] == val) return i;
@@ -31,7 +32,7 @@ static int findB(int[] a, int val) {
     }
     return -1;
 }
-```
+{% endhighlight %}
 
 Here is one possible specification of find:
 
@@ -60,11 +61,11 @@ Non-deterministic code is code that you expect to sometimes behave one way and s
 This can happen, for example, with concurrency: the scheduler chooses to run threads in different orders depending on conditions outside the program.
 
 But a 'non-deterministic' specification doesn't call for such non-determinism in the code.
-The behavior specified is not non-deterministic but *under-determined*.
+The behaviour specified is not non-deterministic but *under-determined*.
 In this case, the specification doesn't say which index is returned if `val` occurs more than once; it simply says that if you look up the entry at the index given by the returned value, you'll find val.
 
 This specification is again satisfied by both `findA` and `findB`, each 'resolving' the under-determinedness in its own way.
-A client of find can't predict which index will be returned, but should not expect the behavior to be truly non-deterministic.
+A client of find can't predict which index will be returned, but should not expect the behaviour to be truly non-deterministic.
 Of course, the specification is satisfied by a non-deterministic procedure too --- for example, one that rather improbably tosses a coin to decide whether to start searching from the top or the bottom of the array.
 But in almost all cases we'll encounter, non-determinism in specifications offers a choice that is made by the implementor at implementation time, and not at runtime.
 
@@ -78,7 +79,6 @@ static int find(int[] a, int val)
              a[i] = val, or -1 if no such i
 </pre>
 
-mitx:e76bd6ffeca5463bb4846bd6ed62ba84 Deterministic vs. underdetermined
 
 ## Declarative vs. operational specs
 
@@ -139,11 +139,7 @@ static int find4(int[] a, int val)
               or -1 if no such i
 </pre>
 
-We'll come back to `find4` in the exercises.
-
-<div class="panel panel-default panel-figure pull-right pull-margin">
 <object data="../figures/space1.svg"></object>
-</div>
 
 ## Diagramming specifications
 
@@ -153,11 +149,7 @@ Each point in this space represents a method implementation.
 
 Here we'll diagram `findA` and `findB` defined [above](#deterministic_vs_underdetermined_specs).
 
-<span class="clearfix"></span>
-
-<div class="panel panel-default panel-figure pull-right pull-margin">
 <object data="../figures/space2.svg"></object>
-</div>
 
 A specification defines a *region* in the space of all possible implementations.
 A given implementation either behaves according to the spec, satisfying the precondition-implies-postcondition contract (it is inside the region), or it does not (outside the region).
@@ -189,21 +181,15 @@ If **S2** is stronger than **S1**, how will these specs appear in our diagram?
 
 + Think through what happens if we **weaken the precondition**, which will again make **S2** a stronger specification.
   Implementations will have to handle new inputs that were previously excluded by the spec.
-  If they behaved badly on those inputs before, we wouldn't have noticed, but now their bad behavior is exposed.
+  If they behaved badly on those inputs before, we wouldn't have noticed, but now their bad behaviour is exposed.
 
-<div class="panel panel-default panel-figure pull-right pull-margin">
 <object data="../figures/space3.svg"></object>
-</div>
 
 We see that when **S2** is stronger than **S1**, it defines a *smaller* region in this diagram; a weaker specification defines a larger region.
 
 In our figure, since `findB` iterates from the end of the array `a`, it does not satisfy *findStronger3* and is outside that region.
 
 A specification **S2** that is neither stronger nor weaker than **S1** might overlap (such that there exist implementations that satisfy only **S1**, only **S2**, and both **S1** and **S2**) or might be disjoint.
-
-<span class="clearfix"></span>
-
-mitx:2f7c187740b241789db976f013556211 Stronger vs. weaker
 
 ## Designing good specifications
 
@@ -283,7 +269,7 @@ static ArrayList&lt;T> reverse(ArrayList&lt;T> list)
 </pre>
 
 This forces the client to pass in an `ArrayList`, and forces the implementor to return an `ArrayList`, even if there might be alternative `List` implementations that they would rather use.
-Since the behavior of the specification doesn't depend on anything specific about *`ArrayList`*, it would be better to write this spec in terms of the more abstract `List&lt;T>`.
+Since the behaviour of the specification doesn't depend on anything specific about *`ArrayList`*, it would be better to write this spec in terms of the more abstract `List&lt;T>`.
 
 ## Precondition or postcondition?
 
@@ -308,26 +294,18 @@ Instead, like the Java API classes, you should throw an exception.
 
 ## About access control
 
-<div class="handout-solo">
-Read: **[Packages]** in the Java Tutorials.
-[Packages]: http://docs.oracle.com/javase/tutorial/java/package/index.html
-</div>
+**Readings**
+* [**Packages**](http://docs.oracle.com/javase/tutorial/java/package/index.html) in the Java Tutorials.
+* [**Controlling Access**](http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html) in the Java Tutorials.
 
-<div class="handout-solo">
-Read: **[Controlling Access]** in the Java Tutorials.
-[Controlling Access]: http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html
-</div>
+We have been using *public* for almost all of our methods, without really thinking about it. The decision to make a method `public` or `private` is actually a decision about the contract of the class.
 
-We have been using *public* for almost all of our methods, without really thinking about it.
-The decision to make a method public or private is actually a decision about the contract of the class.
-Public methods are freely accessible to other parts of the program.
-Making a method public advertises it as a service that your class is willing to provide.
-If you make all your methods public --- including helper methods that are really meant only for local use within the class --- then other parts of the program may come to depend on them, which will make it harder for you to change the internal implementation of the class in the future.
+Public methods are freely accessible to other parts of the program. Making a method public advertises it as a service that your class is willing to provide. If you make all your methods public --- including helper methods that are really meant only for local use within the class --- then other parts of the program may come to depend on them, which will make it harder for you to change the internal implementation of the class in the future.
 Your code won't be as **ready for change**.  
 
 Making internal helper methods public will also add clutter to the visible interface your class offers.
 Keeping internal things *private* makes your class's public interface smaller and more coherent (meaning that it does one thing and does it well).
 Your code will be **easier to understand**.
 
-We will see even stronger reasons to use *private* in the next few lectures, when we start to write classes with persistent internal state.
+We will see even stronger reasons to use *private* when we start to write classes with persistent internal state.
 Protecting this state will help keep the program **safe from bugs**.
