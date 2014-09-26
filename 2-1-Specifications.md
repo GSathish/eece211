@@ -20,19 +20,19 @@ The contract acts as a *firewall* between client and implementor. It shields the
 
 **Source code is complicated** and provides more details than needed. Understanding or even reading every line of
 code is an excessive burden. 
-+ Suppose you had to read the source code of Java libraries in order to use them!
-+ The same applies to developers of different parts of the libraries.
+* Suppose you had to read the source code of Java libraries in order to use them!
+* The same applies to developers of different parts of the libraries.
 
 A client cares only about **what** the code does, not **how** it does it.
 
 **Source code is ambiguous** even though it may appear unambiguous and concrete.
-+ Which details of code's behavior are essential, and which are incidental?
-+ Code invariably gets rewritten.
-+ Client needs to know what they can rely on.
-+ What properties will be maintained over time?
-+ What properties might be changed by future optimization, improved algorithms, or just bug
+* Which details of code's behavior are essential, and which are incidental?
+* Code invariably gets rewritten.
+* Client needs to know what they can rely on.
+* What properties will be maintained over time?
+* What properties might be changed by future optimization, improved algorithms, or just bug
 fixes?
-+ Implementer needs to know what features the client depends on, and which can be changed.
+* Implementer needs to know what features the client depends on, and which can be changed.
 
 ## Behavioural equivalence
 
