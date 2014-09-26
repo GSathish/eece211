@@ -299,8 +299,10 @@ We have been using *public* for almost all of our methods, without really thinki
 <p class="graybox">
 <strong>Readings</strong>
 
-* <a href="http://docs.oracle.com/javase/tutorial/java/package/index.html"><strong>Packages</strong></a> in the Java Tutorials.
-* <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html"><strong>Controlling Access</strong></a> in the Java Tutorials.
+<ul>
+  <li><a href="http://docs.oracle.com/javase/tutorial/java/package/index.html"><strong>Packages</strong></a> in the Java Tutorials.</li>
+  <li><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html"><strong>Controlling Access</strong></a> in the Java Tutorials.</li>
+</ul>
 </p>
 
 
