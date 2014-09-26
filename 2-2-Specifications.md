@@ -296,14 +296,14 @@ Instead, like the Java API classes, you should throw an exception.
 
 We have been using *public* for almost all of our methods, without really thinking about it. The decision to make a method `public` or `private` is actually a decision about the contract of the class.
 
-<div class="graybox">
+<span class="graybox">
 
 **Readings**
 
 * [**Packages**](http://docs.oracle.com/javase/tutorial/java/package/index.html) in the Java Tutorials.
 * [**Controlling Access**](http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html) in the Java Tutorials.
 
-</div>
+</span>
 
 
 Public methods are freely accessible to other parts of the program. Making a method public advertises it as a service that your class is willing to provide. If you make all your methods public --- including helper methods that are really meant only for local use within the class --- then other parts of the program may come to depend on them, which will make it harder for you to change the internal implementation of the class in the future.
