@@ -5,27 +5,36 @@ title: Need for Specifications
 
 ## Why specifications?
 
-Many of the nastiest bugs in programs arise because of misunderstandings about behaviour at the interface between two pieces of code.
-Although every programmer has specifications in mind, not all programmers write them down.
-As a result, different programmers on a team have *different* specifications in mind.
-When the program fails, it's hard to determine where the error is.
+Many of the nastiest bugs in programs arise because of misunderstandings about behaviour at the interface between two pieces of code. Although every programmer has specifications in mind, not all programmers write them down. As a result, different programmers on a team have *different* specifications in mind. When the program fails, it's hard to determine where the error is.
 Precise specifications in the code let you apportion blame (to code fragments, not people!), and can spare you the agony of puzzling over where a fix should go.
 
 Specifications are good for the client of a method because they spare the task of reading code.
 If you're not convinced that reading a spec is easier than reading code, take a look at some of the standard Java specs and compare them to the source code that implements them.
 [`ArrayList`](java:java/util/ArrayList), for example, in the package `java.util`, has a very simple spec but its code is not at all simple.
 
-Specifications are good for the implementer of a method because they give the freedom to change the implementation without telling clients.
-Specifications can make code faster, too.
-Sometimes a weak specification makes it possible to do a much more efficient implementation.
-In particular, a precondition may rule out certain states in which a method might have been invoked that would have incurred an expensive check that is no longer necessary.
+Specifications are good for the implementer of a method because they give the freedom to change the implementation without telling clients. Specifications can make code faster, too. Sometimes a weak specification makes it possible to do a much more efficient implementation. In particular, a precondition may rule out certain states in which a method might have been invoked that would have incurred an expensive check that is no longer necessary.
 
-The contract acts as a *firewall* between client and implementor.
-It shields the client from the details of the *workings* of the unit --- you don't need to read the source code of the procedure if you have its specification.
-And it shields the implementor from the details of the *usage* of the unit; he doesn't have to ask every client how she plans to use the unit.
-This firewall results in *decoupling*, allowing the code of the unit and the code of a client to be changed independently, so long as the changes respect the specification --- each obeying its obligation.
+The contract acts as a *firewall* between client and implementor. It shields the client from the details of the *workings* of the unit --- you don't need to read the source code of the procedure if you have its specification. And it shields the implementor from the details of the *usage* of the unit; he doesn't have to ask every client how she plans to use the unit. This firewall results in *decoupling*, allowing the code of the unit and the code of a client to be changed independently, so long as the changes respect the specification --- each obeying its obligation.
 
-## behavioural equivalence
+#### Can we eliminate the need for specifications by allowing everyone access to all source code?
+
+**Source code is complicated** and provides more details than needed. Understanding or even reading every line of
+code is an excessive burden. 
++ Suppose you had to read the source code of Java libraries in order to use them!
++ The same applies to developers of different parts of the libraries.
+
+A client cares only about **what** the code does, not **how** it does it.
+
+**Source code is ambiguous** even though it may appear unambiguous and concrete.
++ Which details of code's behavior are essential, and which are incidental?
++ Code invariably gets rewritten.
++ Client needs to know what they can rely on.
++ What properties will be maintained over time?
++ What properties might be changed by future optimization, improved algorithms, or just bug
+fixes?
++ Implementer needs to know what features the client depends on, and which can be changed.
+
+## Behavioural equivalence
 
 Consider these two methods.
 Are they the same or different?
