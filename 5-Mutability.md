@@ -1,3 +1,8 @@
+---
+layout: page
+title: Debugging
+---
+
 #### Objectives of Good Software Construction
 
 <table class="table table-striped no-markdown">
