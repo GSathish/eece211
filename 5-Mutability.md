@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Debugging
+title: Mutability and Immutability
 ---
 
 #### Objectives of Good Software Construction
