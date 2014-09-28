@@ -1,3 +1,8 @@
+---
+layout: page
+title: Mutability and Immutability
+---
+
 #### Objectives of Good Software Construction
 
 <table class="table table-striped no-markdown">
