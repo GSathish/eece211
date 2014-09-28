@@ -225,12 +225,13 @@ static void sort(List<String> lst)
 
 And an example of a method that does not mutate its argument:
 
-<pre class="no-markdown">
+```
 static List<String> toLowerCase(List<String> lst)
   <em>requires</em>: nothing
-  <em>effects</em>:  returns a new list t where t[i] = lst[i].toLowerCase()</pre>
+  <em>effects</em>:  returns a new list t where t[i] = lst[i].toLowerCase()
+```
 
-If the *effects* do not describe mutation, in EECE 210 we assume mutation of the inputs is implicitly disallowed.
+If the _effects_ do not describe mutation, in EECE 210 we assume mutation of the inputs is implicitly disallowed.
 
 ## Iterating over arrays and lists
 
@@ -238,24 +239,23 @@ The next mutable object we're going to look at is an **iterator** --- an object 
 Iterators are used under the covers in Java when you're using a `for` loop to step through a `List` or array.
 This code:
 
-
-<pre class="no-markdown">
-<code class="java">List<String> lst = ...;
-<strong class="text-danger">for (String str : lst) {</strong>
+```java
+List<String> lst = ...;
+for (String str : lst) {
     System.out.println(str);
-<strong class="text-danger">}</strong>
-</code></pre>
+}
+```
 
 is rewritten by the compiler into something like this:
 
-<pre class="no-markdown">
-<code class="java">List<String> lst = ...;
-<strong class="text-danger">Iterator iter = lst.iterator();</strong>
-<strong class="text-danger">while (lst.hasNext()) {</strong>
-    <strong class="text-danger">String str = iter.next();</strong>
-    System.out.println(str);
-<strong class="text-danger">}</strong>
-</code></pre>
+```java
+List<String> lst = ...;
+Iterator iter = lst.iterator();
+while (lst.hasNext()) {
+	String str = iter.next();
+	System.out.println(str);
+}
+```
 
 An iterator has two methods:
 
