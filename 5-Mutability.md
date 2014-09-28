@@ -216,12 +216,12 @@ At this point it should be clear that when a method performs mutation, it is cru
 
 Here's an example of a mutating method:
 
-<pre>
+```
 static void sort(List<String> lst)
   <em>requires</em>: nothing
   <em>effects</em>:  puts lst in sorted order, i.e. lst[i] <= lst[j]
               for all 0 <= i < j < lst.size()
-</pre>
+```
 
 And an example of a method that does not mutate its argument:
 
