@@ -3,7 +3,7 @@ layout: page
 title: Debugging
 ---
 
-### Main Course Objectives
+### Objectives of Good Software Construction
 <table class="table table-striped no-markdown">
 <tr><th width="33%">Safe from bugs</th><th>Easy to understand</th><th>Ready for change</th></tr>
 <tr><td>
