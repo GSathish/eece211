@@ -216,11 +216,12 @@ At this point it should be clear that when a method performs mutation, it is cru
 
 Here's an example of a mutating method:
 
-<pre class="no-markdown">
+<pre>
 static void sort(List<String> lst)
   <em>requires</em>: nothing
   <em>effects</em>:  puts lst in sorted order, i.e. lst[i] <= lst[j]
-              for all 0 <= i < j < lst.size()</pre>
+              for all 0 <= i < j < lst.size()
+</pre>
 
 And an example of a method that does not mutate its argument:
 
@@ -634,3 +635,4 @@ Let's review how immutability helps with the main goals of this course:
   Because an immutable object or reference always means the same thing, it's simpler for a reader of the code to reason about --- they don't have to trace through all the code to find all the places where the object or reference might be changed, because it can't be changed.
 + **Ready for change**.
   If an object or reference can't be changed at runtime, then code that depends on that object or reference won't have to be revised when the program changes.
+
