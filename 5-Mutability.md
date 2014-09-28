@@ -270,7 +270,6 @@ You can also look at the [Java API definition of `Iterator`](java:java/util/Iter
 
 To better understand how an iterator works, here's a simple implementation of an iterator for `ArrayList<String>`:
 
-<div class="panel panel-figure pull-right pull-margin">
 ```java
 /**
  * A MyIterator is a mutable object that iterates over
@@ -319,7 +318,6 @@ public class MyIterator {
     }
 }
 ```
-</div>
 
 `MyIterator` makes use of a few Java language features that are different from the classes we've been writing up to this point.
 Make sure you read the Java Tutorial sections required for this reading so that you understand them:
