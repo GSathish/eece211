@@ -1,8 +1,3 @@
----
-layout: page
-title: Mutability and Immutability
----
-
 #### Objectives of Good Software Construction
 
 <table class="table table-striped no-markdown">
@@ -519,7 +514,6 @@ System.out.println(id);
 
 The implementer is worried about the speed and load on the database, so the implementer introduces a cache that remembers usernames that have been looked up:
 
-<div class="pull-margin">
 ```java
 private static Map<String, char[]> cache = new HashMap<String, char[]>();
 
@@ -536,7 +530,6 @@ public static char[] getUBCId(String username) throws NoSuchUserException {
     return id;
 }
 ```
-</div>
 
 These two changes have created a subtle bug.
 When the client looks up `"bitdiddle"` and gets back a char array, now both the client and the implementer's cache are pointing to the *same* char array.
