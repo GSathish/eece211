@@ -28,7 +28,7 @@ title: Mutability and Immutability
 
 ## Risks of mutation
 
-Recall from our discussion of [instance diagrams]({ site.url }/4-debugging) that some objects are *immutable*: once created, they always represent the same value.
+Recall from our discussion of [instance diagrams](/eece210/4-debugging) that some objects are *immutable*: once created, they always represent the same value.
 Other objects are *mutable*: they have methods that change the value of the object.
 
 [`String`](java:java/lang/String) is an example of an immutable type.
