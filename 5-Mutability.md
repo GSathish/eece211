@@ -344,10 +344,7 @@ Most of `MyIterator`'s code refers to instance variables without an explicit `th
 
 Here's a instance diagram showing a typical state for a MyIterator object in action:
 
-<div class="panel panel-figure pull-right pull-margin">
-<div class="panel-body">
 <img src="figures/iterator.png" width="400"></img>
-</div></div>
 
 Note that we drew the arrow from `list` with a double line, to indicate that it's *final*.
 That means the arrow can't change once it's drawn.
@@ -381,6 +378,7 @@ Note that `dropEECECourses` has a frame condition (the *modifies* clause) in its
 
 Next, following test-first programming, we devise a testing strategy that partitions the input space, and choose test cases to cover that partition:
 
+```
     // Testing strategy:
     //   subjects.size: 0, 1, n
     //   contents: no EECE course, one EECE course, all EECE courses
@@ -392,6 +390,7 @@ Next, following test-first programming, we devise a testing strategy that partit
     //   [“ENGL 112”, “MATH 253”, “ECON 102”] => [“ENGL 112”, “MATH 253”, “ECON 102”]
     //   [“PHIL 120”, “EECE 210”, “MATH 256”] => [“PHIL 120”, “MATH 256”]
     //   [“EECE 251”, “EECE 210”, “EECE 253”] => []
+```
 
 Finally, we implement it:
 
@@ -410,8 +409,10 @@ public static void dropEECECourses(ArrayList<String> subjects) {
 Now we run our test cases, and they work! ... almost.
 The last test case fails:
 
+```
     // dropEECECourses([“EECE 210”, “EECE 259”, “EECE 281”])
     //   expected [], actual [“EECE 259”]
+```
 
 We got the wrong answer: `dropEECECourses` left a course behind in the list!
 Why?
@@ -438,15 +439,15 @@ The built-in iterator detects that you're changing the list under its feet, and 
 How can you fix this problem?
 One way is to use the `remove()` method of `Iterator`, so that the iterator adjusts its index appropriately:
 
-<pre class="no-markdown">
-<code class="java">Iterator iter = subjects.iterator();
+```java
+Iterator iter = subjects.iterator();
 while (iter.hasNext()) {
     String subject = iter.next();
-    if (subject.startsWith("6.")) {
-        <strong class="text-danger">iter.remove(subject);</strong>
+    if (subject.startsWith(“EECE”)) {
+        iter.remove(subject);
     }
 }
-</code></pre>
+```
         
 This is actually more efficient as well, it turns out, because `iter.remove()` already knows where the element it should remove is, while `subjects.remove()` had to search for it again.
 
@@ -483,7 +484,6 @@ Here's an example to illustrate the point.
 
 The crux of our example will be the specification for this method, which looks up a username in UBC’s database and returns the user's 9-digit identifier:
 
-<div class="pull-margin">
 ```java
 /**
  * @param username username of person to look up
@@ -494,7 +494,6 @@ public static char[] getUBCId(String username) throws NoSuchUserException {
     // ... look up username in UBC’s database and return the 9-digit ID
 }
 ```
-</div>
 
 A reasonable specification.
 Now suppose we have a client using this method to print out a user's identifier:
@@ -539,7 +538,7 @@ public static char[] getUBCId(String username) throws NoSuchUserException {
 These two changes have created a subtle bug.
 When the client looks up `"bitdiddle"` and gets back a char array, now both the client and the implementer's cache are pointing to the *same* char array.
 The array is aliased.
-That means that the client's obscuring code is actually overwriting the identifier in the cache, so future calls to `getMidId("bitdiddle")` will not return the full 9-digit number, like "928432033", but instead the obscured version "*****2033".
+That means that the client's obscuring code is actually overwriting the identifier in the cache, so future calls to `getUBCId("bitdiddle")` will not return the full 9-digit number, like "928432033", but instead the obscured version "*****2033".
 
 **Sharing a mutable object complicates a contract**.
 If this contract failure went to software engineering court, it would be contentious.
@@ -549,12 +548,12 @@ Was the implementer obliged not to hold on to the object that it returned?
 
 Here's one way we could have clarified the spec:
 
-<pre>
+```java
 public static char[] getUBCId(String username) throws NoSuchUserException 
-  *requires*: nothing
-  *effects*: returns an array containing the 9-digit UBC identifier of username,
+  <em>requires</em>: nothing
+  <em>effects</em>: returns an array containing the 9-digit UBC identifier of username,
              or throws NoSuchUserException if nobody with username is in UBC’s database. Caller may never modify the returned array.
-</pre>
+```
 
 **This is a bad way to do it**.
 The problem with this approach is that it means the contract has to be in force for the entire rest of the program.
@@ -563,13 +562,13 @@ The other contracts we wrote were much narrower in scope; you could think about 
 
 Here's a spec with a similar problem:
 
-<pre>
+```java
 public static char[] getUBCId(String username) throws NoSuchUserException 
-  *requires*: nothing
-  *effects*: returns a new array containing the 9-digit UBC identifier of username,
+  <em>requires</em>: nothing
+  <em>effects</em>: returns a new array containing the 9-digit UBC identifier of username,
              or throws NoSuchUserException if nobody with username is in UBC's
              database.
-</pre>
+```
 
 **This doesn't entirely fix the problem either**.
 This spec at least says that the array has to be fresh.
@@ -578,12 +577,12 @@ Does it keep the implementer from changing that array or reusing it in the futur
 
 Here's a much better spec:
 
-<pre class="pull-margin">
+```java
 public static String getUBCId(String username) throws NoSuchUserException 
-  *requires*: nothing
-  *effects*: returns the 9-digit UBC identifier of username, or throws
+  <em>requires</em>: nothing
+  <em>effects</em>: returns the 9-digit UBC identifier of username, or throws
              NoSuchUserException if nobody with username is in UBC's database.
-</pre>
+```
 
 The immutable String return value provides a *guarantee* that the client and the implementer will never step on each other the way they could with char arrays.
 It doesn't depend on a programmer reading the spec comment carefully.
