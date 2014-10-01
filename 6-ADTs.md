@@ -345,11 +345,9 @@ This design pattern, using a static method as a creator instead of a constructor
     public boolean contains(E e);
 ```
 
-Next we have two observer methods.
-Notice how the specs are in terms of our abstract notion of a set; it would be malformed to mention the details of any particular implementation of sets with particular private fields.
-These specs should apply to any valid implementation of the set ADT.
-```java
+Next we have two observer methods. Notice how the specs are in terms of our abstract notion of a set; it would be malformed to mention the details of any particular implementation of sets with particular private fields. These specs should apply to any valid implementation of the set ADT.
 
+```java
     // examples of mutator methods
     
     /** Modifies this set by adding e to the set.
@@ -407,7 +405,8 @@ You can choose implementations for applications based on how bad it would be to 
 We build a test suite for an abstract data type by creating tests for each of its operations.
 These tests inevitably interact with each other, since the only way to test creators, producers, and mutators is by calling observers on the objects that result.
 
-Here's how we might partition the input spaces of the four operations in our MyString type:
+Here's how we might partition the input spaces of the four operations in our `MyString` type:
+
 ```java
 // testing strategy for each operation of MyString:
 //
@@ -429,6 +428,7 @@ Here's how we might partition the input spaces of the four operations in our MyS
 ```
 
 Then a compact test suite that covers all these partitions might look like:
+
 ```java
 @Test public void testValueOfTrue() {
     MyString s = MyString.valueOf(true);
@@ -484,13 +484,13 @@ Notice that each test case typically calls a few operations that *make* or *modi
 ## Invariants
 
 Resuming our discussion of what makes a good abstract data type, the final, and perhaps most important, property of a good abstract data type is that it **preserves its own invariants**.
-An *invariant* is a property of a program that is always true, for every possible runtime state of the program.
-Immutability is one crucial invariant that we've already encountered: once created, an immutable object should always represent the same value, for its entire lifetime.
-Saying that the ADT *preserves its own invariants* means that the ADT is responsible for ensuring that its own invariants hold.
-It doesn't depend on good behavior from its clients.
 
-When an ADT preserves its own invariants, reasoning about the code becomes much easier.
-If you can count on the fact that Strings never change, you can rule out that possibility when you're debugging code that uses Strings -- or when you're trying to establish an invariant for another ADT that uses Strings.
+An *invariant* is a property of a program that is always true, for every possible runtime state of the program.
+
+Immutability is one crucial invariant that we've already encountered: once created, an immutable object should always represent the same value, for its entire lifetime.
+Saying that the ADT *preserves its own invariants* means that the ADT is responsible for ensuring that its own invariants hold. It doesn't depend on good behaviour from its clients.
+
+When an ADT preserves its own invariants, reasoning about the code becomes much easier. If you can count on the fact that Strings never change, you can rule out that possibility when you're debugging code that uses Strings -- or when you're trying to establish an invariant for another ADT that uses Strings.
 Contrast that with a string type that guarantees that it will be immutable only if its clients promise not to change it. 
 Then you'd have to check all the places in the code where the string might be used.
 
@@ -498,6 +498,7 @@ Then you'd have to check all the places in the code where the string might be us
 
 We'll see many interesting invariants. 
 Let's focus on immutability for now. Here's a specific example:
+
 ```java
 /**
  * This immutable data type represents a tweet from Twitter.
@@ -522,18 +523,21 @@ public class Tweet {
 }
 ```
 
-How do we guarantee that these Tweet objects are immutable -- that, once a tweet is created, its author, message, and date can never be changed?
+How do we guarantee that these `Tweet` objects are immutable -- that, once a tweet is created, its author, message, and date can never be changed?
 
 The first threat to immutability comes from the fact that clients can --- in fact must --- directly access its fields. So nothing's stopping us from writing code like this:
+
 ```java
 Tweet t = new Tweet("justinbieber", 
                     "Thanks to all those beliebers out there inspiring me every day", 
                     new Date());
 t.author = "rbmllr";
 ```
+
 This is a trivial example of **representation exposure**, meaning that code outside the class can modify the representation directly. Rep exposure like this threatens not only invariants, but also representation independence. We can't change the implementation of Tweet without affecting all the clients who are directly accessing those fields.
 
 Fortunately, Java gives us language mechanisms to deal with this kind of rep exposure:
+
 ```java
 public class Tweet {
 
@@ -564,12 +568,14 @@ public class Tweet {
     
 }
 ```
+
 The `private` and `public` keywords indicate which fields and methods are accessible only within the class and which can be accessed from outside the class.
 The `final` keyword also helps by guaranteeing that the fields of this immutable type won't be reassigned after the object is constructed.
 
 <img src="figures/retweetLater.png" alt="retweetLater breaking Tweet's immutability" width="300"></img>
 
 But that's not the end of the story: the rep is still exposed! Consider this perfectly reasonable client code that uses `Tweet`:
+
 ```java
 /** @return a tweet that retweets t, one hour later*/
 public static Tweet retweetLater(Tweet t) {
@@ -578,6 +584,7 @@ public static Tweet retweetLater(Tweet t) {
     return new Tweet("rbmllr", t.getText(), d);
 }
 ```
+
 `retweetLater` takes a tweet and should return another tweet with the same message (called a *retweet*) but sent an hour later. The `retweetLater` method might be part of a system that automatically echoes funny things that Twitter celebrities say.
 
 What's the problem here? The `getTimestamp` call returns a reference to the same date object referenced by tweet `t`.
@@ -587,11 +594,13 @@ What's the problem here? The `getTimestamp` call returns a reference to the same
 `Tweet`'s immutability invariant has been broken. The problem is that `Tweet` leaked out a reference to a mutable object that its immutability depended on. We exposed the rep, in such a way that `Tweet` can no longer guarantee that its objects are immutable. Perfectly reasonable client code created a subtle bug.
 
 We can patch this kind of rep exposure by using defensive copying: making a copy of a mutable object to avoid leaking out references to the rep. Here's the code:
+
 ```java
 public Date getTimestamp() {
     return new Date(Date.getTime());
 }
 ```
+
 Mutable types often have a copy constructor that allows you to make a new instance that duplicates the value of an existing instance.
 In this case, `Date`'s copy constructor uses the timestamp value, measured in seconds since January 1, 1970. As another example, `StringBuilder`'s copy constructor takes a `String`. Another way to copy a mutable object is `clone()`, which is supported by some types but not all.
 There are unfortunate problems with the way `clone()` works in Java.
