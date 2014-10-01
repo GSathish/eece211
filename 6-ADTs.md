@@ -290,15 +290,11 @@ Because MyString's existing clients depend only on the specs of its public metho
 
 ## Interfaces
 
-<div class="handout-solo">
-
 In the Java tutorial, read these pages:
 
 + [Defining an Interface](http://docs.oracle.com/javase/tutorial/java/IandI/interfaceDef.html)
 + [Implementing an Interface](http://docs.oracle.com/javase/tutorial/java/IandI/usinginterface.html)
 + [Using an Interface as a Type](http://docs.oracle.com/javase/tutorial/java/IandI/interfaceAsType.html)
-
-</div>
 
 Java's `interface` is a useful language mechanism for expressing an abstract data type.
 An interface in Java is a list of method signatures, but no method bodies.
@@ -378,8 +374,6 @@ These specs should apply to any valid implementation of the set ADT.
 The story for these three mutator methods is basically the same as for the observers.
 We still write specs at the level of our abstract model of sets.
 
-
-<div class="handout-solo">
 In the Java tutorial, read these pages:
 
 + [Lesson: Interfaces](http://docs.oracle.com/javase/tutorial/collections/interfaces/)
@@ -387,7 +381,6 @@ In the Java tutorial, read these pages:
 + [The List Interface](http://docs.oracle.com/javase/tutorial/collections/interfaces/list.html)
 + [Set Implementations](http://docs.oracle.com/javase/tutorial/collections/implementations/set.html)
 + [List Implementations](http://docs.oracle.com/javase/tutorial/collections/implementations/list.html)
-</div>
 
 ### Why Interfaces?
 
@@ -584,9 +577,7 @@ public class Tweet {
 The `private` and `public` keywords indicate which fields and methods are accessible only within the class and which can be accessed from outside the class.
 The `final` keyword also helps by guaranteeing that the fields of this immutable type won't be reassigned after the object is constructed.
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="figures/retweetLater.png" alt="retweetLater breaking Tweet's immutability" width="300"></img>
-</div>
 
 But that's not the end of the story: the rep is still exposed! Consider this perfectly reasonable client code that uses `Tweet`:
 ```java
@@ -617,9 +608,7 @@ There are unfortunate problems with the way `clone()` works in Java.
 For more, see Josh Bloch, *Effective Java*, item 10. 
 
 
-<div class="panel panel-figure pull-right pull-margin">
 <img src="figures/tweetEveryHourToday.png" alt="tweetEveryHourToday breaking Tweet's immutability" width="300"></img>
-</div>
 
 So we've done some defensive copying in the return value of `getTimestamp`.
 But we're not done yet! There's still rep exposure. Consider this (again perfectly reasonable) client code:
