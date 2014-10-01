@@ -1,7 +1,7 @@
-—
+---
 layout: page
 title: Abstract Data Types
-—
+---
 
 #### Objectives
 
