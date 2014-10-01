@@ -100,7 +100,7 @@ Here are some examples of abstract data types, along with some of their operatio
 
 + creators: the numeric literals 0, 1, 2, ...
 + producers: arithmetic operators +, -, &times;, &divide;
-+ observers: comparison operators ==, !=, &lt;, > 
++ observers: comparison operators ==, !=, <, > 
 + mutators: none (it's immutable)
 
 **List** is Java's list interface.
@@ -176,7 +176,7 @@ public class MyString {
     /** @return number of characters in this string */
     public int length() { ... }
     
-    /** @param i character position (requires 0 &lt;= i &lt; string length)
+    /** @param i character position (requires 0 <= i < string length)
       * @return character at position i
       */
     public char charAt(int i) { ... }
@@ -184,7 +184,7 @@ public class MyString {
     //////////////////// Example of a producer operation ///////////////    
     /** Get the substring between start (inclusive) and end (exclusive).
      * @param start starting index
-     * @param end ending index.  Requires 0 &lt;= start &lt;= end &lt;= string length.
+     * @param end ending index.  Requires 0 <= start <= end <= string length.
      * @return string consisting of charAt(start)...charAt(end-1)
      */
     public MyString substring (int start, int end) { ... }
@@ -247,12 +247,15 @@ It could just point to the original MyString's character array and keep track of
 The String implementation in some versions of Java do this.
 
 To implement this optimization, we could change the internal representation of this class to:
+
 ```java
 private char[] a;
 private int start;
 private int end;
 ```
+
 With this new representation, the operations are now implemented like this:
+
 ```java
     public static MyString valueOf(boolean b) {
         MyString s = new MyString();
@@ -280,7 +283,7 @@ With this new representation, the operations are now implemented like this:
     }
 ```
 
-Because MyString's existing clients depend only on the specs of its public methods, not on its private fields, we can make this change without having to inspect and change all that client code.  That's the power of representation independence.
+Because `MyString`’s existing clients depend only on the specs of its public methods, not on its private fields, we can make this change without having to inspect and change all that client code.  That's the power of representation independence.
 
 <!-- clearly identify the parts of the Java class that are part of the abstract data type's spec, and the parts that are part of its representation, and the parts that are its implementation (i.e. method bodies) -->
 
@@ -293,20 +296,13 @@ In the Java tutorial, read these pages:
 + [Implementing an Interface](http://docs.oracle.com/javase/tutorial/java/IandI/usinginterface.html)
 + [Using an Interface as a Type](http://docs.oracle.com/javase/tutorial/java/IandI/interfaceAsType.html)
 
-Java's `interface` is a useful language mechanism for expressing an abstract data type.
-An interface in Java is a list of method signatures, but no method bodies.
-A class *implements* an interface if it declares the interface in its `implements` clause, and provides method bodies for all of the interface's methods.
-So one way to define an abstract data type in Java is as an interface, with its implementation as a class implementing that interface.
+Java's `interface` is a useful language mechanism for expressing an abstract data type. An interface in Java is a list of method signatures, but no method bodies. A class *implements* an interface if it declares the interface in its `implements` clause, and provides method bodies for all of the interface's methods. So one way to define an abstract data type in Java is as an interface, with its implementation as a class implementing that interface.
 
-One advantage of this approach is that the interface specifies the contract for the client and nothing more.
-The interface is all a client programmer needs to read to understand the ADT.
-The client can't create inadvertent dependencies on the ADT's rep, because instance variables can't be put in an interface at all.
-The implementation is kept well and truly separated, in a different class altogether.
+One advantage of this approach is that the interface specifies the contract for the client and nothing more. The interface is all a client programmer needs to read to understand the ADT.
+The client can't create inadvertent dependencies on the ADT's rep, because instance variables can't be put in an interface at all. The implementation is kept well and truly separated, in a different class altogether.
 
-Another advantage is that multiple different representations of the abstract data type can co-exist in the same program, as different classes implementing the interface.
-When an abstract data type is represented just as a single class, without an interface, it's harder to have multiple representations.
-We saw that in the MyString example above, which was a single class.
-We couldn't have both representations for MyString in the same program.
+Another advantage is that multiple different representations of the abstract data type can co-exist in the same program, as different classes implementing the interface. When an abstract data type is represented just as a single class, without an interface, it's harder to have multiple representations. We saw that in the `MyString` example above, which was a single class.
+We couldn't have both representations for `MyString` in the same program.
 
 Java's static type checking allows the compiler to catch many mistakes in implementing an ADT's contract.
 For instance, it is a compile-time error to omit one of the required methods, or to give it the wrong return type.
@@ -315,16 +311,13 @@ Unfortunately, the compiler doesn't check for us that the code adheres to the sp
 
 ### Example: Set
 
-Java's collection classes provide a good example of the idea of separating interface and implementation.
-Let's consider as an example one of the ADTs from the Java collections library, Set.
-Set is the ADT of finite sets of elements of some other type E.
-Here is a simplified version of the Set interface:
+Java's collection classes provide a good example of the idea of separating interface and implementation. Let's consider as an example one of the ADTs from the Java collections library, `Set`. `Set` is the ADT of finite sets of elements of some other type `E`. Here is a simplified version of the `Set` interface:
 
 ```java
-public interface Set&lt;E> {
+public interface Set<E> {
 ```
-We can match Java interfaces with our classification of ADT operations, starting with a creator:
 
+We can match Java interfaces with our classification of ADT operations, starting with a creator:
 
 ```java
     // example of creator method
@@ -332,7 +325,7 @@ We can match Java interfaces with our classification of ADT operations, starting
     /** Make an empty set.
      * @return a new set instance, initially empty
      */
-    public static Set&lt;E> make() { ... } 
+    public static Set<E> make() { ... } 
 ```
 
 Unfortunately, Java interfaces are not allowed to have constructors, but (as of Java 8) they *are* allowed to contain static methods.
@@ -607,14 +600,14 @@ For more, see Josh Bloch, *Effective Java*, item 10.
 
 <img src="figures/tweetEveryHourToday.png" alt="tweetEveryHourToday breaking Tweet's immutability" width="300"></img>
 
-So we've done some defensive copying in the return value of `getTimestamp`.
-But we're not done yet! There's still rep exposure. Consider this (again perfectly reasonable) client code:
+So we've done some defensive copying in the return value of `getTimestamp( )`. But we're not done yet! There's still rep exposure. Consider this (again perfectly reasonable) client code:
+
 ```java
 /** @return a list of 24 inspiring tweets, one per hour today */
-public static List&lt;Tweet> tweetEveryHourToday () {
-    List&lt;Tweet> list = new ArrayList&lt;Tweet>(); 
+public static List<Tweet> tweetEveryHourToday () {
+    List<Tweet> list = new ArrayList<Tweet>(); 
     Date date = new Date();
-    for (int i=0; i &lt; 24; i++) {
+    for (int i=0; i < 24; i++) {
         date.setHours(i);
         list.add(new Tweet("rbmllr", "keep it up! you can do it", date));
     } 
@@ -622,9 +615,10 @@ public static List&lt;Tweet> tweetEveryHourToday () {
 }
 ```
 
-This code intends to advance a single Date object through the 24 hours of a day, creating a tweet for every hour. But notice that the constructor of Tweet saves the reference that was passed in, so all 24 Tweet objects end up with the same time, as shown in this snapshot diagram.
+This code intends to advance a single Date object through the 24 hours of a day, creating a tweet for every hour. But notice that the constructor of Tweet saves the reference that was passed in, so all 24 Tweet objects end up with the same time, as shown in this instance diagram.
  
 Again, the immutability of Tweet has been violated. We can fix this problem too by using judicious defensive copying, this time in the constructor:
+
 ```java
 public Tweet(String author, String text, Date timestamp) {
     this.author = author;
@@ -632,9 +626,11 @@ public Tweet(String author, String text, Date timestamp) {
     this.timestamp = new Date(timestamp.getTime());
 }
 ```
+
 In general, you should carefully inspect the argument types and return types of all your ADT operations. If any of the types are mutable, make sure your implementation doesn't return direct references to its representation.  Doing that creates rep exposure.
 
 You may object that this seems wasteful. Why make all these copies of dates? Why can't we just solve this problem by a carefully written specification, like this?
+
 ```java
 /**
  * Make a Tweet.
@@ -645,6 +641,7 @@ You may object that this seems wasteful. Why make all these copies of dates? Why
  */
 public Tweet(String author, String text, Date timestamp) {
 ```
+
 This approach is sometimes taken when there isn't any other reasonable alternative -- for example, when the mutable object is too large to copy efficiently. But the cost in your ability to reason about the program, and your ability to avoid bugs, is enormous. In the absence of compelling arguments to the contrary, it's almost always worth it for an abstract data type to guarantee its own invariants, and preventing rep exposure is essential to that.
 
 An even better solution is to prefer immutable types. If we had used an immutable date object, like `java.time.ZonedDateTime`, instead of the mutable `java.util.Date`, then we would have ended this section after talking about `public` and `private`. No further rep exposure would have been possible.
