@@ -402,7 +402,7 @@ public static void dropEECECourses(ArrayList<String> subjects) {
     MyIterator iter = new MyIterator(subjects);
     while (iter.hasNext()) {
         String subject = iter.next();
-        if (subject.startsWith("6.")) {
+        if (subject.startsWith("EECE")) {
             subjects.remove(subject);
         }
     }
