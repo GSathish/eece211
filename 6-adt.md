@@ -282,11 +282,6 @@ Because MyString's existing clients depend only on the specs of its public metho
 
 <!-- clearly identify the parts of the Java class that are part of the abstract data type's spec, and the parts that are part of its representation, and the parts that are its implementation (i.e. method bodies) -->
 
-mitx:bbf9fdac6c944041872a369dc1f6623b Representations
-
-
-
-
 
 ## Interfaces
 
@@ -419,10 +414,6 @@ In other words, we don't implement an ADT multiple times just because we are cho
 Another reason to implement an interface multiple times might be that it is easy to build a simple implementation that you believe is correct, while you can work harder to build a fancier version that is more likely to contain bugs.
 You can choose implementations for applications based on how bad it would be to get bitten by a bug.
 
-
-mitx:18d6b518f69f490ba603569a5a4bd16d Interfaces
-
-
 ## Testing an Abstract Data Type
 
 We build a test suite for an abstract data type by creating tests for each of its operations.
@@ -500,9 +491,6 @@ Then a compact test suite that covers all these partitions might look like:
 ```
 
 Notice that each test case typically calls a few operations that *make* or *modify* objects of the type (creators, producers, mutators) and some operations that *inspect* objects of the type (observers).  As a result, each test case covers parts of several operations.
-
-
-mitx:ce46bb9d49de40c3a7a6b265fd774dc6 Testing
 
 
 ## Invariants
@@ -703,6 +691,7 @@ The risk of rep exposure makes the situation more complicated.  If the rep is ex
 3. no representation exposure occurs, 
 
 then the invariant is true of all instances of the abstract data type.
+
 
 ## Summary
 
