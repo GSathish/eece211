@@ -369,8 +369,8 @@ Following good practices, we first write the spec:
 
 ```java
 /**
- * Drop all subjects that are from Course 6. 
- * Modifies subjects list by removing subjects that start with 6.
+ * Drop all subjects that are from EECE.
+ * Modifies subjects list by removing subjects that start with EECE.
  * 
  * @param subjects list of UBC courses
  */
