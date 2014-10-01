@@ -1,7 +1,7 @@
----
+—
 layout: page
 title: Abstract Data Types
----
+—
 
 #### Objectives
 
@@ -124,9 +124,6 @@ These classes include `ArrayList` and `LinkedList`.
 This classification gives some useful terminology, but it's not perfect.
 In complicated data types, there may be an operation that is both a producer and a mutator, for example.
 Some people reserve the term *producer* only for operations that do no mutation.
-
-mitx:1315a3a555604a088dcc6eec45ce6fd1 Operations
-
 
 
 ## Designing an Abstract Type
