@@ -211,10 +211,13 @@ We'll come back to the question of testing ADTs in a later section of this readi
 
 For now, let's look at a simple representation for MyString: just an array of characters, exactly the length of the string (no extra room at the end).
 Here's how that internal representation would be declared, as an instance variable within the class:
+
 ```java
 private char[] a;
 ```
+
 With that choice of representation, the operations would be implemented in a straightforward way:
+
 ```java
 public static MyString valueOf(boolean b) {
     MyString s = new MyString();
@@ -239,12 +242,11 @@ public MyString substring (int start, int end) {
 }
 ```
 
-Question to ponder: Why don't `charAt` and `substring` have to check whether their parameters are within the valid range?  What do you think will happen if the client calls these implementations with illegal inputs?
+Question to ponder: Why don't `charAt( )` and `substring()` have to check whether their parameters are within the valid range?  What do you think will happen if the client calls these implementations with illegal inputs?
 
 One problem with this implementation is that it's passing up an opportunity for performance improvement.
-Because this data type is immutable, the `substring` operation doesn't really have to copy characters out into a fresh array.
-It could just point to the original MyString's character array and keep track of the start and end that the new substring object represents.
-The String implementation in some versions of Java do this.
+Because this data type is immutable, the `substring()` operation doesn't really have to copy characters out into a fresh array.
+It could just point to the original `MyString`'s character array and keep track of the start and end that the new substring object represents. The `String` implementation in some versions of Java do this.
 
 To implement this optimization, we could change the internal representation of this class to:
 
@@ -315,6 +317,7 @@ Java's collection classes provide a good example of the idea of separating inter
 
 ```java
 public interface Set<E> {
+  ...
 ```
 
 We can match Java interfaces with our classification of ADT operations, starting with a creator:
@@ -328,9 +331,7 @@ We can match Java interfaces with our classification of ADT operations, starting
     public static Set<E> make() { ... } 
 ```
 
-Unfortunately, Java interfaces are not allowed to have constructors, but (as of Java 8) they *are* allowed to contain static methods.
-So we can implement creator operations as static methods.
-This design pattern, using a static method as a creator instead of a constructor, is called a **factory method**.  The `MyString.valueOf` method we saw earlier is also a factory method.
+Unfortunately, Java interfaces are not allowed to have constructors, but (as of Java 8) they *are* allowed to contain static methods. So we can implement creator operations as static methods. This design pattern, using a static method as a creator instead of a constructor, is called a **factory method**.  The `MyString.valueOf( )` method we saw earlier is also a factory method.
 
 ```java
     // examples of observer methods
