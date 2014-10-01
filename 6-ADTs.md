@@ -660,10 +660,10 @@ An even better solution is to prefer immutable types. If we had used an immutabl
 
 The Java collections classes offer an interesting compromise: immutable wrappers.
 
-`Collections.unmodifiableList()` takes a (mutable) List and wraps it with an object that looks like a List, but whose mutators are disabled -- set(), add(), remove() throw exceptions.
+`Collections.unmodifiableList()` takes a (mutable) List and wraps it with an object that looks like a List, but whose mutators are disabled -- `set()`, `add()`, `remove()` throw exceptions.
 So you can construct a list using mutators, then seal it up in an unmodifiable wrapper (and throw away your reference to the original mutable list), and get an immutable list.
 
-The downside here is that you get immutability at runtime, but not at compile time. Java won't warn you at compile time if you try to sort() this unmodifiable list.  You'll just get an exception at runtime. But that's still better than nothing, so using unmodifiable lists, maps, and sets can be a very good way to reduce the risk of bugs.
+The downside here is that you get immutability at runtime, but not at compile time. Java won't warn you at compile time if you try to `sort()` this unmodifiable list.  You'll just get an exception at runtime. But that's still better than nothing, so using unmodifiable lists, maps, and sets can be a very good way to reduce the risk of bugs.
 
 ### How to Establish Invariants
 
