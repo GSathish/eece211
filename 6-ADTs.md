@@ -1,3 +1,8 @@
+---
+layout: page
+title: Abstract Data Types
+---
+
 #### Objectives
 
 This reading introduces the following key concepts:
