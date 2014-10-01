@@ -681,7 +681,7 @@ Translating this in terms of the types of ADT operations, this means:
 
 The risk of rep exposure makes the situation more complicated.  If the rep is exposed, then the object might be changed anywhere in the program, not just in the ADT's operations, and we can't guarantee that the invariant still holds after those arbitrary changes.  So the full rule for proving invariants is:
 
-**Structural induction**. If an invariant of an abstract data type is 
+**[Structural induction](http://en.wikipedia.org/wiki/Structural_induction)**. If an invariant of an abstract data type is 
 
 1. established by creators and producers; 
 2. preserved by mutators, and observers; and
