@@ -347,7 +347,7 @@ Most of `MyIterator`'s code refers to instance variables without an explicit `th
 
 Here's a instance diagram showing a typical state for a MyIterator object in action:
 
-<img src="figures/iterator.png" width="400"></img>
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Mutability/iterator.png" width="400"></img>
 
 Note that we drew the arrow from `list` with a double line, to indicate that it's *final*.
 That means the arrow can't change once it's drawn.
