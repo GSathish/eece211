@@ -5,7 +5,7 @@ title: Mutability and Immutability
 
 #### Objectives of Good Software Construction
 
-<table class="table table-striped no-markdown">
+<table>
 <tr><th width="33%">Safe from bugs</th><th>Easy to understand</th><th>Ready for change</th></tr>
 <tr><td>
   Correct today and correct in the unknown future.
