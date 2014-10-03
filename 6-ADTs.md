@@ -79,10 +79,10 @@ The `add()` method of `List`, for example, mutates a list by adding an element t
 
 We can summarize these distinctions schematically like this (explanation to follow):
 
-+ creator: t* &rarr; T 
-+ producer: T+, t* &rarr; T
-+ observer: T+, t* &rarr; t
-+ mutator: T+, t* &rarr; void|t|T
++ creator: t<sup>*</sup> &rarr; T 
++ producer: T<sup>+</sup>, t<sup>*</sup> &rarr; T
++ observer: T<sup>+</sup>, t<sup>*</sup> &rarr; t
++ mutator: T<sup>+</sup>, t<sup>*</sup> &rarr; void|t|T
 
 These show informally the shape of the signatures of operations in the various classes.
 Each `T` is the abstract type itself; each `t` is some other type.
