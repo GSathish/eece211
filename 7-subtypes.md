@@ -40,6 +40,7 @@ q = new LinkedList<Integer>( );
 ...
 
 ```
+
 In the example, `q` has declared type `Queue<Integer>` but its runtime type is `LinkedList<Integer>`. Java permits this because `LinkedList<Integer>` is a subtype of `Queue<Integer>`.
 
 In *Effective Java* by Joshua Bloch, *Item 16: Favor composition over inheritance*:
