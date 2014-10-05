@@ -21,15 +21,26 @@ So a *subtype* is simply a subset of the *supertype*.
 
 In terms of specifications, "every B object satisfies the specification for A."
 
+**Substitution principle**: Subtypes must be *substitutable* for their supertypes. In particular, a subtype must fulfill the same contract as its supertype, so that clients designed to work with the supertype can use the subtype objects safely.
+
 Subclassing, written with the *extends* keyword `class B `**`extends`**` A`, is one way to declare a subtyping relationship in Java. It is not the only way: other ways include implementing an `interface` (`class B implements A`) or one interface extending another (`interface B extends A`).
 
 ## Subclassing
 
 Whenever we declare that B is a subtype of A, the Java type system allows us to use a B object whenever an A object is expected.
 
-That is, when the [declared type][declared] of a variable or method parameter is A, the actual [runtime type][declared] can be B.
+That is, when the declared type of a variable or method parameter is A, the actual runtime type can be B.
 
-## Subclassing
+To understand the distinction between declared and runtime types, here is an example:
+```java
+
+Queue<Integer> q;
+...
+q = new LinkedList<Integer>( );
+...
+
+```
+In the example, `q` has declared type `Queue<Integer>` but its runtime type is `LinkedList<Integer>`. Java permits this because `LinkedList<Integer>` is a subtype of `Queue<Integer>`.
 
 In *Effective Java* by Joshua Bloch, *Item 16: Favor composition over inheritance*:
 
@@ -49,13 +60,13 @@ Bloch again:
 
 Let's look at several examples to see what can go wrong with careless subclassing.
 
-### Example from the Java library: java.util.Properties
+### Example from the Java library: `java.util.Properties`
 
 ```java
 public class Properties extends Hashtable {
 
     // Hashtable is an old library class that implements
-    // Map&lt;Object,Object>, so Properties inherits methods like:
+    // Map<Object,Object>, so Properties inherits methods like:
     public Object get(Object key) { ... }
     public void put(Object key, Object value) { ... }
 
@@ -72,17 +83,17 @@ public class Properties extends Hashtable {
 ```
 
 The [`Properties`](java:java/util/Properties) class represents a collection of `String` key/value pairs.
-It's a very old class in the Java library: it predates generics, which allow you to write `Map&lt;String,String>` and have the compiler check that all keys and values in the `Map` are `String`s.
+It's a very old class in the Java library: it predates generics, which allow you to write `Map<String,String>` and have the compiler check that all keys and values in the `Map` are `String`s.
 It even predates `Map`.
 
-But at the time, the implementor of `Properties` did have access to `Hashtable`, which in modern terms is a `Map&lt;Object,Object>`.
+But at the time, the implementor of `Properties` did have access to `Hashtable`, which in modern terms is a `Map<Object,Object>`.
 
 So `Properties` extends `Hashtable`, and provides the `getProperty(String)` and `setProperty(String, String)` methods shown above.
 What could go wrong?
 
 **Inherited superclass methods can break the subclass's rep invariant.**
 
-### Example: CountingList
+### Example: `CountingList`
 
 Let's suppose we have a program that uses an `ArrayList`.
 To tune the performance of our program, we'd like to query the `ArrayList` as to how many elements have been added since it was created.
@@ -92,7 +103,7 @@ To provide this functionality, we write an `ArrayList` variant called `CountingL
 The `ArrayList` class contains two methods capable of adding elements, `add` and `addAll`, so we override both of those methods:
 
 ```java
-public class CountingList&lt;E> extends ArrayList&lt;E> {
+public class CountingList<E> extends ArrayList<E> {
 
     // total number of elements ever added
     private int elementsAdded = 0;
@@ -115,13 +126,13 @@ What if `ArrayList.addAll` sometimes calls `add` *n* times, and sometimes does i
 
 **When a subclass overrides superclass methods, it may depend on how the superclass uses its own methods.**
 
-### Example: photo organizer
+### Example: Photo Organizer
 
 Here's version 1.0 of a class to store photo albums:
 
 ```java
 public class Album {
-    protected Set&lt;Photo> photos;
+    protected Set<Photo> photos;
     public void addNewPhoto(Photo photo) { photos.add(photo); }  
 }
 ```
@@ -141,8 +152,8 @@ It has a new version of the `Album` class:
 
 ```java
 public class Album { 
-    protected Set&lt;Photo> photos;
-    protected Map&lt;Person, Photo> photosContaining;
+    protected Set<Photo> photos;
+    protected Map<Person, Photo> photosContaining;
     // rep invariant: all Photos in the photosContaining map
     //                are also in the photos set
     // ...
@@ -158,8 +169,6 @@ The `MyAlbum` subclass breaks this new representation invariant.
 ### Substitution principle
 
 **Subtypes must be *substitutable* for their supertypes.**
-
-In particular, a subtype must fulfill the same contract as its supertype, so that clients designed to work with the supertype can use the subtype objects safely.
 
 The subtype must not surprise clients by failing to meet the guarantees made by the supertype specification (postconditions), and the subtype must not surprise clients by making stronger demands of them than the supertype does (preconditions).
 
@@ -196,12 +205,12 @@ public class MutableRational extends Rational {
 
 By making it a subclass, we've declared to Java that MutableRational is a subtype of Rational... but is MutableRational truly a subtype of Rational?
 
-**Clients that depend on the immutability of Rational may fail when given MutableRational values.**
+**Clients that depend on the immutability of `Rational` may fail when given `MutableRational` values.**
 For example, an immutable expression tree that contains Rational objects --- suddenly it's mutable.
 A function that memoizes previously-computed values in a HashMap --- suddenly those values are wrong.
 Multithreaded code that uses the same Rational values in different threads, as we'll see in a future class, is also in trouble.
 
-**MutableRational fails to meet guarantees made by Rational.**
+**`MutableRational` fails to meet guarantees made by `Rational`.**
 Specifically, the spec of Rational says that the value of objects will never change (immutability).
 The spec of MutableRational is *not* at least as strong as that of Rational.
 
@@ -232,27 +241,23 @@ public class BigInt extends BigNat {
 }
 ```
 
-BigInt just adds a sign big to BigNat.
-Makes sense, right?
-But is BigInt substitutable for BigNat?
+`BigInt` just adds a sign big to `BigNat`. Makes sense, right? But is `BigInt` substitutable for `BigNat`?
 
 **Abstractly, it doesn't make any sense.**
-We need to be able to say "every BigInt is a BigNat," but not every integer is a positive natural!
-The abstract type of BigInt is not a subset of the abstract type of BigNat.
-It's nonsense to declare BigInt a subtype of BigNat.
+We need to be able to say "every `BigInt` is a `BigNat`," but not every integer is a positive natural!
+The abstract type of `BigInt` is not a subset of the abstract type of `BigNat`. It's nonsense to declare `BigInt` a subtype of `BigNat`.
 
 **Practically, it's risky.**
-A function declared to take a BigNat parameter has an implicit precondition that the parameter is &geq; 0, since that's part of the spec of BigNat.
+A function declared to take a `BigNat` parameter has an implicit precondition that the parameter is &geq; 0, since that's part of the spec of `BigNat`.
 For example, we might declare
 
 ```java
     public double squareRoot(BigNat n);
 ```
 
-but now it can be passed a BigInt that represents a negative number.
-What will happen?
+but now it can be passed a `BigInt` that represents a negative number. What will happen?
 
-**BigInt fails to make guarantees made by BigNat.**
+**`BigInt` fails to make guarantees made by `BigNat`.**
 Specifically, that the value is not negative.
 Its spec is *not* at least as strong.
 
@@ -273,7 +278,7 @@ public class Square extends ImRectangle {
 ```
 
 But what about mutable square and mutable rectangle?
-Perhaps MutableRectangle has a method to set the size:
+Perhaps `MutableRectangle` has a method to set the size:
 
 ```java
 public class MutableRectangle {
@@ -286,19 +291,16 @@ public class MutableSquare extends MutableRectangle {
     // ...
 ```
 
-Let's consider our options for overriding `setSize` in MutableSquare:
+Let's consider our options for overriding `setSize` in `MutableSquare`:
 
-<ul>
-<li>
 ```java
 /** Sets all edges to given size.
  *  Requires w = h. */
 public void setSize(int w, int h) { ... }
 ```
 **No.**
-This stronger precondition violates the contract defined by Mutable&shy;Rectangle in the spec of `setSize`.
-</li>
-<li>
+This stronger precondition violates the contract defined by MutableRectangle in the spec of `setSize`.
+
 ```java
 /** Sets all edges to given size.
  *  Throws BadSizeException if w != h. */
@@ -306,8 +308,7 @@ void setSize(int w, int h) throws BadSizeException { ... }
 ```
 **No.**
 This weaker postcondition also violates the contract.
-</li>
-<li>
+
 ```java
 /** Sets all edges to given size. */
 void setSize(int side);
@@ -315,8 +316,6 @@ void setSize(int side);
 **No.**
 This *overloads* `setSize`, it doesn't override it.
 Clients can still break the rep invariant by calling the inherited 2-argument `setSize` method.
-</li>
-</ul>
 
 ### Declared subtypes must truly be subtypes
 
@@ -348,6 +347,7 @@ Here's Bloch's recommendation from *Item 16*:
 > The resulting class will be rock solid, with no dependencies on the implementation details of the existing class.
 
 The abstraction barrier between the two classes is preserved.
+
 **Favor composition over subclassing.**
 
 Let's apply this approach to the `Properties` class:
@@ -363,10 +363,10 @@ public class Properties {
 And to `CountingList`:
 
 <pre class="no-markdown">
-<code class="java"><strike>public class CountingList&lt;E> extends ArrayList&lt;E> { ... }</strike>
-public class CountingList&lt;E> implements List&lt;E> { 
-    private List&lt;E> list;
-    public CountingList&lt;E>(List&lt;E> list) { this.list = list; }
+<code class="java"><strike>public class CountingList<E> extends ArrayList<E> { ... }</strike>
+public class CountingList<E> implements List<E> { 
+    private List<E> list;
+    public CountingList<E>(List<E> list) { this.list = list; }
     // ...
 }
 </code></pre>
@@ -381,11 +381,11 @@ A wrapper works by taking an existing instance of the type whose behavior we wis
 So in `CountingList` we might see:
 
 ```java
-public class CountingList&lt;E> implements List&lt;E> { 
-    private List&lt;E> list;
+public class CountingList<E> implements List<E> { 
+    private List<E> list;
     private int elementsAdded = 0;
     
-    public CountingList&lt;E>(List&lt;E> list) { this.list = list; }
+    public CountingList<E>(List<E> list) { this.list = list; }
     
     public boolean add(E elt) {
         elementsAdded++;
@@ -408,184 +408,15 @@ public class CountingList&lt;E> implements List&lt;E> {
 
 You can find more discussion of how to design for subclassing in *Effective Java* under *Item 17: Design and document for inheritance or else prohibit it*.
 
-## Subclassing and equality
-
-We've already seen several ways that subclassing breaks encapsulation:
-
-+ Inherited superclass methods can break the subclass's rep invariant.
-+ When a subclass overrides superclass methods, it may depend on how the superclass uses its own methods.
-+ When a class is subclassed, either it must freeze its implementation forever, or all its subclasses must evolve with its implementation.
-
-Subclassing also causes problem for the definition of equality.
-
-Let's revisit [the `Duration` example][duration].
-Here's the code with equality and the Object contract implemented:
-
-```java
-public class Duration {
-    private final int mins;
-    private final int secs;
-    // rep invariant:
-    //    mins >= 0, secs >= 0
-    // abstraction function:
-    //    represents a span of time of mins minutes and secs seconds
-
-    /** Make a duration lasting for m minutes and s seconds.
-     *  Requires m >= 0, s >= 0. */
-    public Duration(int m, int s) {
-        mins = m; secs = s;
-    }
-    /** @return length of this duration in seconds */
-    public long getLength() {
-        return mins*60 + secs;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if ( ! (that instanceof Duration)) { return false; }
-        Duration thatDuration = (Duration)that;
-        return this.getLength() == thatDuration.getLength();
-    }
-
-    @Override
-    public int hashCode() {
-        return (int)getLength();
-    }
-}
-```
-
-Suppose we subclass `Duration` in order to represent durations with millisecond precision:
-
-```java
-public class PreciseDuration extends Duration {
-    private final int millisecs;
-    // rep invariant:
-    //    millisecs >= 0
-    
-    /** Make a duration lasting for m min, s sec, and ms millesec.
-     *  Requires m, s, ms >= 0. */
-    public PreciseDuration(int m, int s, int ms) {
-        super(m, s); 
-        millisecs = ms;
-    }
-    
-    /** @return length of this duration in milliseconds */
-    public long getMillisecs() {
-        return super.getLength() * 1000 + millisecs;
-    }
-}
-```
-
-First, let's review the problems we've already encountered and see if they apply:
-
-+ `PreciseDuration` cannot break `Duration`'s rep invariant, since the rep is private and immutable.
-  (Although notice that `Duration` does not defend itself with a call to `checkRep` in the constructor!)
-+ We are not overriding any superclass methods, which might cause our subclass to depend on the superclass method implementations.
-+ We may have a problem in the future if `Duration` evolves, so this code is less ready for change.
-  But for now, it seems to work.
-
-Our new problem: how should we define equality for `PreciseDuration`?
-
-**Can we simply use the `equals()` inherited from our superclass?**
-
-**No**, because it ignores the additional information in our subclass: milliseconds.
-A `PreciseDuration` of 0:30.0000 is equal to 0:30.8123.
-
-**Can we simply override `equals()` in the usual way?**
-For example:
-
-```java
-public class PreciseDuration {
-    // ...
-    @Override public boolean equals(Object that) {
-        if ( ! (that instanceof PreciseDuration)) { return false; }
-        PreciseDuration thatDuration = (PreciseDuration)that;
-        return this.getMillisecs() == thatDuration.getMillisecs();
-    }
-}
-```
-
-**No**, because it ignores the information from our superclass: minutes and seconds.
-A very short `PreciseDuration` of 0:00.8123 is equal to the half-hour-long 0:29.8123.
-
-The implementation is even more deeply flawed, which we'll see if we try to fix the bug...
-
-**Can we override `equals()` and also delegate to our superclass?**
-For example:
-
-```java
-public class PreciseDuration {
-    // ...
-    @Override public boolean equals(Object that) {
-        if ( ! (that instanceof PreciseDuration)) { return false; }
-        if ( ! super.equals(that)) { return false; }
-        PreciseDuration thatDuration = (PreciseDuration)that;
-        return this.getMillisecs() == thatDuration.getMillisecs();
-    }
-}
-```
-
-**No**, because it is not [symmetric]!
-Consider this example:
-
-```java
-Duration approx = new Duration(5, 30);
-Duration precise = new PreciseDuration(5, 30, 2123);
-
-/* 1 */ approx.equals(precise) &rarr; ???
-/* 2 */ precise.equals(approx) &rarr; ???
-```
-
-In (1) the `approx` instance has runtime type `Duration`, so we run `Duration.equals`, which *does not consider milliseconds*.
-
-But in (2), the `precise` instance has runtime type `PreciseDuration`, so we run `PreciseDuration.equals`, which *does consider milliseconds*.
-
-**Can we use the superclass definition of `equals` except for when we compare two `PreciseDuration` objects?**
-Here's the code:
-
-```java
-public class PreciseDuration extends Duration {
-    // ...
-    @Override public boolean equals(Object that) {
-        if ( ! (that instanceof PreciseDuration)) {
-            return super.equals(that);
-        }
-        PreciseDuration thatDuration = (PreciseDuration)that;
-        return this.getMillisecs() == thatDuration.getMillisecs();
-    }
-}
-```
-
-**No**, because this implementation is not transitive!
-Two different `PreciseDuration` objects can both be equal to the same `Duration` object, but not be equal to one another.
-
-**There is no really satisfactory solution.**
-
-The standard approach is that superclass equality should reject **all** subclass objects.
-So in `Duration`, instead of:
-
-```java
-if ( ! (that instanceof Duration)) { return false; }
-```
-
-we should use:
-
-```java
-if ( ! that.getClass().equals(this.getClass())) { return false; }
-```
-
-But this solution is inflexible --- for example, it doesn't permit a subclass that *doesn't* add any new abstract values.
-
-The better solution to this problem: **avoid subclassing, and use composition instead**.
-
 ## Interfaces and abstract classes
 
 Java has two mechanisms for defining a type that can have multiple different implementations: **interfaces** and **abstract classes**.
 An abstract class is a class that can only be subclassed, it cannot be instantiated.
+
 There are two differences between the two mechanisms:
 
 + Abstract classes can provide implementations for some instance methods, while interfaces cannot.
-  (New in Java 8 is a mechanism for providing "default" implementations of instance methods in interfaces, but this introduces a knot of tricky questions we'll leave aside.)
+  (New in Java 8 is a mechanism for providing "default" implementations of instance methods in interfaces, but this introduces a knot of tricky questions we'll skip over.)
 
 + To implement the type defined by abstract class `A`, class `B` *must* be a subclass of abstract class `A` (declared with `extends`).
   But *any* class that defines all of the required methods and follows the specification of interface `I` can be a subtype of `I` (declared with `implements`).
@@ -626,13 +457,13 @@ Bloch provides an excellent example:
 > }
 > ```
 
-A class `Troubadour` that `implements SingerSongwriter` must provide implementations of `sing`, `compose`, and `actSensitive`, and `Troubadour` instances can be used anywhere that code requires a `Singer` or a `Songwriter`.
+A class `Troubadour` that `implements` `SingerSongwriter` must provide implementations of `sing`, `compose`, and `actSensitive`, and `Troubadour` instances can be used anywhere that code requires a `Singer` or a `Songwriter`.
 
 If we are favoring interfaces over abstract classes, what should we do if we are defining a type that others will implement, and we want to provide code they can reuse?
 
 A good strategy is to define an abstract **skeletal implementation** that goes along with the interface.
 The type is still defined by the interface, but the skeletal implementation makes the type easier to implement.
-For example, the Java library includes a skeletal implementation for each of the major interfaces in the collections framework: [`Abstract&shy;List`](java:java/util/AbstractList) implements [`List`](java:java/util/List), [`Abstract&shy;Set`](java:java/util/AbstractSet) for [`Set`](java:java/util/Set), etc.
+For example, the Java library includes a skeletal implementation for each of the major interfaces in the collections framework: [`AbstractList`](java:java/util/AbstractList) implements [`List`](java:java/util/List), [`AbstractSet`](java:java/util/AbstractSet) for [`Set`](java:java/util/Set), etc.
 If you are implementing a new kind of `List` or `Set`, you may be able to subclass the appropriate skeletal implementation, saving yourself work and relying on well-tested library code instead.
 
 The skeletal implementation can also be combined with the [wrapper class pattern](#use_composition_rather_than_subclassing) described above.
@@ -645,11 +476,11 @@ The rest of the operations are implemented in the skeleton, written in terms of 
 For example, the Java [`Map`](java:java/util/Map) interface defines a number of different observers:
 
 ```java
-public interface Map&lt;K,V> {
+public interface Map<K,V> {
     public boolean containsKey(Object key);
     public boolean containsValue(Object value);
-    public Set&lt;K> keySet();
-    public Collection&lt;V> values();
+    public Set<K> keySet();
+    public Collection<V> values();
     // ...
 }
 ```
@@ -657,7 +488,7 @@ public interface Map&lt;K,V> {
 But all of these can be defined in terms of
 
 ```java
-    public Set&lt;Map.Entry&lt;K,V>> entrySet();
+    public Set<Map.Entry<K,V>> entrySet();
 ```
 
 which returns a set of [`Map.Entry`](java:java/util/Map.Entry) objects representing key/value pairs.
@@ -670,8 +501,8 @@ The documentation says:
 So:
 
 ```java
-public class MyMap&lt;K,V> extends AbstractMap&lt;K,V> {
-    public Set&lt;Map.Entry&lt;K,V>> entrySet() {
+public class MyMap<K,V> extends AbstractMap<K,V> {
+    public Set<Map.Entry<K,V>> entrySet() {
         // my code here to return a set of key/value pairs in the map
     }
     // ...
@@ -681,25 +512,25 @@ public class MyMap&lt;K,V> extends AbstractMap&lt;K,V> {
 And the skeletal implementation, written for us by the authors of `Map`, implements the other methods in terms of `entrySet`:
 
 ```java
-public class AbstractMap&lt;K,V> implements Map&lt;K,V> {
+public class AbstractMap<K,V> implements Map<K,V> {
     public boolean containsKey(Object key) {
         // simplified version, actual code must handle null :(
-        for (Map.Entry&lt;K,V> entry : this.entrySet()) {
+        for (Map.Entry<K,V> entry : this.entrySet()) {
             if (entry.getKey().equals(key)) { return true; }
         }
         return false;
     }
     public boolean containsValue(Object value) {
         // simplified version, actual code must handle null :(
-        for (Map.Entry&lt;K,V> entry : this.entrySet()) {
+        for (Map.Entry<K,V> entry : this.entrySet()) {
             if (entry.getValue().equals(value)) { return true; }
         }
         return false;
     }
-    public Set&lt;K> keySet() {
+    public Set<K> keySet() {
         // return a set of just the keys from this.entrySet()
     }
-    public Collection&lt;V> values() {
+    public Collection<V> values() {
         // return a collection of just the values from this.entrySet()
     }
     // ...
