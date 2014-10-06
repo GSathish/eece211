@@ -43,7 +43,7 @@ q = new LinkedList<Integer>( );
 
 In the example, `q` has declared type `Queue<Integer>` but its runtime type is `LinkedList<Integer>`. Java permits this because `LinkedList<Integer>` is a subtype of `Queue<Integer>`.
 
-In *Effective Java* by Joshua Bloch, *Item 16: Favor composition over inheritance*:
+In *Effective Java* by Joshua Bloch, *Item 16: Favour composition over inheritance*:
 
 > [Subclassing] is a powerful way to achieve code reuse, but it is not always the best tool for the job.
 > Used inappropriately, it leads to fragile software.
@@ -333,9 +333,9 @@ Bloch's advice in *Item 16*:
 > If you cannot answer yes to this question, B should not extend A.
 > If the answer is no, it is often the case that B should contain a private instance of A and expose a smaller and simpler API: A is not an essential part of B, merely a detail of its implementation.
 
-Even if the answer to this question is yes, you should carefully consider the use of `extends`, because --- as we saw in the example of `CountingList` --- the implementation of the subclass may not work due to unspecified behavior of the superclass.
+Even if the answer to this question is yes, you should carefully consider the use of `extends`, because --- as we saw in the example of `CountingList` --- the implementation of the subclass may not work due to unspecified behaviour of the superclass.
 In that example, the subclass's methods broke because the superclass's methods have an implicit dependence between them which is not in the superclass specification.
-Before using `extends`, you should be able to convince yourself that dependences amongst the superclass methods will not impact subclass behavior.
+Before using `extends`, you should be able to convince yourself that dependences amongst the superclass methods will not impact subclass behaviour.
 
 ## Use composition rather than subclassing
 
@@ -349,7 +349,7 @@ Here's Bloch's recommendation from *Item 16*:
 
 The abstraction barrier between the two classes is preserved.
 
-**Favor composition over subclassing.**
+**Favour composition over subclassing.**
 
 Let's apply this approach to the `Properties` class:
 
@@ -374,10 +374,10 @@ public class CountingList<E> implements List<E> {
 
 `CountingList` is an instance of the **wrapper pattern**:
 
-+ A wrapper modifies the behavior of another class without subclassing.
++ A wrapper modifies the behaviour of another class without subclassing.
 + It also decouples the wrapper from the specific class it wraps --- `CountingList` could wrap an `ArrayList`, `LinkedList`, even another `CountingList`.
 
-A wrapper works by taking an existing instance of the type whose behavior we wish to modify, then implementing the contract of that type by forwarding method calls to the provided instance, delegating the work.
+A wrapper works by taking an existing instance of the type whose behaviour we wish to modify, then implementing the contract of that type by forwarding method calls to the provided instance, delegating the work.
 
 So in `CountingList` we might see:
 
@@ -460,7 +460,7 @@ Bloch provides an excellent example:
 
 A class `Troubadour` that `implements` `SingerSongwriter` must provide implementations of `sing`, `compose`, and `actSensitive`, and `Troubadour` instances can be used anywhere that code requires a `Singer` or a `Songwriter`.
 
-If we are favoring interfaces over abstract classes, what should we do if we are defining a type that others will implement, and we want to provide code they can reuse?
+If we are favouring interfaces over abstract classes, what should we do if we are defining a type that others will implement, and we want to provide code they can reuse?
 
 A good strategy is to define an abstract **skeletal implementation** that goes along with the interface.
 The type is still defined by the interface, but the skeletal implementation makes the type easier to implement.
@@ -547,5 +547,5 @@ Equivalently, the specification of B must imply the specification of A.
 Preconditions of the subtype must be the same or weaker, and postconditions the same or stronger.
 Violating the substitution principle will yield code that doesn't make semantic sense and contains lurking bugs.
 
-Favor **composition** over inheritance from a superclass: the wrapper pattern is an alternative to subclassing that preserves encapsulation and avoids the problems we've seen in several examples.
+Favour **composition** over inheritance from a superclass: the wrapper pattern is an alternative to subclassing that preserves encapsulation and avoids the problems we've seen in several examples.
 Since subclassing creates tightly-coupled code that lacks strong barriers of encapsulation to separate super- from subclasses, composition is useful for writing code that is safer from bugs, easier to understand, and more ready for change.
