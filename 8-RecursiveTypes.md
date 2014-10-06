@@ -17,7 +17,7 @@ A recursive function is defined in terms of *base cases* and *recursive cases*.
 Consider writing a function to compute factorial.
 We can define factorial in two different ways:
 
-<table class="table" class="no-markdown">
+<table class="table">
 <thead>
 <tr><th width="50%">Product</th><th>Recurrence relation</th></tr>
 </thead>
