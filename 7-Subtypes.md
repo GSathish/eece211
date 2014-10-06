@@ -12,9 +12,7 @@ title: Subtypes
 ## Subtyping
 
 Recall that a *type* is a set of values --- a (potentially unbounded) set of possible primitive values or objects.
-If we think about all possible `List` values, some are `ArrayList`s and others are `LinkedList`s.
-Or if we think about all possible `ImList` values, some are type `Empty` and the rest are type `Cons`.
-So a *subtype* is simply a subset of the *supertype*.
+If we think about all possible `List` values, some are `ArrayList`s and others are `LinkedList`s. A *subtype* is simply a subset of the *supertype*.
 
 **"B is a subtype of A" means "every B object is also an A object."**
 
