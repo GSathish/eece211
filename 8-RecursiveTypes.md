@@ -14,26 +14,15 @@ A recursive function is defined in terms of *base cases* and *recursive cases*.
 + In a base case, we compute the result immediately given the inputs to the function call.
 + In a recursive case, we compute the result with the help of one or more *recursive calls* to this same function, but with the inputs somehow reduced in size or complexity, closer to a base case.
 
-Consider writing a function to compute factorial.
-We can define factorial in two different ways:
+Consider writing a function to compute factorial. We can define factorial in two different ways.
 
-<table class="table">
-<thead>
-<tr><th width="50%">Product</th><th>Recurrence relation</th></tr>
-</thead>
-<tr>
-<td><img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294"><br>(where the empty product equals<br>&nbsp;multiplicative identity *1*)</td>
-<td><img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-recurrence.png" width="232"></td>
-</tr>
-</table>
-which leads to two different implementations:
-<table class="table">
-<thead class="no-markdown">
-<tr><th width="50%">Iterative</th><th>Recursive</th></tr>
-</thead>
-<tr>
-<td>
+The first approach is to use the product form.
 
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" />
+
+(where the empty product equals the multiplicative identity *1*)
+
+This leads to the following implementation:
 
 ```java
 static long factorial(int n) {
@@ -44,8 +33,12 @@ static long factorial(int n) {
   return fact;
 }
 ```
-</td>
-<td>
+
+The alternative approach uses the recurrence for computing factorials.
+
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-recurrence.png" width="294" />
+
+This leads to the following implementation:
 
 ```java
 static long factorial(int n) {
@@ -57,9 +50,6 @@ static long factorial(int n) {
   }
 }
 ```
-
-</td>
-</tr></table></div>
 
 In the recursive implementation on the right, the base case is *n = 0*, where we compute and return the result immediately: *0!* is defined to be *1*. The recursive case is *n > 0*, where we compute the result with the help of a recursive call to obtain *(n-1)!*, then complete the computation by multiplying by *n*.
 
