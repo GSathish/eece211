@@ -34,6 +34,7 @@ which leads to two different implementations:
 <tr>
 <td>
 
+
 ```java
 static long factorial(int n) {
   long fact = 1;
