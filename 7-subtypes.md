@@ -32,6 +32,7 @@ Whenever we declare that B is a subtype of A, the Java type system allows us to 
 That is, when the declared type of a variable or method parameter is A, the actual runtime type can be B.
 
 To understand the distinction between declared and runtime types, here is an example:
+
 ```java
 
 Queue<Integer> q;
