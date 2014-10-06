@@ -204,22 +204,22 @@ public class MutableRational extends Rational {
 }
 ```
 
-By making it a subclass, we've declared to Java that MutableRational is a subtype of Rational... but is MutableRational truly a subtype of Rational?
+By making it a subclass, we've declared to Java that `MutableRational` is a subtype of `Rational`... but is `MutableRational` truly a subtype of `Rational`?
 
 **Clients that depend on the immutability of `Rational` may fail when given `MutableRational` values.**
 For example, an immutable expression tree that contains Rational objects --- suddenly it's mutable.
 A function that memoizes previously-computed values in a HashMap --- suddenly those values are wrong.
-Multithreaded code that uses the same Rational values in different threads, as we'll see in a future class, is also in trouble.
+Multithreaded code that uses the same `Rational` values in different threads, as we'll see in a future class, is also in trouble.
 
 **`MutableRational` fails to meet guarantees made by `Rational`.**
-Specifically, the spec of Rational says that the value of objects will never change (immutability).
-The spec of MutableRational is *not* at least as strong as that of Rational.
+Specifically, the spec of `Rational` says that the value of objects will never change (immutability).
+The spec of `MutableRational` is *not* at least as strong as that of `Rational`.
 
 In general, **mutable counterparts of immutable classes should not be declared as subtypes.**
-If you want a mutable rational class (perhaps for performance reasons), then it should not be a subtype of Rational.
+If you want a mutable rational class (perhaps for performance reasons), then it should not be a subtype of `Rational`.
 [String](java:java/lang/String) and [StringBuilder](java:java/util/StringBuilder) (and [StringBuffer](java:java/util/StringBuffer), which is safe for multiple threads) offer an example of how to do it right.
 The mutable types are not subtypes.
-Instead, they provide operations to create a mutable StringBuilder/Buffer from an immutable String, mutate the text, and then retrieve a new String.
+Instead, they provide operations to create a mutable StringBuilder/Buffer from an immutable `String`, mutate the text, and then retrieve a new `String`.
 
 ### Violating the substitution principle: adding values
 
