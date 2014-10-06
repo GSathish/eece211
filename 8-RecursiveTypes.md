@@ -156,8 +156,6 @@ Especially for a function with multiple base cases (consider a recursive [Fibona
 And when you write your recursive calls, you must make sure that you will eventually reduce the problem down to a base case!
 Otherwise, you will recurse until the program runs out of memory for the stack and triggers a [`Stack&shy;Overflow&shy;Error`](java:java/lang/StackOverflowError) (or an [`OutOf&shy;Memory&shy;Error`](java:java/lang/OutOfMemoryError) if the program runs out of heap memory before it runs out of stack depth).
 
-mitx:0896b0fa818b4227a3e62ab997be3662 Recursive functions (note: this exercise asks you to write some code)
-
 ## Immutable lists
 
 We'll start with a classic recursive datatype, the *immutable list*.
@@ -337,7 +335,6 @@ Note that this design is different from what we have seen with `List`, `ArrayLis
 
 For `ImList`, the two implementations `Empty` and `Cons` *cooperate* in order to implement the datatype --- you need them both.
 
-mitx:28db5edea3474607821c0c295d35f3a2 Immutable lists
 
 ## Recursive datatype definitions
 
@@ -368,7 +365,6 @@ Another example is a binary tree:
 
 We'll see more examples below.
 
-mitx:e513dad6f1f1486285e0ee43839fc15c Recursive datatype definitions
 
 ## Functions over recursive datatypes
 
@@ -451,7 +447,6 @@ Let's try a few more examples:
 For *reverse*, it turns out that the recursive definition produces a pretty bad implementation in Java, with performance that's quadratic in the length of the list you're reversing.
 We can rewrite that better using an iterative approach.
 
-mitx:6d14aeef1a274aa3a3cdee8fa30b01a6 Functions over recursive datatypes
 
 ## Tuning the rep
 
@@ -539,7 +534,6 @@ For example, `new String()` makes an object whose actual type is `String`.
 `new Empty()` makes an object whose actual type is `Empty`.
 `new ImList()` is forbidden by Java, because `ImList` is an interface --- it has no object values of its own, and no constructors.
 
-mitx:47b6c86ecbdc49fc88f1df430f30369e Declared vs. actual types
 
 ## Another example: Boolean formulas
 
@@ -626,7 +620,6 @@ Finally, *satisfiable*, with one more helper function:
 > **satisfiable : Formula &rarr; Boolean**  
 > satisfiable(f) = evalVars(variables(f), Empty, f)
 
-mitx:c0e8dea3fe4f4416a35cba5bc298fe47 Boolean formulas
 
 ### Backtracking search with immutability
 
