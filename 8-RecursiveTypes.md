@@ -225,19 +225,19 @@ Further discussion of Java generics is a topic for another time.
 
 Now that we have all the operations, here's some actual Java code that parallels the abstract examples we wrote earlier:
 
-| Java syntax | Functional syntax | Result | Instance diagram | 
+| Java syntax | Functional syntax | Result | 
 |------|------|------|------|
-| `ImList<Integer> nil = ImList.empty();` | *nil = empty()* | [ ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist0.png" width = 200 /> |
-| `nil.cons(0)` | *cons(0, nil)* | [ 0 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist1.png" width = 200 /> |
-| `nil.cons(2).cons(1).cons(0)` | *cons(0, cons(1, cons(2, nil)))* | [ 0, 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist2.png" width = 200 /> |
-| `ImList<Integer> x = nil.cons(2).cons(1).cons(0);` | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist3.png" width = 200 /> |
-| `x.first()`               | *first(x)*             | 0        | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist4.png" width = 200 /> |
-| `x.rest()`                | *rest(x)*              | [ 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist5.png" width = 200 /> |
-| `x.rest().first()`        | *first(rest(x))*       | 1        | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist6.png" width = 200 /> |
-| `x.rest().rest()`         | *rest(rest(x))*        | [ 2 ]    | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist7.png" width = 200 /> |
-| `x.rest().rest().first()` | *first(rest(rest(x)))* | 2        |<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist8.png" width = 200 /> |
-| `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist9.png" width = 200 /> |
-| `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist10.png" width = 200 /> |
+| [`ImList<Integer> nil = ImList.empty();`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist0.png) | *nil = empty()* | [ ] }
+| [`nil.cons(0)`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist1.png) | *cons(0, nil)* | [ 0 ] |
+| [`nil.cons(2).cons(1).cons(0)`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist2.png) | *cons(0, cons(1, cons(2, nil)))* | [ 0, 1, 2 ] | 
+| [`ImList<Integer> x = nil.cons(2).cons(1).cons(0);`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist3.png) | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] | 
+| [`x.first()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist4.png)               | *first(x)*             | 0        | 
+| [`x.rest()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist5.png)                | *rest(x)*              | [ 1, 2 ] | 
+| [`x.rest().first()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist6.png)        | *first(rest(x))*       | 1        | 
+| [`x.rest().rest()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist7.png)         | *rest(rest(x))*        | [ 2 ]   
+| [`x.rest().rest().first()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist8.png) | *first(rest(rest(x)))* | 2        |
+| [`x.rest().rest().rest()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist9.png)  | *rest(rest(rest(x)))*  | [ ]      |
+| [`ImList<Integer> y = x.rest().cons(4);`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist10.png) | *y = cons(4, rest(x))* | [ 4, 1, 2 ] | 
 
 (Click on the instance diagrams to see an enlarged view.)
 
