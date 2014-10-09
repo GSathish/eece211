@@ -23,9 +23,7 @@ Consider writing a function to compute factorial. We can define factorial in two
 
 The first approach is to use the product form.
 
-&nbsp;<br />
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" float="left"></img>
-&nbsp;<br />
 
 (where the empty product equals the multiplicative identity *1*)
 
