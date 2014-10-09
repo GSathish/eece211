@@ -231,7 +231,7 @@ Now that we have all the operations, here's some actual Java code that parallels
 | `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |
 | `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] |
 
-Hover or tap on each row above for a snapshot diagram:
+Hover or tap on each row above for instance diagrams.
 
 <div class="panel panel-figure inline-figure hover-figure no-markdown col-sm-12 col-lg-10" data-selector="#imlist-examples + table tr" data-target="img" data-attr="src" data-template="figures/imlist{index}.png"><img></img></div>
 
