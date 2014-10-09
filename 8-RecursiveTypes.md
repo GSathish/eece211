@@ -24,7 +24,7 @@ Consider writing a function to compute factorial. We can define factorial in two
 The first approach is to use the product form.
 
 &nbsp;<br />
-<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" />
+<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" float="left" />
 &nbsp;<br />
 
 (where the empty product equals the multiplicative identity *1*)
@@ -239,7 +239,7 @@ Now that we have all the operations, here's some actual Java code that parallels
 | [`x.rest().rest().rest()`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist9.png)  | *rest(rest(rest(x)))*  | [ ]      |
 | [`ImList<Integer> y = x.rest().cons(4);`](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist10.png) | *y = cons(4, rest(x))* | [ 4, 1, 2 ] | 
 
-(Click on the instance diagrams to see an enlarged view.)
+(Click on the Java syntax to see instance diagrams.)
 
 The key thing to note here is the *sharing of structure* that immutable list provides.
 
