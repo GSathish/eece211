@@ -40,10 +40,7 @@ static long factorial(int n) {
 ```
 
 The alternative approach uses the recurrence for computing factorials.
-
-&nbsp;<br />
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-recurrence.png" width="294" />
-&nbsp;<br />
 
 This leads to the following implementation:
 
