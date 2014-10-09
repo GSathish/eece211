@@ -12,7 +12,7 @@ title: Recursive Types
 
 ## Recursive functions
 
-Before we introduce recursive datatypes -- which have a recursive structure of both data and computation -- let's review recursive computations, which you should already be familiar with.
+Before we introduce recursive datatypes -- which have a recursive structure of both data and computation -- let's review recursive computations.
 
 A recursive function is defined in terms of *base cases* and *recursive cases*.
 
