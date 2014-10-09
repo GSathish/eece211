@@ -23,9 +23,9 @@ Consider writing a function to compute factorial. We can define factorial in two
 
 The first approach is to use the product form.
 
-<div>
+<p>
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" />
-</div>
+</p>
 
 (where the empty product equals the multiplicative identity *1*)
 
@@ -43,9 +43,9 @@ static long factorial(int n) {
 
 The alternative approach uses the recurrence for computing factorials.
 
-<div>
+<p>
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-recurrence.png" width="294" />
-</div>
+</p>
 
 This leads to the following implementation:
 
