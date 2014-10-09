@@ -217,19 +217,19 @@ Further discussion of Java generics is a topic for another time.
 Now that we have all the operations, here's some actual Java code that parallels the abstract examples we wrote earlier:
 
 <div id="imlist-examples"></div>
-| Java syntax | Functional syntax | Result |
-|------|------|------|
-| `ImList<Integer> nil = ImList.empty();` | *nil = empty()* | [ ] |
-| `nil.cons(0)` | *cons(0, nil)* | [ 0 ] |
-| `nil.cons(2).cons(1).cons(0)` | *cons(0, cons(1, cons(2, nil)))* | [ 0, 1, 2 ] |
-| `ImList<Integer> x = nil.cons(2).cons(1).cons(0);` | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] |
-| `x.first()`               | *first(x)*             | 0        |
-| `x.rest()`                | *rest(x)*              | [ 1, 2 ] |
-| `x.rest().first()`        | *first(rest(x))*       | 1        |
-| `x.rest().rest()`         | *rest(rest(x))*        | [ 2 ]    |
-| `x.rest().rest().first()` | *first(rest(rest(x)))* | 2        |
-| `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |
-| `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] |
+| Java syntax | Functional syntax | Result | Instance Diagram | 
+|------|------|------|------|
+| `ImList<Integer> nil = ImList.empty();` | *nil = empty()* | [ ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist0.png" width = 300 /> |
+| `nil.cons(0)` | *cons(0, nil)* | [ 0 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist1.png" width = 300 /> |
+| `nil.cons(2).cons(1).cons(0)` | *cons(0, cons(1, cons(2, nil)))* | [ 0, 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist2.png" width = 300 /> |
+| `ImList<Integer> x = nil.cons(2).cons(1).cons(0);` | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist3.png" width = 300 /> |
+| `x.first()`               | *first(x)*             | 0        | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist4.png" width = 300 /> |
+| `x.rest()`                | *rest(x)*              | [ 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist5.png" width = 300 /> |
+| `x.rest().first()`        | *first(rest(x))*       | 1        | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist6.png" width = 300 /> |
+| `x.rest().rest()`         | *rest(rest(x))*        | [ 2 ]    | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist7.png" width = 300 /> |
+| `x.rest().rest().first()` | *first(rest(rest(x)))* | 2        |<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist8.png" width = 300 /> |
+| `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist9.png" width = 300 /> |
+| `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist10.png" width = 300 /> |
 
 Hover or tap on each row above for instance diagrams.
 
