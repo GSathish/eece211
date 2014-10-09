@@ -231,9 +231,7 @@ Now that we have all the operations, here's some actual Java code that parallels
 | `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |<img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist9.png" width = 300 /> |
 | `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist10.png" width = 300 /> |
 
-Hover or tap on each row above for instance diagrams.
-
-<div class="panel panel-figure inline-figure hover-figure no-markdown col-sm-12 col-lg-10" data-selector="#imlist-examples + table tr" data-target="img" data-attr="src" data-template="figures/imlist{index}.png"><img></img></div>
+(Click on the instance diagrams to see an enlarged view.)
 
 The key thing to note here is the *sharing of structure* that immutable list provides.
 
@@ -355,53 +353,6 @@ Let's try a few more examples:
 
 For *reverse*, it turns out that the recursive definition produces a pretty bad implementation in Java, with performance that's quadratic in the length of the list you're reversing.
 We can rewrite that better using an iterative approach.
-
-
-## Tuning the rep
-
-Getting the size of a list is a common operation.
-Right now our implementation of `size()` takes *O(n)* time, where *n* is the length of the list --- that's linear in the number of list items.
-We can make it better with a simple change to the rep of the list that caches the size the first time we compute it, so that subsequently it costs only *O(1)* time --- constant time, independent of the number of list items --- to get:
-
-```java
-public class Cons<E> implements ImList<E> {
-    private final E e;
-    private final ImList<E> rest;
-    private int size = 0;
-    // rep invariant:
-    //   e != null, rest != null
-    //   size > 0 implies size == 1+rest.size()
-    
-    // ...
-    public int size() { 
-        if (size == 0) size = 1 + rest.size();
-        return size;
-    }
-}
-```
-
-Note that we're using the special value 0 (which can never be the size of a `Cons`) to indicate that we haven't computed the size yet.
-Note also that this change introduces a new clause to the rep invariant, relating the `size` field to the `rest` field.
-
-There's something interesting happening here: this is an immutable datatype, and yet it has a mutable rep.
-It's modifying its own size field, in this case to cache the result of an expensive operation.
-This is an example of a **beneficient mutation**, a state change that doesn't change the abstract value represented by the object, so the type is still immutable.
-
-### Rep independence and rep exposure revisited
-
-Does our Java implementation of `ImList` still have rep independence?
-We've concealed the `Empty` contructor behind the static method `ImList.empty()`, and clients should never need to use the `Empty` or `Cons` constructors directly.
-We can hide them further by making them package-private (declared with neither the `public` nor `private` keyword) so that classes outside of `ImList`'s package cannot see or use them.
-
-We have a great deal of freedom to change our implementation --- indeed, we just added a `size` field to the internal rep of `Cons`.
-We could even have an extra array in there to make `get()` run fast!
-This might get expensive in space, however, but we are free to make those tradeoffs.
-
-Is there rep exposure because `Cons.rest()` returns a reference to its internal list?
-Could a clumsy client add elements to the rest of the list?
-If so, this would threaten two of `Cons`'s invariants: that it's immutable, and that the cached size is always correct.
-But there's no risk of rep exposure, because the internal list is immutable.
-Nobody can threaten the rep invariant of `Cons`.
 
 ## Null vs. empty
 
