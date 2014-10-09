@@ -27,7 +27,7 @@ This leads to the following implementation:
 ```java
 static long factorial(int n) {
   long fact = 1;
-  for (int i = 1; i &lt;= n; i++) {
+  for (int i = 1; i <= n; i++) {
     fact = fact * i;
   }
   return fact;
@@ -53,21 +53,10 @@ static long factorial(int n) {
 
 In the recursive implementation on the right, the base case is *n = 0*, where we compute and return the result immediately: *0!* is defined to be *1*. The recursive case is *n > 0*, where we compute the result with the help of a recursive call to obtain *(n-1)!*, then complete the computation by multiplying by *n*.
 
-To visualize the execution of a recursive function, it is helpful to diagram the *call stack* of currently-executing functions as the computation proceeds (in the code, we've assigned the result of the recursive call to temporary variable `r` to assist with this visualization).
-Let's run a main method:
-
-```java
-public static void main(String[] args) {
-    long x = factorial(3);
-}
-```
-
-In the diagram, we can see how the stack grows as `main` calls `factorial` and `factorial` then calls *itself*, until `factorial(0)` does not make a recursive call.
-Then the call stack unwinds, each call to `factorial` returning its answer to the caller (where it is assigned to `r`), until `factorial(3)` returns to `main` (where the answer is assigned to `x`).
+To visualize the execution of a recursive function, it is helpful to diagram the *call stack* of currently-executing functions as the computation proceeds.
 
 [Here's an **interactive visualization for a Python version of `factorial`**](http://www.pythontutor.com/visualize.html#code=def+factorial(n)%3A%0A++++if+n+%3D%3D+0%3A%0A++++++++return+1%0A++++else%3A%0A++++++++r+%3D+factorial(n-1)%0A++++++++return+n+*+r%0A%0Ax+%3D+factorial(3)%0A&mode=display&origin=opt-frontend.js&cumulative=false&heapPrimitives=false&drawParentPointers=false&textReferences=false&showOnlyOutputs=false&py=2&rawInputLstJSON=%5B%5D&curInstr=1).
-You can step through the computation to see the recursion in action.
-New stack frames grow down instead of up in this visualization.
+You can step through the computation to see the recursion in action. New stack frames grow down instead of up in this visualization.
 
 Decomposing a problem into a recursive function often results in a compact, elegant implementation that neatly captures the structure of the problem.
 Because the runtime itself (the JVM) does most of the bookkeeping for us --- keeping track of temporary results, then resuming each level of the recursion when the next deeper level completes --- the code is often drastically simpler than an iterative version.
@@ -76,7 +65,7 @@ We'll look at an example of this in the exercises.
 Whenever you write a recursive function, pay attention to your base cases: what are they, and are you sure you'll get there?
 Especially for a function with multiple base cases (consider a recursive [Fibonacci](http://en.wikipedia.org/wiki/Fibonacci_number) function), it's easy to omit one.
 And when you write your recursive calls, you must make sure that you will eventually reduce the problem down to a base case!
-Otherwise, you will recurse until the program runs out of memory for the stack and triggers a [`Stack&shy;Overflow&shy;Error`](java:java/lang/StackOverflowError) (or an [`OutOf&shy;Memory&shy;Error`](java:java/lang/OutOfMemoryError) if the program runs out of heap memory before it runs out of stack depth).
+Otherwise, you will recurse until the program runs out of memory for the stack and triggers a [`StackOverflowError`](java:java/lang/StackOverflowError) (or an [`OutOfMemoryError`](java:java/lang/OutOfMemoryError) if the program runs out of heap memory before it runs out of stack depth).
 
 ## Immutable lists
 
@@ -86,7 +75,7 @@ Immutability is powerful not just because of its safety, but also because of the
 Sharing actually produces performance benefits: less memory consumed, less time spent copying.
 Here we're going to look at how to represent list data structures differently than in our familiar array lists or linked lists. 
 
-Let's define a data type for an immutable list, `ImList&lt;E>`.
+Let's define a data type for an immutable list, `ImList<E>`.
 The data type has four fundamental operations:
 
 <table class="table table-condensed no-markdown">
@@ -141,11 +130,11 @@ What *cons* puts together, *first* and *rest* peel back apart.
 To implement this datatype in Java, we'll use an interface:
 
 ```java
-public interface ImList&lt;E> {
-    // TODO: ImList&lt;E> empty()
-    public ImList&lt;E> cons(E e);
+public interface ImList<E> {
+    // TODO: ImList<E> empty()
+    public ImList<E> cons(E e);
     public E first();
-    public ImList&lt;E> rest();
+    public ImList<E> rest();
 }
 ```
 
@@ -153,43 +142,43 @@ and we'll write two classes that implement it.
 `Empty` represents the result of the *empty* operation (an empty list), and `Cons` represents the result of a *cons* operation (an element glued together with another list):
 
 ```java
-public class Empty&lt;E> implements ImList&lt;E> {
+public class Empty<E> implements ImList<E> {
     public Empty() {
     }
-    public ImList&lt;E> cons(E e) {
-        return new Cons&lt;E>(e, this);
+    public ImList<E> cons(E e) {
+        return new Cons<E>(e, this);
     }
     public E first() {
         throw new UnsupportedOperationException();
     }
-    public ImList&lt;E> rest() {
+    public ImList<E> rest() {
         throw new UnsupportedOperationException();
     }
 }
 ```
 
 ```java
-public class Cons&lt;E> implements ImList&lt;E> {
+public class Cons<E> implements ImList<E> {
     private E e;
-    private ImList&lt;E> rest;
+    private ImList<E> rest;
 
-    public Cons(E e, ImList&lt;E> rest) {
+    public Cons(E e, ImList<E> rest) {
         this.e = e;
         this.rest = rest;
     }
-    public ImList&lt;E> cons(E e) {
-        return new Cons&lt;E> (e, this);
+    public ImList<E> cons(E e) {
+        return new Cons<E> (e, this);
     }
     public E first() {
         return e;
     }
-    public ImList&lt;E> rest() {
+    public ImList<E> rest() {
         return rest;
     }
 }
 ```
 
-Note: our interface declares a *generic type* `ImList&lt;E>` that can be instantiated for any type `E`: `ImList&lt;Integer>`, `ImList&lt;String>`, etc.
+Note: our interface declares a *generic type* `ImList<E>` that can be instantiated for any type `E`: `ImList<Integer>`, `ImList<String>`, etc.
 The `E` in these declarations acts as a placeholder that the compiler will fill in when it checks our code for type safety.
 
 So we have methods for *cons*, *first*, and *rest*, but where is the fourth operation of our datatype, *empty*?
@@ -203,50 +192,48 @@ This choice was *not possible* in previous versions of Java: no method bodies we
 Under that restriction, we would have implemented *empty* with `new Empty()`.
 You can see this choice in action with code like:
 
-    List&lt;String> z = new ArrayList&lt;>();
+    List<String> z = new ArrayList<>();
 
 Perhaps someday Java will offer a `List.empty()` method to obtain new empty `List`s... but not today.
 
 We will go ahead and update our `ImList` interface with the static `empty` method:
 
 ```java
-public interface ImList&lt;E> {
-    public static &lt;E> ImList&lt;E> empty() {
-        return new Empty&lt;>();
+public interface ImList<E> {
+    public static <E> ImList<E> empty() {
+        return new Empty<>();
     }
-    public ImList&lt;E> cons(E e);
+    public ImList<E> cons(E e);
     public E first();
-    public ImList&lt;E> rest();
+    public ImList<E> rest();
 }
 ```
 
 Note: the type signature for `empty` uses another bit of new generic type syntax.
-The `E` in `ImList&lt;E>` is a placeholder for the type of elements in an instance of `ImList`, but `empty` is a static method: it cannot see instance variables or methods, and it also cannot see the instance type parameter.
-You can read the declaration of `empty` as: "for any `E`, `empty()` returns an `ImList&lt;E>`."
+The `E` in `ImList<E>` is a placeholder for the type of elements in an instance of `ImList`, but `empty` is a static method: it cannot see instance variables or methods, and it also cannot see the instance type parameter.
+You can read the declaration of `empty` as: "for any `E`, `empty()` returns an `ImList<E>`."
 Further discussion of Java generics is a topic for another time.
 
 Now that we have all the operations, here's some actual Java code that parallels the abstract examples we wrote earlier:
 
 <div id="imlist-examples"></div>
 | Java syntax | Functional syntax | Result |
-|--|--|--|
-| `ImList&lt;Integer> nil = ImList.empty();` | *nil = empty()* | [ ] |
+|------|------|------|
+| `ImList<Integer> nil = ImList.empty();` | *nil = empty()* | [ ] |
 | `nil.cons(0)` | *cons(0, nil)* | [ 0 ] |
 | `nil.cons(2).cons(1).cons(0)` | *cons(0, cons(1, cons(2, nil)))* | [ 0, 1, 2 ] |
-| `ImList&lt;Integer> x = nil.cons(2).cons(1).cons(0);` | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] |
+| `ImList<Integer> x = nil.cons(2).cons(1).cons(0);` | *x&nbsp;=&nbsp;cons(0,&nbsp;cons(1,&nbsp;cons(2,&nbsp;nil)))* | [&nbsp;0,&nbsp;1,&nbsp;2&nbsp;] |
 | `x.first()`               | *first(x)*             | 0        |
 | `x.rest()`                | *rest(x)*              | [ 1, 2 ] |
 | `x.rest().first()`        | *first(rest(x))*       | 1        |
 | `x.rest().rest()`         | *rest(rest(x))*        | [ 2 ]    |
 | `x.rest().rest().first()` | *first(rest(rest(x)))* | 2        |
 | `x.rest().rest().rest()`  | *rest(rest(rest(x)))*  | [ ]      |
-| `ImList&lt;Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] |
+| `ImList<Integer> y = x.rest().cons(4);` | *y = cons(4, rest(x))* | [ 4, 1, 2 ] |
 
 Hover or tap on each row above for a snapshot diagram:
 
 <div class="panel panel-figure inline-figure hover-figure no-markdown col-sm-12 col-lg-10" data-selector="#imlist-examples + table tr" data-target="img" data-attr="src" data-template="figures/imlist{index}.png"><img></img></div>
-
-<span class="clearfix"></span>
 
 The key thing to note here is the *sharing of structure* that immutable list provides.
 
@@ -265,7 +252,7 @@ The abstract data type `ImList`, and its two concrete classes `Empty` and `Cons`
 
 To make this fact clearly visible, we'll write a **datatype definition**:
 
-    ImList&lt;E> = Empty + Cons(first:E, rest:ImList)
+    ImList<E> = Empty + Cons(first:E, rest:ImList)
 
 This is a recursive definition of `ImList` as a set of values.
 Read it like this: the set `ImList` consists of values formed in two ways: either by the `Empty` constructor, or by applying the `Cons` constructor to an element and an `ImList`.
@@ -283,7 +270,7 @@ Formally, a datatype definition has:
 
 Another example is a binary tree:
 
-    Tree&lt;E> = Empty + Node(e:E, left:Tree, right:Tree)
+    Tree<E> = Empty + Node(e:E, left:Tree, right:Tree)
 
 We'll see more examples below.
 
@@ -315,17 +302,17 @@ We can think about the execution of *size* on a particular list as a series of r
 And the cases from the definition can be translated directly into Java as methods in `ImList`, `Empty`, and `Cons`:
 
 ```java
-public interface ImList&lt;E> {
+public interface ImList<E> {
     // ...
     public int size();
 }
 
-public class Empty&lt;E> implements ImList&lt;E> {
+public class Empty<E> implements ImList<E> {
     // ...
     public int size() { return 0; }
 }
 
-public class Cons&lt;E> implements ImList&lt;E> {
+public class Cons<E> implements ImList<E> {
     // ...
     public int size() { return 1 + rest.size(); }
 }
@@ -377,9 +364,9 @@ Right now our implementation of `size()` takes *O(n)* time, where *n* is the len
 We can make it better with a simple change to the rep of the list that caches the size the first time we compute it, so that subsequently it costs only *O(1)* time --- constant time, independent of the number of list items --- to get:
 
 ```java
-public class Cons&lt;E> implements ImList&lt;E> {
+public class Cons<E> implements ImList<E> {
     private final E e;
-    private final ImList&lt;E> rest;
+    private final ImList<E> rest;
     private int size = 0;
     // rep invariant:
     //   e != null, rest != null
@@ -489,14 +476,14 @@ There is a simple but slow algorithm for checking satisfiability:
 
 A few functions will be useful to implement the above pseudocode:
 
-> variables : Formula &rarr; Set&lt;&zwj;Variable>  
+> variables : Formula &rarr; Set<&zwj;Variable>  
 > evaluate : Formula &times; Environment &rarr; Boolean  
 > satisfiable : Formula &rarr; Boolean
 
 And here are definitions of the datatypes we've mentioned above:
 
-> Set&lt;&zwj;T> = ImList&lt;&zwj;T>  
-> Environment = ImList&lt;&zwj;Variable &times; Boolean>  
+> Set<&zwj;T> = ImList<&zwj;T>  
+> Environment = ImList<&zwj;Variable &times; Boolean>  
 > Boolean = True + False
 
 Let's write some nice recursive definitions of the functions.
@@ -504,15 +491,15 @@ Let's write some nice recursive definitions of the functions.
 Before we define *variables* we'll first define a helper function *union*:
 
 > // Helper function: duplicate-free union of duplicate-free sets  
-> **union : Set&lt;&zwj;E> &times; Set&lt;&zwj;E> &rarr; Set&lt;&zwj;E>**  
+> **union : Set<&zwj;E> &times; Set<&zwj;E> &rarr; Set<&zwj;E>**  
 > union(Empty, s) = s  
 > union(Cons(elt, s1), s2) = if contains(s2, elt) then union(s1, s2)  
 > &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; else union(s1, Cons(elt, s2))
 
-*union* has two inputs of type `Set&lt;E>`, but its recursive definition only depends on the variant of the first parameter.
+*union* has two inputs of type `Set<E>`, but its recursive definition only depends on the variant of the first parameter.
 Now, to define *variables*, we consider each possible variant of `Formula`:
 
-> **variables : Formula &rarr; Set&lt;&zwj;Variable>**  
+> **variables : Formula &rarr; Set<&zwj;Variable>**  
 > variables(Variable(x)) = Cons(x, Empty)  
 > variables(Not(f)) = variables(f)  
 > variables(And(f1, f2)) = union(variables(f1), variables(f2))  
@@ -534,7 +521,7 @@ Next is *evaluate*, with a helper function:
 Finally, *satisfiable*, with one more helper function:
 
 > // Helper function: consider all possible assignments to a set of variables  
-> **evalVars : Set&lt;&zwj;Variable> &times; Environment &times; Formula &rarr; Boolean**  
+> **evalVars : Set<&zwj;Variable> &times; Environment &times; Formula &rarr; Boolean**  
 > evalVars(Empty, env, f) = evaluate(f, env)  
 > evalVars(Cons(x, rest), env, f) = evaluate(f, Cons((x, False), env))  
 > &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &or; evaluate(f, Cons((x, True), env))
