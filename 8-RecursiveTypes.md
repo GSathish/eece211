@@ -1,3 +1,8 @@
+---
+layout: page
+title: Recursive Types
+---
+
 #### Objectives
 
 + Recursive datatypes
