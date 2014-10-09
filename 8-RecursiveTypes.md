@@ -23,7 +23,9 @@ Consider writing a function to compute factorial. We can define factorial in two
 
 The first approach is to use the product form.
 
+<div>
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-product.png" width="294" />
+</div>
 
 (where the empty product equals the multiplicative identity *1*)
 
@@ -41,7 +43,9 @@ static long factorial(int n) {
 
 The alternative approach uses the recurrence for computing factorials.
 
+<div>
 <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/factorial-recurrence.png" width="294" />
+</div>
 
 This leads to the following implementation:
 
@@ -221,7 +225,6 @@ Further discussion of Java generics is a topic for another time.
 
 Now that we have all the operations, here's some actual Java code that parallels the abstract examples we wrote earlier:
 
-<div id="imlist-examples"></div>
 | Java syntax | Functional syntax | Result | Instance Diagram | 
 |------|------|------|------|
 | `ImList<Integer> nil = ImList.empty();` | *nil = empty()* | [ ] | <img src="https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/RecursiveTypes/imlist0.png" width = 300 /> |
