@@ -1,11 +1,15 @@
+---
+layout: page
+title: Problem Solving using ADTs
+---
+
 ## Introduction
 
 This reading demonstrates the development of an abstract datatype to solve a simple problem.
 
 ## Recipes for programming
 
-Recall the test-first programming approach for  
-**Writing a procedure** (a static method):
+In the test-first programming approach for **writing a procedure** (a static method), we can adopt the following recipe:
 
 1. **Spec.**
    Write the spec, including the method signature (name, argument types, return types, exceptions), and the precondition and the postcondition as a Javadoc comment.
@@ -22,8 +26,7 @@ Recall the test-first programming approach for
 			Implementing the method puts pressure on both the tests and the specs, and you may find bugs in them that you have to go back and fix.
       So finishing the job may require changing the implementation, the tests, and the specs, and bouncing back and forth among them.
 
-Let's broaden this to a recipe for  
-**Writing an abstract data type**:
+Let's broaden this to a recipe for **writing an abstract data type**:
 
 1. **Spec.**
    Write specs for the operations of the datatype, including method signatures, preconditions, and postconditions.
