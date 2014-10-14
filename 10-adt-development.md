@@ -226,8 +226,8 @@ private static class Scalar implements MatrixExpression {
 
 private static class Matrix implements MatrixExpression {
     public boolean isIdentity() { 
-        for (int row = 0; row &lt; array.length; row++) {
-            for (int col = 0; col &lt; array[row].length; ++col) {
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[row].length; ++col) {
                 double expected = (row == col) ? 1 : 0;
                 if (array[row][col] != expected) return false;
             }
