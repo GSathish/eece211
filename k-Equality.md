@@ -174,8 +174,8 @@ Duration d2 = new Duration (1, 2);
 Object o2 = d2;
 ```
 
-`d1.equals(d2)` &rarr; true
-`d1.equals(o2)` &rarr; false
++ `d1.equals(d2)` &rarr; true
++ `d1.equals(o2)` &rarr; false
 
 
 What's going on?  It turns out that Duration has **overloaded** the `equals()` method, because the method signature was not identical to Object's.  We actually have two `equals()` methods in Duration: an implicit `equals(Object)` inherited from `Object`, and the new `equals(Duration)`.
@@ -215,8 +215,8 @@ Duration d1 = new Duration(1, 2);
 Object o2 = new Duration(1,2);
 ```
 
-`d1.equals(o2)` &rarr; true
-`o2.equals(d1)` &rarr; ??       // is it symmetric?
++ `d1.equals(o2)` &rarr; true
++ `o2.equals(d1)` &rarr; ??       // is it symmetric?
 
 
 
@@ -282,9 +282,9 @@ Duration d1 = new Duration(1,2);
 Duration d2 = new Duration(1,2);
 ```
 
-`d1.equals(d2)` &rarr; true
-`d1.hashCode()` &rarr; 2392
-`d2.hashCode()` &rarr; 4823
++ `d1.equals(d2)` &rarr; true
++ `d1.hashCode()` &rarr; 2392
++ `d2.hashCode()` &rarr; 4823
 
 
 `d1` and `d2` are `equal()`, but they have different hash codes.  So we need to fix that.
