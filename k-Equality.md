@@ -96,9 +96,9 @@ C# | `==` | `Equals()`
 Python | `is` | `==`
 Javascript | `==` | n/a
 
-Note that `==` unfortunately flips its meaning between Java and Python. Don't let that confuse you: == in Java just tests reference identity, it doesn't compare object contents.
+Note that `==` unfortunately flips its meaning between Java and Python. Don't let that confuse you: `==` in Java just tests reference identity, it doesn't compare object contents.
 
-As programmers in any of these languages, we can't change the meaning of the referential equality operator.  In Java, == always means referential equality. But when we define a new data type, it's our responsibility to decide what object equality means for values of the data type, and implement the equals() operation appropriately.
+As programmers in any of these languages, we can't change the meaning of the referential equality operator.  In Java, `==` always means referential equality. But when we define a new data type, it's our responsibility to decide what object equality means for values of the data type, and implement the `equals()` operation appropriately.
 
 The `equals()` method is defined by `Object`, and its default implementation looks like this:
 
