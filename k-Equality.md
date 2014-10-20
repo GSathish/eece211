@@ -90,7 +90,6 @@ For comparison, here are the equality operators in several languages:
 
 ---
 Programming Language | *referential equality* | *object equality*
----
 Java | `==` | `equals()`
 ---
 Objective C | `==` | `isEqual:`
