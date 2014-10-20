@@ -172,9 +172,11 @@ There's a subtle problem here.  Why doesn't this work?  Let's try this code:
 Duration d1 = new Duration (1, 2);
 Duration d2 = new Duration (1, 2);
 Object o2 = d2;
-d1.equals(d2) &rarr; true
-d1.equals(o2) &rarr; false
 ```
+
+`d1.equals(d2)` &rarr; true
+`d1.equals(o2)` &rarr; false
+
 
 What's going on?  It turns out that Duration has **overloaded** the `equals()` method, because the method signature was not identical to Object's.  We actually have two `equals()` methods in Duration: an implicit `equals(Object)` inherited from `Object`, and the new `equals(Duration)`.
 
@@ -211,9 +213,11 @@ This fixes the immediate problem:
 ```java
 Duration d1 = new Duration(1, 2);
 Object o2 = new Duration(1,2);
-d1.equals(o2) &rarr; true
-o2.equals(d1) &rarr; ??       // is it symmetric?
 ```
+
+`d1.equals(o2)` &rarr; true
+`o2.equals(d1)` &rarr; ??       // is it symmetric?
+
 
 
 ## The Object Contract
@@ -276,10 +280,12 @@ But immutable objects need a different implementation of `hashCode()`.  For Dura
 ```java
 Duration d1 = new Duration(1,2);
 Duration d2 = new Duration(1,2);
-d1.equals(d2) &rarr; true
-d1.hashCode() &rarr; 2392
-d2.hashCode() &rarr; 4823
 ```
+
+`d1.equals(d2)` &rarr; true
+`d1.hashCode()` &rarr; 2392
+`d2.hashCode()` &rarr; 4823
+
 
 `d1` and `d2` are `equal()`, but they have different hash codes.  So we need to fix that.
 
@@ -332,7 +338,7 @@ set.add(list);
 We can check that the set contains the list we put in it, and it does:
 
 ```java
-set.contains(list) &rarr; true
+set.contains(list) // true
 ```
 
 But now we mutate the list:
@@ -344,14 +350,14 @@ list.add("goodbye");
 And it no longer appears in the set!
 
 ```java
-set.contains(list) &rarr; false!
+set.contains(list) // false!
 ```
 
 It's worse than that, in fact:  when we iterate over the members of the set, we still find the list in there, but contains() says it's not there!
 
 ```java
 for (List<String> l : set) { 
-    set.contains(l) &rarr; false! 
+    set.contains(l) // false! 
 }
 ```
 
@@ -394,7 +400,7 @@ One more instructive pitfall in Java.  We've talked about primitive types and th
 ```java
 Integer x = new Integer(3);
 Integer y = new Integer(3);
-x.equals(y) &rarr; true
+x.equals(y) // true
 ```
 
 But there's a subtle problem here; == is overloaded.  For reference types like Integer, it implements referential equality:
