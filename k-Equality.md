@@ -87,23 +87,13 @@ Like many languages, Java has two different operations for testing equality, wit
 
 For comparison, here are the equality operators in several languages:
 
-<style>
-.equality-table {
-  text-align: center;
-}
-.equality-table td {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-</style>
-
-<table class="equality-table">
+<table>
 <tr><td>
-&nbsp;
+Programming Language
 </td><td>
-*referential<br>equality*
+*referential equality*
 </td><td>
-*object<br>equality*
+*object equality*
 </tr>
 
 <tr><td>
@@ -147,11 +137,11 @@ n/a
 </td></tr>
 </table>
 
-Note that == unfortunately flips its meaning between Java and Python. Don't let that confuse you: == in Java just tests reference identity, it doesn't compare object contents.
+Note that `==` unfortunately flips its meaning between Java and Python. Don't let that confuse you: == in Java just tests reference identity, it doesn't compare object contents.
 
 As programmers in any of these languages, we can't change the meaning of the referential equality operator.  In Java, == always means referential equality. But when we define a new data type, it's our responsibility to decide what object equality means for values of the data type, and implement the equals() operation appropriately.
 
-The equals() method is defined by Object, and its default implementation looks like this:
+The `equals()` method is defined by `Object`, and its default implementation looks like this:
 
 ```java
 public class Object {
@@ -186,7 +176,7 @@ d1.equals(d2) &rarr; true
 d1.equals(o2) &rarr; false
 ```
 
-What's going on?  It turns out that Duration has **overloaded** the equals() method, because the method signature was not identical to Object's.  We actually have two equals() methods in Duration: an implicit equals(Object) inherited from Object, and the new equals(Duration).
+What's going on?  It turns out that Duration has **overloaded** the `equals()` method, because the method signature was not identical to Object's.  We actually have two `equals()` methods in Duration: an implicit `equals(Object)` inherited from `Object`, and the new `equals(Duration)`.
 
 ```java
 public class Duration extends Object {
@@ -201,11 +191,11 @@ public class Duration extends Object {
 }
 ```
 
-Recall from an earlier reading that the compiler selects between overloaded operations using the compile-time type of the parameters.  For example, when you use the `/` operator, the compiler chooses either integer division or float division based on whether the arguments are ints or floats.  The same compile-time selection happens here.  If we pass an Object reference, as in `d1.equals(o2)`, we end up calling the equals(Object) implementation.  If we pass a Duration reference, as in `d1.equals(d2)`, we end up calling the equals(Duration) version.  This happens even though `o2` and `d2` both point to the same object at runtime!  Equality has become inconsistent.
+Recall from an earlier reading that the compiler selects between overloaded operations using the compile-time type of the parameters.  For example, when you use the `/` operator, the compiler chooses either integer division or float division based on whether the arguments are ints or floats.  The same compile-time selection happens here.  If we pass an Object reference, as in `d1.equals(o2)`, we end up calling the `equals(Object)` implementation.  If we pass a `Duration` reference, as in `d1.equals(d2)`, we end up calling the `equals(Duration)` version.  This happens even though `o2` and `d2` both point to the same object at runtime!  Equality has become inconsistent.
 
 It's easy to make a mistake in the method signature, and overload a method when you meant to override it.  This is such a common error that Java has a language feature, the annotation @Override, which you should use whenever your intention is to override a method in your superclass.  With this annotation, the Java compiler will check that a method with the same signature actually exists in the superclass, and give you a compiler error if you've made a mistake in the signature.
 
-So here's the right way to implement Duration's equals() method:
+So here's the right way to implement `Duration`’s `equals()` method:
 
 ```java
 @Override
@@ -232,7 +222,7 @@ The specification of the Object class is so important that it is often referred 
 
 + equals must define an equivalence relation -- that is, a relation that is reflexive, symmetric, and transitive; 
 + equals must be consistent: repeated calls to the method must yield the same result provided no information used in equals comparisons on the object is modified; 
-+ for a non-null reference x, x.equals (null) should return false; 
++ for a non-null reference `x`, `x.equals (null)` should return `false`; 
 + `hashCode()` must produce the same result for two objects that are deemed equal by the equals
 method. 
 
@@ -331,6 +321,7 @@ For immutable objects, observational and behavioral equality are identical, beca
 For mutable objects, it's tempting to implement strict observational equality.  Java uses observational equality for most of its mutable data types, in fact.  If two distinct List objects contain the same sequence of elements, then equals() reports that they are equal. 
 
 But using observational equality leads to subtle bugs, and in fact allows us to easily break the rep invariants of other collection data structures.  Suppose we make a List, and then drop it into a Set:
+
 ```java
 List<String> list = Arrays.asList(new String[] { "a" });
 
@@ -339,21 +330,25 @@ set.add(list);
 ```
 
 We can check that the set contains the list we put in it, and it does:
+
 ```java
 set.contains(list) &rarr; true
 ```
 
 But now we mutate the list:
+
 ```java
 list.add("goodbye");
 ```
 
 And it no longer appears in the set!
+
 ```java
 set.contains(list) &rarr; false!
 ```
 
 It's worse than that, in fact:  when we iterate over the members of the set, we still find the list in there, but contains() says it's not there!
+
 ```java
 for (List<String> l : set) { 
     set.contains(l) &rarr; false! 
@@ -362,7 +357,7 @@ for (List<String> l : set) {
 
 If the set's iterator and its `contains()` method disagree about whether an element is in the set, then the set clearly is broken.
 
-What's going on?  `List<String>` is a mutable object.  In the standard Java implementation of collection classes like `List`, mutations affect the result of `equals()` and `hashCode()`.  When the list is first put into the `HashSet`, it is stored in the hash bucket corresponding to its hashCode() result at that time.  When the list is subsequently mutated, its hashCode() changes, but `HashSet` doesn't realize it should be moved to a different bucket.  So it can never be found again.
+What's going on?  `List<String>` is a mutable object.  In the standard Java implementation of collection classes like `List`, mutations affect the result of `equals()` and `hashCode()`.  When the list is first put into the `HashSet`, it is stored in the hash bucket corresponding to its `hashCode()` result at that time.  When the list is subsequently mutated, its `hashCode()` changes, but `HashSet` doesn't realize it should be moved to a different bucket.  So it can never be found again.
 
 When `equals()` and `hashCode()` can be affected by mutation, we can break the rep invariant of a hash table that uses that object as a key.
 
@@ -395,22 +390,27 @@ So mutable types should not override `equals()` and `hashCode()` at all, and sho
 ### Autoboxing and Equality
 
 One more instructive pitfall in Java.  We've talked about primitive types and their object type equivalents -- for example, int and Integer.  The object type implements equals() in the correct way, so that if you create two Integer objects with the same value, they'll be equals() to each other:
+
 ```java
 Integer x = new Integer(3);
 Integer y = new Integer(3);
 x.equals(y) &rarr; true
 ```
+
 But there's a subtle problem here; == is overloaded.  For reference types like Integer, it implements referential equality:
+
 ```java
 x == y // returns false
 ```
 
 But for primitive types like int, == implements behavioral equality:
+
 ```java
 (int)x == (int)y // returns true
 ```
 
 So you can't really use Integer interchangeably with int.  The fact that Java automatically converts between int and Integer (this is called *autoboxing* and *autounboxing*) can lead to subtle bugs!  You have to be aware what the compile-time types of your expressions are.  Consider this:
+
 ```java
 Map<String, Integer> a = new HashMap(), b = new HashMap();
 a.put("c", 130); // put ints into the map
@@ -418,9 +418,7 @@ b.put("c", 130);
 a.get("c") == b.get("c") // but what do we get out of the map?
 ```
 
-
 ## Summary
-
 
 + Equality should be an equivalence relation (reflexive, symmetric, transitive).
 + Equality and hash code must be consistent with each other, so that data structures that use hash tables (like `HashSet` and `HashMap`) work properly.
