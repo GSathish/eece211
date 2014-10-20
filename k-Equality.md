@@ -8,7 +8,7 @@ From Joshua Bloch, [Effective Java](http://my.safaribooksonline.com/book/program
 + Item 8: Obey the general contract when overriding equals
 + Item 9: Always override `hashCode( )` when you override `equals( )`
 
-Now we turn to how we define the notion of equality of values in a data type.
+## What is Object Equality?
 
 In the physical world, every object is distinct -- at some level, even two snowflakes are different, even if the distinction is just the position they occupy in space.  (This isn't strictly true of all subatomic particles, actually, but true enough of large objects like snowflakes and baseballs and people.)  So two physical objects are never truly "equal" to each other; they only have degrees of similarity.
 
@@ -22,7 +22,7 @@ Formally, we can regard equality in several ways.
 
 **Using a relation**.  An *equivalence* is a relation E &subseteq; T x T that is:
 
-+ reflexive:   E(t,t) &forall; t &isin; T
++ reflexive:  E(t,t) &forall; t &isin; T
 + symmetric:  E(t,u) &rArr; E(u,t)
 + transitive: E(t,u) &and; E(u,v) &rArr; E(t,v)
 
@@ -233,7 +233,7 @@ The specification of the Object class is so important that it is often referred 
 + equals must define an equivalence relation -- that is, a relation that is reflexive, symmetric, and transitive; 
 + equals must be consistent: repeated calls to the method must yield the same result provided no information used in equals comparisons on the object is modified; 
 + for a non-null reference x, x.equals (null) should return false; 
-+ hashCode must produce the same result for two objects that are deemed equal by the equals
++ `hashCode()` must produce the same result for two objects that are deemed equal by the equals
 method. 
 
 ### Breaking the Equivalence Relation
@@ -249,7 +249,7 @@ private static final int CLOCK_SKEW = 5; // seconds
 public boolean equals (Object thatObject) {
     if (!(thatObject instanceof Duration)) return false;
     Duration thatDuration = (Duration) thatObject;
-    return Math.abs(this.getLength() - thatDuration.getLength()) &lt;= CLOCK_SKEW;
+    return Math.abs(this.getLength() - thatDuration.getLength()) <= CLOCK_SKEW;
 }
 ```
 
@@ -257,11 +257,11 @@ Which property of the equivalence relation is violated?
 
 ### Breaking Hash Tables
 
-To understand the part of the contract relating to the hashCode method, you'll need to have some idea of how hash tables work.  Two very common collection implementations, HashSet and HashMap, use a hash table data structure, and depend on the hashCode method to be implemented correctly for the objects stored in the set and used as keys in the map.
+To understand the part of the contract relating to the `hashCode()` method, you'll need to have some idea of how hash tables work.  Two very common collection implementations, HashSet and HashMap, use a hash table data structure, and depend on the `hashCode()` method to be implemented correctly for the objects stored in the set and used as keys in the map.
 
-A hash table is a representation for a mapping: an abstract data type that maps keys to values. Hash tables offer constant time lookup, so they tend to perform better than trees or lists. Keys don't have to be ordered, or have any particular property, except for offering equals and hashCode.
+A hash table is a representation for a mapping: an abstract data type that maps keys to values. Hash tables offer constant time lookup, so they tend to perform better than trees or lists. Keys don't have to be ordered, or have any particular property, except for offering `equals()` and `hashCode()`.
 
-Here's how a hash table works. It contains an array that is initialized to a size corresponding to the number of elements that we expect to be inserted. When a key and a value are presented for insertion, we compute the hashcode of the key, and convert it into an index in the array's range (e.g., by a modulo division). The value is then inserted at that index.
+Here's how a hash table works. It contains an array that is initialized to a size corresponding to the number of elements that we expect to be inserted. When a key and a value are presented for insertion, we compute the `hashcode()` of the key, and convert it into an index in the array's range (e.g., by a modulo division). The value is then inserted at that index.
 
 The rep invariant of a hash table includes the fundamental constraint that keys are in the slots determined by their hash codes.
 
@@ -269,7 +269,7 @@ Hashcodes are designed so that the keys will be spread evenly over the indices. 
 
 Now it should be clear why the Object contract requires equal objects to have the same hashcode. If two equal objects had distinct hashcodes, they might be placed in different slots. So if you attempt to lookup a value using a key equal to the one with which it was inserted, the lookup may fail.
 
-Object's default hashCode() implementation is consistent with its default equals():
+`Object`’s default `hashCode()` implementation is consistent with its default `equals()`:
 
 ```java
 public class Object {
@@ -281,7 +281,8 @@ public class Object {
 
 For references a and b, if a == b, then the address of a == the address of b.  So the Object contract is satisfied.
 
-But immutable objects need a different implementation of hashCode().  For Duration, since we haven't overridden the default hashCode() yet, we're currently breaking the Object contract:
+But immutable objects need a different implementation of `hashCode()`.  For Duration, since we haven't overridden the default `hashCode()` yet, we're currently breaking the Object contract:
+
 ```java
 Duration d1 = new Duration(1,2);
 Duration d2 = new Duration(1,2);
@@ -290,11 +291,11 @@ d1.hashCode() &rarr; 2392
 d2.hashCode() &rarr; 4823
 ```
 
-d1 and d2 are equal(), but they have different hash codes.  So we need to fix that.
+`d1` and `d2` are `equal()`, but they have different hash codes.  So we need to fix that.
 
-A simple and drastic way to ensure that the contract is met is for hashCode to always return some constant value, so every object's hash code is the same. This satisfies the Object contract, but it would have a disastrous performance effect, since every key will be stored in the same slot, and every lookup will degenerate to a linear search along a long list.
+A simple and drastic way to ensure that the contract is met is for `hashCode()` to always return some constant value, so every object's hash code is the same. This satisfies the Object contract, but it would have a disastrous performance effect, since every key will be stored in the same slot, and every lookup will degenerate to a linear search along a long list.
 
-The standard way to construct a more reasonable hash code that still satisfies the contract is to compute a hash code for each component of the object that is used in the determination of equality (usually by calling the hashCode method of each component), and then combining these, throwing in a few arithmetic operations. For Duration, this is easy, because the abstract value of the class is already an integer value:
+The standard way to construct a more reasonable hash code that still satisfies the contract is to compute a hash code for each component of the object that is used in the determination of equality (usually by calling the `hashCode()` method of each component), and then combining these, throwing in a few arithmetic operations. For Duration, this is easy, because the abstract value of the class is already an integer value:
 
 ```java
 @Override
@@ -309,11 +310,11 @@ Josh Bloch's fantastic book, *Effective Java*, explains this issue in more detai
 
 Note, however, that as long as you satisfy the requirement that equal objects have the same hash code value, then the particular hashing technique you use doesn't make a difference to the correctness of your code.  It may affect its performance, by creating unnecessary collisions between different objects, but even a poorly-performing hash function is better than one that breaks the contract.
 
-Most crucially, note that if you don't override hashCode at all, you'll get the one from Object, which is based on the address of the object. If you have overridden equals, this will mean that you will have almost certainly violated the contract. So as a general rule:
+Most crucially, note that if you don't override `hashCode()` at all, you'll get the one from Object, which is based on the address of the object. If you have overridden equals, this will mean that you will have almost certainly violated the contract. So as a general rule:
 
-> **Always override hashCode when you override equals.**
+> **Always override `hashCode()` when you override `equals()`.**
 
-Many years ago in 6.170, a student spent hours tracking down a bug in a project that amounted to nothing more than misspelling hashCode as hashcode. This created a new method that didn't override the hashCode method of Object at all, and strange things happened. Use `@Override`!
+Many years ago, I spent hours tracking down a bug in a project that amounted to nothing more than misspelling `hashCode()` as `hashcode()`. This created a new method that didn't override the `hashCode()` method of `Object` at all, and strange things happened. Use `@Override`!
 
 
 ### Equality of Mutable Objects
@@ -331,9 +332,9 @@ For mutable objects, it's tempting to implement strict observational equality.  
 
 But using observational equality leads to subtle bugs, and in fact allows us to easily break the rep invariants of other collection data structures.  Suppose we make a List, and then drop it into a Set:
 ```java
-List&lt;String> list = Arrays.asList(new String[] { "a" });
+List<String> list = Arrays.asList(new String[] { "a" });
 
-Set&lt;List&lt;String>> set = new HashSet&lt;List&lt;String>>();
+Set<List<String>> set = new HashSet<List<String>>();
 set.add(list);
 ```
 
@@ -354,27 +355,27 @@ set.contains(list) &rarr; false!
 
 It's worse than that, in fact:  when we iterate over the members of the set, we still find the list in there, but contains() says it's not there!
 ```java
-for (List&lt;String> l : set) { 
+for (List<String> l : set) { 
     set.contains(l) &rarr; false! 
 }
 ```
 
-If the set's iterator and its contains() method disagree about whether an element is in the set, then the set clearly is broken.
+If the set's iterator and its `contains()` method disagree about whether an element is in the set, then the set clearly is broken.
 
-What's going on?  List&lt;String> is a mutable object.  In the standard Java implementation of collection classes like List, mutations affect the result of equals() and hashCode().  When the list is first put into the HashSet, it is stored in the hash bucket corresponding to its hashCode() result at that time.  When the list is subsequently mutated, its hashCode() changes, but HashSet doesn't realize it should be moved to a different bucket.  So it can never be found again.
+What's going on?  `List<String>` is a mutable object.  In the standard Java implementation of collection classes like `List`, mutations affect the result of `equals()` and `hashCode()`.  When the list is first put into the `HashSet`, it is stored in the hash bucket corresponding to its hashCode() result at that time.  When the list is subsequently mutated, its hashCode() changes, but `HashSet` doesn't realize it should be moved to a different bucket.  So it can never be found again.
 
-When equals() and hashCode() can be affected by mutation, we can break the rep invariant of a hash table that uses that object as a key.
+When `equals()` and `hashCode()` can be affected by mutation, we can break the rep invariant of a hash table that uses that object as a key.
 
-Here's a telling quote from the specification of java.util.Set:
+Here's a telling quote from the specification of `java.util.Set`:
 
 > Note: Great care must be exercised if mutable objects are used as set elements. The behavior of a set is not specified if the value of an object is changed in a manner that affects equals comparisons while the object is an element in the set. 
 
-The Java library is unfortunately inconsistent about its interpretation of equals() for mutable classes.  Collections use observational equality, but other mutable classes (like StringBuilder) use behavioral equality.
+The Java library is unfortunately inconsistent about its interpretation of `equals()` for mutable classes.  Collections use observational equality, but other mutable classes (like `StringBuilder`) use behavioral equality.
 
-The lesson we should draw from this example is that **equals() should implement behavioral equality**.  In general, that means that two references should be equal() if and only if they are aliases for the same object.  So mutable objects should just inherit equals() and hashCode() from Object.  For clients that need a notion of observational equality (whether two mutable objects "look" the same in the current state), it's better to define a new method, e.g., similar().
+The lesson we should draw from this example is that **equals() should implement behavioral equality**.  In general, that means that two references should be `equal()` if and only if they are aliases for the same object.  So mutable objects should just inherit `equals()` and `hashCode()` from Object.  For clients that need a notion of observational equality (whether two mutable objects "look" the same in the current state), it's better to define a new method, e.g., `similar()`.
 
 
-### The Final Rule for equals and hashCode()
+### The Final Rule for `equals()` and `hashCode()`
 
 **For immutable types**:
 
@@ -411,7 +412,7 @@ But for primitive types like int, == implements behavioral equality:
 
 So you can't really use Integer interchangeably with int.  The fact that Java automatically converts between int and Integer (this is called *autoboxing* and *autounboxing*) can lead to subtle bugs!  You have to be aware what the compile-time types of your expressions are.  Consider this:
 ```java
-Map&lt;String, Integer> a = new HashMap(), b = new HashMap();
+Map<String, Integer> a = new HashMap(), b = new HashMap();
 a.put("c", 130); // put ints into the map
 b.put("c", 130);
 a.get("c") == b.get("c") // but what do we get out of the map?
@@ -421,9 +422,7 @@ a.get("c") == b.get("c") // but what do we get out of the map?
 ## Summary
 
 
-+ the abstraction function maps a concrete representation to the abstract value it represents
-+ the rep invariant specifies legal values of the representation, and should be checked at runtime with `checkRep()`
-+ equality should be an equivalence relation (reflexive, symmetric, transitive)
-+ equality and hash code must be consistent with each other, so that data structures that use hash tables (like HashSet and HashMap) work properly
-+ the abstraction function is the basis for equality in immutable data types
-+ reference equality is the basis for equality in mutable data types; this is the only way to ensure consistency over time and avoid breaking rep invariants of hash tables
++ Equality should be an equivalence relation (reflexive, symmetric, transitive).
++ Equality and hash code must be consistent with each other, so that data structures that use hash tables (like `HashSet` and `HashMap`) work properly.
++ The abstraction function is the basis for equality in immutable data types.
++ Reference equality is the basis for equality in mutable data types; this is the only way to ensure consistency over time and avoid breaking rep invariants of hash tables.
