@@ -88,18 +88,13 @@ Like many languages, Java has two different operations for testing equality, wit
 
 For comparison, here are the equality operators in several languages:
 
----
 Programming Language | *referential equality* | *object equality*
+---
 Java | `==` | `equals()`
----
 Objective C | `==` | `isEqual:`
----
 C# | `==` | `Equals()`
----
 Python | `is` | `==`
----
 Javascript | `==` | n/a
----
 
 Note that `==` unfortunately flips its meaning between Java and Python. Don't let that confuse you: == in Java just tests reference identity, it doesn't compare object contents.
 
