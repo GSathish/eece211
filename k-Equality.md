@@ -6,6 +6,7 @@ title: Equality
 ##  Recommended Reading 
 
 From Joshua Bloch, [Effective Java](http://my.safaribooksonline.com/book/programming/java/9780137150021)
+
 + Item 8: Obey the general contract when overriding equals
 + Item 9: Always override `hashCode( )` when you override `equals( )`
 
