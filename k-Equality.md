@@ -45,9 +45,10 @@ A third way we can talk about the equality between abstract values is in terms o
 In terms of abstract data types, "observation" means calling operations on the objects.  So two objects are equal if and only if they cannot be distinguished by calling any operations of the abstract data type.
 
 
-## Example: Duration
+## Example: `Duration`
 
 Here's a simple example of an immutable ADT.
+
 ```java
 public class Duration {
     private final int mins;
@@ -80,7 +81,7 @@ Duration d4 = new Duration (1, 2);
 Think in terms of both the abstraction-function definition of equality, and the observational equality definition.
 
 
-## == vs. equals()
+## `==` vs. `equals()`
 
 Like many languages, Java has two different operations for testing equality, with different semantics.  
 
@@ -112,9 +113,9 @@ public class Object {
 }
 ```
 
-In other words, the default meaning of equals() is the same as referential equality.  For immutable data types, this is almost always wrong.  So you have to **override** the equals() method, replacing it with your own implementation.
+In other words, the default meaning of `equals()` is the same as referential equality.  For immutable data types, this is almost always wrong.  So you have to **override** the `equals()` method, replacing it with your own implementation.
 
-Here's our first try for Duration:
+Here's our first try for `Duration`:
 
 ```java
 public class Duration {
@@ -155,7 +156,7 @@ public class Duration extends Object {
 
 Recall from an earlier reading that the compiler selects between overloaded operations using the compile-time type of the parameters.  For example, when you use the `/` operator, the compiler chooses either integer division or float division based on whether the arguments are ints or floats.  The same compile-time selection happens here.  If we pass an Object reference, as in `d1.equals(o2)`, we end up calling the `equals(Object)` implementation.  If we pass a `Duration` reference, as in `d1.equals(d2)`, we end up calling the `equals(Duration)` version.  This happens even though `o2` and `d2` both point to the same object at runtime!  Equality has become inconsistent.
 
-It's easy to make a mistake in the method signature, and overload a method when you meant to override it.  This is such a common error that Java has a language feature, the annotation @Override, which you should use whenever your intention is to override a method in your superclass.  With this annotation, the Java compiler will check that a method with the same signature actually exists in the superclass, and give you a compiler error if you've made a mistake in the signature.
+It's easy to make a mistake in the method signature, and overload a method when you meant to override it.  This is such a common error that Java has a language feature, the annotation `@Override`, which you should use whenever your intention is to override a method in your superclass.  With this annotation, the Java compiler will check that a method with the same signature actually exists in the superclass, and give you a compiler error if you've made a mistake in the signature.
 
 So here's the right way to implement `Duration`’s `equals()` method:
 
