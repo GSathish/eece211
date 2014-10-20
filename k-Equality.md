@@ -89,7 +89,7 @@ Like many languages, Java has two different operations for testing equality, wit
 For comparison, here are the equality operators in several languages:
 
 Programming Language | *referential equality* | *object equality*
----
+---|---|---
 Java | `==` | `equals()`
 Objective C | `==` | `isEqual:`
 C# | `==` | `Equals()`
