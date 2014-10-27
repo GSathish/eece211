@@ -501,7 +501,7 @@ HtmlParser parser = new HtmlParser(tokens);
 
 To actually do the parsing, we call a particular nonterminal on the parser.  The generated parser has one method for every nonterminal in our grammar, including `root()`, `html()`, `normal()`, `italic()`.  We want to call the nonterminal that represents the set of strings that we want to match -- in this case, `root()`.
 
-<img src="figures/parse-tree.png" alt="the parse tree produced by parsing the HTML example"></img>
+<img src="https://www.dropbox.com/s/gceg9br892wj430/parse-tree.png?dl=0" alt="the parse tree produced by parsing the HTML example"></img>
 
 Calling it produces a parse tree:
 
@@ -582,7 +582,7 @@ private static class HtmlListenerPrintEverything extends HtmlBaseListener {
 ```
 
 
-<img src="figures/parse-tree.png" alt="how the ParseTreeWalker walks over the parse tree"></img>
+<img src="https://www.dropbox.com/s/kgrcwx8w2e20nl8/parse-tree-2.png?dl=0" alt="how the ParseTreeWalker walks over the parse tree"></img>
 
 If we walk over the parse tree with this listener, then we see the following output:
 
