@@ -313,12 +313,7 @@ For Java, for example, user-defined names are typically grouped into a single ki
 ```
 So tokens are not just strings, but might be objects with fields. In Java, an enum class is a useful way to define tokens.
 
-<div class="handout-solo">
-Read **[Enum Types]** in the Java Tutorials.
-
-  [Enum Types]: http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
-</div>
-
+(Read about [Enum Types](http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html) in the Java Tutorials.)
 
 Different languages call for different kinds of tokenization.  In Python, for example, you wouldn't throw away all whitespace entirely; you'd have tokens for newlines and tokens for indentation, since those affect Python statement structure.  In natural language processing, like English, a tokenizer might detect parts of speech (nouns, adjectives) and undo morphology (e.g., "mice" becomes "mouse+plural").
 
@@ -655,17 +650,10 @@ More about Antlr's parse-tree listeners can be found in Section 7.2 of the [Defi
 
 ### Handling errors
 
-By default, Antlr lexers and parsers print errors to the console.  In order to make the lexer/parser modular, however, we need to handle those errors differently.  You can attach an ErrorListener to a lexer or a parser which throws an exception instead when it encounters an error during lexing or parsing.  The `Html.g4` file defines a method `reportErrorsAsExceptions()` which does this.  So if you copy the technique used in this grammar file, you can call:
-
-```java
-lexer.reportErrorsAsExceptions();
-parser.reportErrorsAsExceptions();
-```
-
-right after you create your lexer and parser, respectively.  Then when you call parser.root(), it will throw an exception as soon as the lexer encounters something it can't turn into a token, or the parser encounters a sequence of tokens that it can't match.
+By default, Antlr lexers and parsers print errors to the console.  In order to make the lexer/parser modular, however, we need to handle those errors differently.  You can attach an ErrorListener to a lexer or a parser which throws an exception instead when it encounters an error during lexing or parsing.  The grammar file can be have addition instructions and then you can then throw exceptions. See the Antlr guide for how this can be achieved.
 
 This is a simplistic approach to handling errors.  Antlr offers more sophisticated forms of error recovery as well.  To learn more, see Chapter 9 in the [Definitive Antlr 4 Reference].
 
 ## Summary
 
-Machine-processed textual languages are ubiquitous in computer science.  Context-free grammars are the most popular formalism for describing such languages, and regular languages are an important subclass of grammars, expressible without recursion.  The classic way of implementing a language processor is to split it into a lexer and a parser.
+Machine-processed textual languages are ubiquitous in computing systems.  Context-free grammars are the most popular formalism for describing such languages, and regular languages are an important subclass of grammars, expressible without recursion.  The classic way of implementing a language processor is to split it into a lexer and a parser.
