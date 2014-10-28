@@ -31,7 +31,7 @@ Being able to program with concurrency will still be important in the future. Pr
 
 There are two common models for concurrent programming: *shared memory* and *message passing*.
 
-<img alt=“Shared Memory” src=“https://www.dropbox.com/s/3w8yr5mwl5h2glw/shared-memory.png” width=200 />
+<img alt= “Shared Memory” src=“https://www.dropbox.com/s/3w8yr5mwl5h2glw/shared-memory.png?dl=0” width=200 />
 
 **Shared memory.** In the shared memory model of concurrency, concurrent modules interact by reading and writing shared objects in memory.  
 
