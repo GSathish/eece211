@@ -43,7 +43,7 @@ Other examples of the shared-memory model:
 
 + A and B might be two threads in the same Java program (we'll explain what a thread is below), sharing the same Java objects.
 
-![Message Passing](https://www.dropbox.com/s/4gpwjm6x4td766f/message-passing.png?dl=1)
+![Message Passing](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Concurrency/message-passing.jpg)
 
 **Message passing.**  In the message-passing model, concurrent modules interact by sending messages to each other through a communication channel.  Modules send off messages, and incoming messages to each module are queued up for handling. Examples include:
 
@@ -72,7 +72,7 @@ Just as a process represents a virtual computer, the thread abstraction represen
 
 Threads are automatically ready for shared memory, because threads share all the memory in the process.  It needs special effort to get "thread-local" memory that's private to a single thread.  It's also necessary to set up  message-passing explicitly, by creating and using queue data structures.  We'll talk about how to do that in a future reading.
 
-![Time Slicing](https://www.dropbox.com/s/rmlyjojv6tglmwi/time-slicing.png?dl=1)
+![Time Slicing](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Concurrency/time-slicing.jpg)
 
 How can I have many concurrent threads with only one or two processors in my computer?  When there are more threads than processors, concurrency is simulated by **time slicing**, which means that the processor switches between threads.  The figure on the right shows how three threads T1, T2, and T3 might be time-sliced on a machine that has only two actual processors.  In the figure, time proceeds downward, so at first one processor is running thread T1 and the other is running thread T2, and then the second processor switches to run thread T3.  Thread T2 simply pauses, until its next time slice on the same processor or another processor.
 
@@ -88,7 +88,7 @@ In the Java Tutorials, read:
 
 Let's look at an example of a shared memory system.  The point of this example is to show that concurrent programming is hard, because it can have subtle bugs.
 
-![Shared Memory Model for Bank Accounts](https://www.dropbox.com/s/apy98hic2d8f4pp/shared-memory-bank-account.png?dl=1)
+![Shared Memory Model for Bank Accounts](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Concurrency/shared-memory-bank-account.jpg)
 
 Imagine that a bank has cash machines that use a shared memory model, so all the cash machines can read and write the same account objects in memory.
 
@@ -258,7 +258,7 @@ private void computeAnswer() {
 
 ## Message Passing Example
 
-![Message Passing Bank Account Example](https://www.dropbox.com/s/7k1dc484ivf1jo0/message-passing-bank-account.png?dl=1)
+![Message Passing Bank Account Example](https://dl.dropboxusercontent.com/u/567187/EECE%20210/Images/Concurrency/message-passing-bank-account.jpg)
 
 Now let's look at the message-passing approach to our bank account example.
 
