@@ -152,6 +152,7 @@ A write back the result (balance=1)
 ```
 
 This interleaving is fine -- we end up with balance 2, so both A and B successfully put in a dollar. But what if the interleaving looked like this:
+
 ```
 A get balance (balance=0)
                                     B get balance (balance=0)
