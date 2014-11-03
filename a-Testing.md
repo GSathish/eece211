@@ -82,6 +82,8 @@ The idea behind subdomains is to partition the input space into sets of similar 
 
 #### Example: `BigInteger.multiply()`
 
+![Partitioning multiply()]({{ site.url }}/public/images/Testing/multiply-partition.png)
+
 Let's look at an example.  [`BigInteger`](java:java/math/BigInteger) is a class built into the Java library that can represent integers of any size, unlike the primitive types `int` and `long` that have only limited ranges.  BigInteger has a method `multiply` that multiplies two BigInteger values together:
 
     /**
@@ -137,8 +139,6 @@ To produce the test suite, we would pick an arbitrary pair (a,b) from each squar
 + (a,b) = (2^100, 1) to cover (large positive, 1)
 + etc.
 
-![Partitioning multiply()]({{ site.url }}/public/images/Testing/multiply-partition.png)
-
 #### Example: `max()`
 
 Let's look at another example from the Java library: the integer `max()` function, found in the [`Math`](http://docs.oracle.com/javase/8/docs/api/java/lang/Math.html) class.
@@ -168,7 +168,6 @@ Our test suite might then be:
 + (a, b) = (9, 9) to cover a = b
 + (a, b) = (-5, -6) to cover a > b
 
-#### Illustrating the Test Partition
 ![Partitioning max]({{ site.url }}/public/images/Testing/max-partition.png) 
 
 ### Include Boundaries in the Partition
