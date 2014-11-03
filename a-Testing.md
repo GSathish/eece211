@@ -183,7 +183,7 @@ Why do bugs often happen at boundaries?  One reason is that programmers often ma
 
 It's important to include boundaries as subdomains in your partition, so that you're choosing an input from the boundary.  
 
-Let's redo **`max : int &times; int &rarr; int`**.
+Let's redo max : int &times; int &rarr; int.
 
 Partition into:
 
