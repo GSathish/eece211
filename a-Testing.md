@@ -74,7 +74,7 @@ Instead, test cases must be chosen carefully and systematically, and that's what
 
 Creating a good test suite is a challenging and interesting design problem.  We want to pick a set of test cases that is small enough to run quickly, yet large enough to validate the program.  
 
-<img src=“public/images/Testing/partition.png" alt="partitioning a function's input space" width="200">
+![Partitioning a function's input space](public/images/Testing/partition.png)
 
 To do this, we divide the input space into **subdomains**, each consisting of a set of inputs. Taken together the subdomains completely cover the input space, so that every input lies in at least one subdomain. Then we choose one test case from each subdomain, and that's our test suite.
 
@@ -122,9 +122,7 @@ Finally, as a suspicious tester trying to find bugs, we might suspect that the i
 
 Let's bring all these observations together into a straightforward partition of the whole `(a,b)` space.  We'll  choose `a` and `b` independently from:
 
-<div class="panel panel-figure pull-right pull-margin">
-<img src="figures/multiply-partition.png" alt="partitioning multiply()" width="400"></img>
-</div>
+![Partitioning multiply()](public/images/Testing/multiply-partition.png)
 
 + 0
 + 1
@@ -160,21 +158,19 @@ public static int max(int a, int b)
 
 Mathematically, this method is a function of the following type:
 
-**`max : int &times; int &rarr; int`**
+max : int &times; int &rarr; int
 
-<div class="panel panel-figure pull-right pull-margin">
-<img src="figures/max-partition.png" alt="partitioning-max" width="200"></img>
-</div>
+[Partitioning max](public/images/Testing/max-partition.png) 
 
 From the specification, it makes sense to partition this function as:
 
-+ a &lt; b
++ a < b
 + a = b
 + a > b
 
 Our test suite might then be:
 
-+ (a, b) = (1, 2) to cover a &lt; b
++ (a, b) = (1, 2) to cover a < b
 + (a, b) = (9, 9) to cover a = b
 + (a, b) = (-5, -6) to cover a > b
 
@@ -189,7 +185,7 @@ Bugs often occur at *boundaries* between subdomains.  Some examples:
 + emptiness (the empty string, empty list, empty array) for collection types
 + the first and last element of a collection
 
-Why do bugs often happen at boundaries?  One reason is that programmers often make off-by-one mistakes (like writing `&lt;=` instead of `&lt;`, or initializing a counter to 0 instead of 1).  Another is that some boundaries may need to be  handled as special cases in the code.  Another is that boundaries may be places of discontinuity in the code's behavior.  When an `int` variable grows beyond its maximum positive value, for example, it abruptly becomes a negative number. 
+Why do bugs often happen at boundaries?  One reason is that programmers often make off-by-one mistakes (like writing `<=` instead of `<`, or initializing a counter to 0 instead of 1).  Another is that some boundaries may need to be  handled as special cases in the code.  Another is that boundaries may be places of discontinuity in the code's behavior.  When an `int` variable grows beyond its maximum positive value, for example, it abruptly becomes a negative number. 
 
 It's important to include boundaries as subdomains in your partition, so that you're choosing an input from the boundary.  
 
@@ -198,28 +194,28 @@ Let's redo **`max : int &times; int &rarr; int`**.
 Partition into:
 
 + *relationship between a and b*
-    + a &lt; b
+    + a < b
     + a = b
     + a > b
 + *value of a*
     + a = 0
-    + a &lt; 0
+    + a < 0
     + a > 0
     + a = minimum integer
     + a = maximum integer
 + *value of b*
     + b = 0
-    + b &lt; 0
+    + b < 0
     + b > 0
     + b = minimum integer
     + b = maximum integer
 
 Now let's pick test values that cover all these classes:
 
-+ (1, 2) covers a &lt; b, a > 0, b > 0
-+ (-1, -3) covers a > b, a &lt; 0, b &lt; 0
++ (1, 2) covers a < b, a > 0, b > 0
++ (-1, -3) covers a > b, a < 0, b < 0
 + (0, 0) covers a = b, a = 0, b = 0
-+ (Integer.MIN_VALUE, Integer.MAX_VALUE) covers a &lt; b, a = minint, b = maxint
++ (Integer.MIN_VALUE, Integer.MAX_VALUE) covers a < b, a = minint, b = maxint
 + (Integer.MAX_VALUE, Integer.MIN_VALUE) covers a > b, a = maxint, b = minint
 
 
@@ -231,7 +227,7 @@ After partitioning the input space, we can choose how exhaustive we want the tes
 Every legal combination of the partition dimensions is covered by one test case.
 This is what we did for the `multiply` example, and it gave us 7 &times; 7 = 49 test cases.
 For the `max` example that included boundaries, which has three dimensions with 3 parts, 5 parts, and 5 parts respectively, it would mean up to 3 &times; 5 &times; 5 = 75 test cases.  
-In practice not all of these combinations are possible, however.  For example, there's no way to cover the combination a &lt; b, a=0, b=0, because `a` can't be simultaneously less than zero and equal to zero.
+In practice not all of these combinations are possible, however.  For example, there's no way to cover the combination a < b, a=0, b=0, because `a` can't be simultaneously less than zero and equal to zero.
 
 + **Cover each part.**  
 Every part of each dimension is covered by at least one test case, but not necessarily every combination. 
@@ -382,7 +378,7 @@ Here's an example of a spec:
      * @return the hailstone sequence starting at n and ending with 1.
      * For example, hailstone(3)=[3,10,5,16,8,4,2,1].
      */
-    public static List&lt;Integer> hailstoneSequence(int n) {
+    public static List<Integer> hailstoneSequence(int n) {
     ...
     }
 
@@ -495,7 +491,7 @@ Here's a third example of smelly code.
     public static int LONG_WORD_LENGTH = 5;
     public static String longestWord;
     
-    public static void countLongWords(List&lt;String> words) {
+    public static void countLongWords(List<String> words) {
        int n = 0;
        longestWord = "";
        for (String word: words) {
