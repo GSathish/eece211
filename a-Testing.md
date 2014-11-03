@@ -74,7 +74,7 @@ Instead, test cases must be chosen carefully and systematically, and that's what
 
 Creating a good test suite is a challenging and interesting design problem.  We want to pick a set of test cases that is small enough to run quickly, yet large enough to validate the program.  
 
-![Partitioning a function's input space]({{ site.url }}public/images/Testing/partition.png)
+![Partitioning a function's input space]({{ site.url }}/public/images/Testing/partition.png)
 
 To do this, we divide the input space into **subdomains**, each consisting of a set of inputs. Taken together the subdomains completely cover the input space, so that every input lies in at least one subdomain. Then we choose one test case from each subdomain, and that's our test suite.
 
@@ -122,7 +122,7 @@ Finally, as a suspicious tester trying to find bugs, we might suspect that the i
 
 Let's bring all these observations together into a straightforward partition of the whole `(a,b)` space.  We'll  choose `a` and `b` independently from:
 
-![Partitioning multiply()](public/images/Testing/multiply-partition.png)
+![Partitioning multiply()]({{ site.url }}/public/images/Testing/multiply-partition.png)
 
 + 0
 + 1
@@ -141,8 +141,6 @@ To produce the test suite, we would pick an arbitrary pair (a,b) from each squar
 + (a,b) = (2^100, 1) to cover (large positive, 1)
 + etc.
 
-<div class="clearfix"></div>
-
 #### Example: `max()`
 
 Let's look at another example from the Java library: the integer `max()` function, found in the [`Math`](http://docs.oracle.com/javase/8/docs/api/java/lang/Math.html) class.
@@ -160,7 +158,7 @@ Mathematically, this method is a function of the following type:
 
 max : int &times; int &rarr; int
 
-[Partitioning max](public/images/Testing/max-partition.png) 
+![Partitioning max]({{ site.url }}/public/images/Testing/max-partition.png) 
 
 From the specification, it makes sense to partition this function as:
 
@@ -263,12 +261,7 @@ A standard approach to testing is to add tests until the test suite achieves ade
 In practice, statement coverage is usually measured by a code coverage tool, which instruments your program to count the number of times each statement is run by your test suite. 
 With such a tool, white box testing is easy; you just measure the coverage of your black box tests, and add more test cases until all important statements are logged as executed. 
 
-A good code coverage tool for Eclipse is [EclEmma](http://www.eclemma.org/), shown below.
-
-<img src="figures/eclemma.png" alt="EclEmma code coverage tool for Eclipse" width="100%"></img>
-
-Notice how lines that have been executed by the test suite are colored green, and lines not yet covered are red.  The next step should be to add a test case that causes the body of the while loop to execute.
-
+A good code coverage tool for Eclipse is [EclEmma](http://www.eclemma.org/).
 
 ## Automated Testing and Regression Testing
 
