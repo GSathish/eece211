@@ -564,6 +564,8 @@ pre {
 
 img {
   padding: 10px; 
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* lots of new stuff */
