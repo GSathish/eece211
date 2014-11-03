@@ -118,7 +118,7 @@ There are also some special cases for multiplication that we should check: 0, 1,
 Finally, as a suspicious tester trying to find bugs, we might suspect that the implementor of BigInteger might try to make it faster by using ``int`` or ``long`` internally when possible, and only fall back to an expensive general representation (like a list of digits) when the value is too big.  So we should definitely also try integers that are very big, bigger than the biggest ``long``.
 
 + a or b is small
-+ a or b is bigger than `Long.MAX_VALUE`, the biggest possible primitive integer in Java, which is roughly 2^63.
++ a or b is bigger than `Long.MAX_VALUE`, the biggest possible primitive integer in Java, which is roughly 2<sup>63</sup>.
 
 Let's bring all these observations together into a straightforward partition of the whole `(a,b)` space.  We'll  choose `a` and `b` independently from:
 
@@ -136,7 +136,7 @@ To produce the test suite, we would pick an arbitrary pair (a,b) from each squar
 
 + (a,b) = (-3, 25) to cover (small negative, small positive)
 + (a,b) = (0, 30) to cover (0, small positive)
-+ (a,b) = (2^100, 1) to cover (large positive, 1)
++ (a,b) = (2<sup>100</sup>, 1) to cover (large positive, 1)
 + etc.
 
 #### Example: `max()`
