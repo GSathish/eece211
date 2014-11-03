@@ -50,7 +50,7 @@ The development of a single function proceeds in this order:
 2. Write tests that exercise the specification. 
 3. Write the actual code.  Once your code passes the tests you wrote, you're done.
 
-The **specification** describes the input/output behavior of the function.  It gives the types of the parameters and any additional constraints on them (e.g. `sqrt`'s parameter must be nonnegative).  It also gives the type of the return value and how the return value relates to the inputs.  You've already seen and used specifications on your problem sets in this class.  In code, the specification consists of the method signature and the comment above it that describes what it does.  We'll have much more to say about specifications a few classes from now.
+The **specification** describes the input/output behaviour of the function.  It gives the types of the parameters and any additional constraints on them (e.g. `sqrt`'s parameter must be nonnegative).  It also gives the type of the return value and how the return value relates to the inputs.  You've already seen and used specifications on your problem sets in this class.  In code, the specification consists of the method signature and the comment above it that describes what it does.  We'll have much more to say about specifications a few classes from now.
 
 Writing tests first is a good way to understand the specification.  The specification can be buggy, too &mdash; incorrect, incomplete, ambiguous, missing corner cases.  Trying to write tests can uncover these problems early, before you've wasted time writing an implementation of a buggy spec.
 
@@ -65,7 +65,7 @@ Here are some approaches that unfortunately don't work well in the world of soft
 
 **Random or statistical testing** doesn't work well for software.  Other engineering disciplines can test small random samples (e.g. 1% of hard drives manufactured) and infer the defect rate for the whole production lot.  Physical systems can use many tricks to speed up time, like opening a refrigerator 1000 times in 24 hours instead of 10 years.  These tricks give known failure rates (e.g. mean lifetime of a hard drive), but they assume continuity or uniformity across the space of defects.  This is true for physical artifacts.
 
-But it's not true for software.  Software behavior varies discontinuously and discretely across the space of possible inputs.  The [famous Pentium division bug](http://www.willamette.edu/~mjaneba/pentprob.html) affected approximately 1 in 9 billion divisions.  Stack overflows, out of memory errors, and numeric overflow bugs tend to happen abruptly, and always in the same way.
+But it's not true for software.  Software behaviour varies discontinuously and discretely across the space of possible inputs.  The [famous Pentium division bug](http://www.willamette.edu/~mjaneba/pentprob.html) affected approximately 1 in 9 billion divisions.  Stack overflows, out of memory errors, and numeric overflow bugs tend to happen abruptly, and always in the same way.
 
 Instead, test cases must be chosen carefully and systematically, and that's what we'll look at next.
 
@@ -76,7 +76,7 @@ Creating a good test suite is a challenging and interesting design problem.  We 
 
 To do this, we divide the input space into **subdomains**, each consisting of a set of inputs. Taken together the subdomains completely cover the input space, so that every input lies in at least one subdomain. Then we choose one test case from each subdomain, and that's our test suite.
 
-The idea behind subdomains is to partition the input space into sets of similar inputs on which the program has similar behavior. Then we use one representative of each set. This approach makes the best use of limited testing resources by choosing dissimilar test cases, and forcing the testing to explore parts of the input space that random testing might not reach.
+The idea behind subdomains is to partition the input space into sets of similar inputs on which the program has similar behaviour. Then we use one representative of each set. This approach makes the best use of limited testing resources by choosing dissimilar test cases, and forcing the testing to explore parts of the input space that random testing might not reach.
 
 ![Partitioning a function's input space]({{ site.url }}/public/images/Testing/partition.png)
 
@@ -168,6 +168,7 @@ Our test suite might then be:
 + (a, b) = (9, 9) to cover a = b
 + (a, b) = (-5, -6) to cover a > b
 
+#### Illustrating the Test Partition
 ![Partitioning max]({{ site.url }}/public/images/Testing/max-partition.png) 
 
 ### Include Boundaries in the Partition
@@ -179,7 +180,7 @@ Bugs often occur at *boundaries* between subdomains.  Some examples:
 + emptiness (the empty string, empty list, empty array) for collection types
 + the first and last element of a collection
 
-Why do bugs often happen at boundaries?  One reason is that programmers often make off-by-one mistakes (like writing `<=` instead of `<`, or initializing a counter to 0 instead of 1).  Another is that some boundaries may need to be  handled as special cases in the code.  Another is that boundaries may be places of discontinuity in the code's behavior.  When an `int` variable grows beyond its maximum positive value, for example, it abruptly becomes a negative number. 
+Why do bugs often happen at boundaries?  One reason is that programmers often make off-by-one mistakes (like writing `<=` instead of `<`, or initializing a counter to 0 instead of 1).  Another is that some boundaries may need to bee  handled as special cases in the code.  Another is that boundaries may be places of discontinuity in the code's behaviour.  When an `int` variable grows beyond its maximum positive value, for example, it abruptly becomes a negative number. 
 
 It's important to include boundaries as subdomains in your partition, so that you're choosing an input from the boundary.  
 
@@ -234,13 +235,13 @@ Often we strike some compromise between these two extremes, influenced by whiteb
 
 ## Blackbox and Whitebox Testing
 
-Recall from above that the *specification* is the description of the function's behavior &mdash; the types of parameters, type of return value, and constraints and relationships between them.
+Recall from above that the *specification* is the description of the function's behaviour &mdash; the types of parameters, type of return value, and constraints and relationships between them.
 
 **Blackbox testing** means choosing test cases only from the specification, not the implementation of the function.  That's what we've been doing in our examples so far.  We partitioned and looked for boundaries in `multiply`, `max`, and `intersect` without looking at the actual code for these functions.
 
 **Whitebox testing** (also called glass box testing) means choosing test cases with knowledge of how the function is actually implemented.  For example, if the implementation selects different algorithms depending on the input, then you should partition according to those domains.   If the implementation keeps an internal cache that remembers the answers to previous inputs, then you should test repeated inputs.
 
-When doing whitebox testing, you must take care that your test cases don't *require* specific implementation behavior that isn't specifically called for by the spec.  For example, if the spec says "throws an exception if the input is poorly formatted", then your test shouldn't check *specifically* for a NullPointerException just because that's what the current implementation does.  The specification in this case allows *any* exception to be thrown, so your test case should likewise be general to preserve the implementor's freedom.  We'll have much more to say about this in the class on specs.
+When doing whitebox testing, you must take care that your test cases don't *require* specific implementation behaviour that isn't specifically called for by the spec.  For example, if the spec says "throws an exception if the input is poorly formatted", then your test shouldn't check *specifically* for a NullPointerException just because that's what the current implementation does.  The specification in this case allows *any* exception to be thrown, so your test case should likewise be general to preserve the implementor's freedom.  We'll have much more to say about this in the class on specs.
 
 
 ### Coverage
@@ -356,7 +357,7 @@ The dayOfYear example is full of identical code. How would you DRY it out?
 
 A quick general word about commenting.  Good software developers write comments in their code, and do it judiciously.  Good comments should make the code easier to understand, safer from bugs (because important assumptions have been documented), and ready for change.
 
-One kind of crucial comment is a specification, which appears above a method or above a class and documents the behavior of the method or class.
+One kind of crucial comment is a specification, which appears above a method or above a class and documents the behaviour of the method or class.
 In Java, this is conventionally written as a Javadoc comment, meaning that it starts with `/**` and includes `@`-syntax, like `@param` and `@return` for methods.
 Here's an example of a spec:
 
@@ -561,4 +562,4 @@ Testing is about finding bugs in your code, and test-first programming is about 
 
 + **Easy to understand.**  Code review is really the only way to find obscure or confusing code, because other people are reading it and trying to understand it.
 
-+ **Ready for change.**  Readiness for change was considered by writing tests that only depend on behavior in the spec.  We also talked about automated regression testing, which helps keep bugs from coming back when changes are made to code.  Code review also helps here, when it's done by experienced software developers who can anticipate what might change and suggest ways to guard against it. 
++ **Ready for change.**  Readiness for change was considered by writing tests that only depend on behaviour in the spec.  We also talked about automated regression testing, which helps keep bugs from coming back when changes are made to code.  Code review also helps here, when it's done by experienced software developers who can anticipate what might change and suggest ways to guard against it. 
