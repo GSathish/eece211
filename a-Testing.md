@@ -59,7 +59,7 @@ Writing tests first is a good way to understand the specification.  The specific
 
 Here are some approaches that unfortunately don't work well in the world of software.
 
-**Exhaustive testing** is infeasible.  The space of possible test cases is generally too big to cover exhaustively.  Imagine exhaustively testing a 32-bit floating-point multiply operation, `a*b`.  There are 2^64 test cases!
+**Exhaustive testing** is infeasible.  The space of possible test cases is generally too big to cover exhaustively.  Imagine exhaustively testing a 32-bit floating-point multiply operation, `a*b`.  There are 2<sup>64</sup> test cases!
 
 **Haphazard testing** ("just try it and see if it works") is less likely to find bugs, unless the program is so buggy that an arbitrarily-chosen input is more likely to fail than to succeed.It also doesn't increase our confidence in program correctness.
 
