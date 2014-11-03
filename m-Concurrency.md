@@ -119,7 +119,7 @@ In this simple example, every transaction is just a one dollar deposit followed 
 // each ATM does a bunch of transactions that
 // modify balance, but leave it unchanged afterward
 private static void cashMachine() {
-    for (int i = 0; i &lt; TRANSACTIONS_PER_MACHINE; ++i) {
+    for (int i = 0; i < TRANSACTIONS_PER_MACHINE; ++i) {
         deposit(); // put a dollar in
         withdraw(); // take it back out
     }
@@ -249,7 +249,7 @@ private void computeAnswer() {
     tmpr = true;
     
     ready = tmpr;
-                   // &lt;-- what happens if useAnswer() interleaves here?
+                   // what happens if useAnswer() interleaves here?
                    // ready is set, but answer isn't.
     answer = tmpa;
 }
@@ -288,7 +288,7 @@ A heisenbug may even disappear when you try to look at it with `println` or `deb
 
 ```java
 private static void cashMachine() {
-    for (int i = 0; i &lt; TRANSACTIONS_PER_MACHINE; ++i) {
+    for (int i = 0; i < TRANSACTIONS_PER_MACHINE; ++i) {
         deposit(); // put a dollar in
         withdraw(); // take it back out
         System.out.println(balance); // makes the bug disappear!
