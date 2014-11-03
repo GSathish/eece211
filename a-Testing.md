@@ -74,7 +74,7 @@ Instead, test cases must be chosen carefully and systematically, and that's what
 
 Creating a good test suite is a challenging and interesting design problem.  We want to pick a set of test cases that is small enough to run quickly, yet large enough to validate the program.  
 
-![Partitioning a function's input space](public/images/Testing/partition.png)
+![Partitioning a function's input space]({{ site.url }}public/images/Testing/partition.png)
 
 To do this, we divide the input space into **subdomains**, each consisting of a set of inputs. Taken together the subdomains completely cover the input space, so that every input lies in at least one subdomain. Then we choose one test case from each subdomain, and that's our test suite.
 
@@ -102,7 +102,7 @@ This example shows that even though only one parameter is explicitly shown in th
 
 So we should think of `multiply` as a function taking two inputs, each of type `BigInteger`, and producing one output of type `BigInteger`:
 
-**`multiply : BigInteger &times; BigInteger &rarr; BigInteger`**
+multiply : BigInteger &times; BigInteger &rarr; BigInteger
 
 So we have a two-dimensional input space, consisting of all the pairs of integers (a,b).  Now let's partition it.  Thinking about how multiplication works, we might start with these partitions:
 
