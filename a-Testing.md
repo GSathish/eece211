@@ -74,17 +74,11 @@ Instead, test cases must be chosen carefully and systematically, and that's what
 
 Creating a good test suite is a challenging and interesting design problem.  We want to pick a set of test cases that is small enough to run quickly, yet large enough to validate the program.  
 
-&nbsp;<br />
-
-![Partitioning a function's input space]({{ site.url }}/public/images/Testing/partition.png)
-
-&nbsp;<br />
-
 To do this, we divide the input space into **subdomains**, each consisting of a set of inputs. Taken together the subdomains completely cover the input space, so that every input lies in at least one subdomain. Then we choose one test case from each subdomain, and that's our test suite.
 
 The idea behind subdomains is to partition the input space into sets of similar inputs on which the program has similar behavior. Then we use one representative of each set. This approach makes the best use of limited testing resources by choosing dissimilar test cases, and forcing the testing to explore parts of the input space that random testing might not reach.
 
-<div class="clearfix"></div>
+![Partitioning a function's input space]({{ site.url }}/public/images/Testing/partition.png)
 
 #### Example: `BigInteger.multiply()`
 
@@ -126,12 +120,6 @@ Finally, as a suspicious tester trying to find bugs, we might suspect that the i
 
 Let's bring all these observations together into a straightforward partition of the whole `(a,b)` space.  We'll  choose `a` and `b` independently from:
 
-&nbsp;<br />
-
-![Partitioning multiply()]({{ site.url }}/public/images/Testing/multiply-partition.png)
-
-&nbsp;<br />
-
 + 0
 + 1
 + -1
@@ -148,6 +136,8 @@ To produce the test suite, we would pick an arbitrary pair (a,b) from each squar
 + (a,b) = (0, 30) to cover (0, small positive)
 + (a,b) = (2^100, 1) to cover (large positive, 1)
 + etc.
+
+![Partitioning multiply()]({{ site.url }}/public/images/Testing/multiply-partition.png)
 
 #### Example: `max()`
 
@@ -166,12 +156,6 @@ Mathematically, this method is a function of the following type:
 
 max : int &times; int &rarr; int
 
-&nbsp;<br />
-
-![Partitioning max]({{ site.url }}/public/images/Testing/max-partition.png) 
-
-&nbsp;<br />
-
 From the specification, it makes sense to partition this function as:
 
 + a < b
@@ -184,7 +168,7 @@ Our test suite might then be:
 + (a, b) = (9, 9) to cover a = b
 + (a, b) = (-5, -6) to cover a > b
 
-<div class="clearfix"></div>
+![Partitioning max]({{ site.url }}/public/images/Testing/max-partition.png) 
 
 ### Include Boundaries in the Partition
 
