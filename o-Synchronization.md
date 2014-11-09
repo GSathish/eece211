@@ -11,7 +11,7 @@ After reading the notes and examining the related example code, you should be ab
 
 In our introduction to concurrency, we saw [two models for concurrent programming](../m-Concurrency/): *shared memory* and *message passing*.
 
-![Multiprocessing with Shared Memory]({{ site.url }}/public/images/synchronization/multiprocessor.png)
+![Multiprocessing with Shared Memory]({{ site.url }}/public/images/concurrency/shared-memory-bank-account.jpg)
 
 + In the **shared memory** model, concurrent modules interact by reading and writing shared objects in memory.
 
