@@ -222,7 +222,7 @@ But get it working, and thoroughly tested, in a sequential, single-threaded envi
 
 Now we're ready for the next step:
 
-4. **Synchronize.**
++ (Step 4.) **Synchronize.**
 Make an argument that your rep is threadsafe.
 Write it down explicitly as a comment in your class, right by the rep invariant, so that a maintainer knows how you designed thread safety into the class.
 
@@ -231,7 +231,7 @@ We already saw [how to make a thread safety argument](../n-ThreadSafety/), but t
 
 And then the extra step we hinted at above:
 
-5. **Iterate**.
++ (Step 5.) **Iterate**.
 You may find that your choice of operations makes it hard to write a threadsafe type with the guarantees clients require.
 You might discover this in step 1, or in step 2 when you write tests, or in steps 3 or 4 when you implement.
 If that's the case, go back and refine the set of operations your ADT provides.
