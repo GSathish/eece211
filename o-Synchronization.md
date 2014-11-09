@@ -11,7 +11,7 @@ After reading the notes and examining the related example code, you should be ab
 
 In our introduction to concurrency, we saw [two models for concurrent programming](../m-Concurrency/): *shared memory* and *message passing*.
 
-![Multiprocessing with Shared Memory]({{ site.url }}/public/figures/synchronization/multiprocessor.png)
+![Multiprocessing with Shared Memory]({{ site.url }}/public/images/synchronization/multiprocessor.png)
 
 + In the **shared memory** model, concurrent modules interact by reading and writing shared objects in memory.
 
@@ -19,7 +19,7 @@ Creating multiple threads inside a single Java process is our primary example of
 
 + In the **message passing** model, concurrent modules interact by sending messages to one another over a communication channel.
 
-![Network Message Passing]({{ site.url }}/public/figures/synchronization/network.png)
+![Network Message Passing]({{ site.url }}/public/images/synchronization/network.png)
 
 We [defined thread safety](../n-ThreadSafety/) for a data type or a function as *behaving correctly when used from multiple threads, regardless of how those threads are executed, without additional coordination*.
 
