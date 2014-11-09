@@ -25,9 +25,9 @@ A data type or static method is *Thread-safe* if it behaves correctly when used 
 
 + "behaves correctly" means satisfying its specification and preserving its rep invariant;
 + "regardless of how threads are executed" means threads might be on multiple processors or timesliced on the same processor;
-+ "without additional coordination" means that the data type can't put preconditions on its caller related to timing, like "you can't call get() while set() is in progress."
++ "without additional coordination" means that the data type can't put preconditions on its caller related to timing, like "you can't call `get()` while `set()` is in progress."
 
-Remember `Iterator`?  It's not Thread-safe.  Iterator's specification says that you can't modify a collection at the same time as you're iterating over it.  That's a timing-related precondition put on the caller, and Iterator makes no guarantee to behave correctly if you violate it.
+Remember `Iterator`?  It's not Thread-safe.  `Iterator`’s specification says that you can't modify a collection at the same time as you're iterating over it.  That's a timing-related precondition put on the caller, and `Iterator` makes no guarantee to behave correctly if you violate it.
 
 
 ## Strategy 1: Confinement
@@ -167,7 +167,7 @@ This is in contrast to [StringBuilder](http://docs.oracle.com/javase/8/docs/api/
 
 It's become common in the Java API to find two mutable data types that do the same thing, one Thread-safe and the other not.  The reason is what this quote indicates: Thread-safe data types usually incur a performance penalty compared to an unsafe type. 
 
-It's deeply unfortunate that `StringBuffer` and `StringBuilder` are named so similarly, without any indication in the name that thread safety is the crucial difference between them.  It's also unfortunate that they don't share a common interface, so you can't simply swap in one implementation for the other for the times when you need thread safety. The Java collection interfaces do much better in this respect, as we'll see next.
+It's rather unfortunate that `StringBuffer` and `StringBuilder` are named so similarly, without any indication in the name that thread safety is the crucial difference between them.  It's also unfortunate that they don't share a common interface, so you can't simply swap in one implementation for the other for the times when you need thread safety. The Java collection interfaces do much better in this respect, as we'll see next.
 
 ### Thread-safe Collections
 
