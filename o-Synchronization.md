@@ -692,9 +692,8 @@ We've omitted one important approach to mutable shared data because it's outside
 Database systems are widely used for distributed client/server systems like web applications.
 Databases avoid race conditions using *transactions*, which are similar to synchronized regions in that their effects are atomic, but they don't have to acquire locks, though a transaction may fail and be rolled back if it turns out that a race occurred.
 Databases can also manage locks, and handle locking order automatically.
-For more about how to use databases in system design, 6.170 Software Studio is strongly recommended; for more about how databases work on the inside, take 6.814 Database Systems.
 
-And if you're interested in the **performance** of concurrent programs --- since performance is often one of the reasons we add concurrency to a system in the first place --- then 6.172 Performance Engineering is the course for you.
+And if you're interested in the **performance** of concurrent programs --- since performance is often one of the reasons we add concurrency to a system in the first place --- then a course on Parallel Programming would be the best choice.
 
 ## Summary
 
