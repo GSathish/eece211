@@ -1,7 +1,7 @@
-———
+---
 layout: page
 title: Thread-safe Programming
-———
+---
 
 ### Objectives
 
