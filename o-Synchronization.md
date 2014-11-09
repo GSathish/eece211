@@ -1,3 +1,8 @@
+---
+layout: page
+title: Synchronization
+---
+
 ### Objectives
 
 After reading the notes and examining the related example code, you should be able to implement a threadsafe datatype using synchronization.
