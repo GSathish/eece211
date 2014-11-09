@@ -11,7 +11,7 @@ After reading the notes and examining the related example code, you should be ab
 
 In our introduction to concurrency, we saw [two models for concurrent programming](../m-Concurrency/): *shared memory* and *message passing*.
 
-![Multiprocessing with Shared Memory]({{ site.url }}/public/images/concurrency/shared-memory-bank-account.jpg)
+![Multiprocessing with Shared Memory]({{ site.url }}/public/images/synchronization/multiprocessor.png)
 
 + In the **shared memory** model, concurrent modules interact by reading and writing shared objects in memory.
 
@@ -58,7 +58,7 @@ This avoids the problem of [reordering](../m-Concurrency), ensuring that the own
 
 ### Bank account example
 
-![Shared memory model for bank accounts]({{ site…url }}/public/images/concurrency/shared-memory-bank-account.png)
+![Shared memory model for bank accounts]({{ site…url }}/public/images/concurrency/shared-memory-bank-account.jpg)
 
 Our first example of shared memory concurrency was a [bank with cash machines](../m-Concurrency/).
 
