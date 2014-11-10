@@ -43,7 +43,7 @@ Are they the same or different?
 
 {% highlight java %}
 static int findA(int[] a, int val) {
-    for (int i = 0; i &lt; a.length; i++) {
+    for (int i = 0; i < a.length; i++) {
         if (a[i] == val) return i;
     }
     return a.length;
@@ -237,7 +237,7 @@ We'll usually omit saying this because it's virtually always required of object 
 Here is another example of a mutating method:
 
 <pre class="no-markdown">
-static void sort(List&lt;String> lst)
+static void sort(List<String> lst)
   <em>requires</em>: nothing
   <em>effects</em>:  puts lst in sorted order, i.e. lst[i] <= lst[j]
               for all 0 <= i < j < lst.size()</pre>

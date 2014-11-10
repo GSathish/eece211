@@ -20,7 +20,7 @@ Recall the two example implementations of `find` we began with in the previous p
 
 {% highlight java %}
 static int findA(int[] a, int val) {
-    for (int i = 0; i &lt; a.length; i++) {
+    for (int i = 0; i < a.length; i++) {
         if (a[i] == val) return i;
     }
     return a.length;
@@ -215,7 +215,7 @@ It would be better to use two separate procedures.
 Consider the specification of a method that puts a value in a map:
 
 <pre>
-static V put (Map&lt;K,V> map, K key, V val)
+static V put (Map<K,V> map, K key, V val)
   <em>requires</em>: val may be null, and map may contain null values
   <em>effects</em>:  inserts (key, val) into the mapping,
               overriding any existing mapping for key, and
@@ -233,7 +233,7 @@ There's no point throwing a checked exception for a bad argument but allowing ar
 Here's a specification illustrating this flaw (and also written in an inappropriately operational style):
 
 <pre>
-static void addAll(List&lt;T> list1, List&lt;T> list2)
+static void addAll(List<T> list1, List<T> list2)
   <em>effects</em>: adds the elements of list2 to list1,
              unless it encounters a null element,
              at which point it throws a NullPointerException
@@ -258,14 +258,14 @@ In Java, this often means using an interface type, like `Map` or `Reader`, inste
 Consider this specification:
 
 <pre>
-static ArrayList&lt;T> reverse(ArrayList&lt;T> list)
+static ArrayList<T> reverse(ArrayList<T> list)
   <em>effects</em>: returns a new list which is the reversal of list, i.e.
              newList[i] == list[n-i-1]
-             for all 0 &lt;= i &lt; n, where n = list.size()
+             for all 0 <= i < n, where n = list.size()
 </pre>
 
 This forces the client to pass in an `ArrayList`, and forces the implementor to return an `ArrayList`, even if there might be alternative `List` implementations that they would rather use.
-Since the behaviour of the specification doesn't depend on anything specific about *`ArrayList`*, it would be better to write this spec in terms of the more abstract `List&lt;T>`.
+Since the behaviour of the specification doesn't depend on anything specific about *`ArrayList`*, it would be better to write this spec in terms of the more abstract `List<T>`.
 
 ## Precondition or postcondition?
 
