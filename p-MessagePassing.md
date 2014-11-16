@@ -48,7 +48,7 @@ A synchronized queue, according to the Java API documentation:
 + **`put(e)`** *blocks* until it can add element `e` to the end of the queue (if the queue does not have a size bound, `put` will not block).
 + **`take()`** *blocks* until it can remove and return the element at the head of the queue, waiting until the queue is non-empty.
 
-![Producer-consumer with message passing]({ site.url }/public/images/producer-consumer.png)
+![Producer-consumer with message passing]({{ site.url }}/public/images/producer-consumer.png)
 
 Analogous to the client/server pattern for message passing over a network is the **producer-consumer design pattern** for message passing between threads.
 Producer threads and consumer threads share a synchronized queue.
