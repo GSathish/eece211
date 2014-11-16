@@ -229,7 +229,8 @@ class FibonacciResult {
 	public String toString() {
 		return "fibonacci(" + input + ") = " + output;
 	}
-}```
+}
+```
 
 We would probably add additional observers to `FibonacciResult` so clients can retrieve the input number and output result.
 
