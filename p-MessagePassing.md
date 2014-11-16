@@ -1,3 +1,8 @@
+---
+layout: pages
+title: Message Passing
+---
+
 ## Goals of concurrent program design
 
 Now is a good time to step back and look at what we're doing with regards to concurrent programming.
