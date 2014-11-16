@@ -247,7 +247,7 @@ We already know that port 80 is the well-known port for speaking HTTP to web ser
 
 You can experiment with `telnet`: For input to the telnet connection, newlines (pressing enter) are shown with <b>&crarr;</b>:
 
-```
+<pre>
 $ <b>telnet www.ubc.ca 80</b>
 Trying 137.82.130.49...
 Connected to www.ubc.ca.
@@ -257,7 +257,7 @@ Host: www.ubc.ca&crarr;
 &crarr;
 &lt;!DOCTYPE html&gt;
 <i>... lots of output ...</i>
-```
+</pre>
 
 The `GET` command gets a web page.
 The `/` is the path of the page you want on the site.
