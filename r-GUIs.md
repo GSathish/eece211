@@ -39,11 +39,11 @@ In the Java Tutorials, read:
 
 Virtually every GUI system has some kind of view tree.  The view tree is a powerful structuring idea, which is loaded with responsibilities in a typical GUI:
 
-**Output**.  Views are responsible for displaying themselves, and the view tree directs the display process. GUIs change their output by mutating the view tree.  For example, to show a new set of photos, the current Thumbnails are removed from the tree and a new set of Thumbnails is added in their place.  A redraw algorithm built into the GUI toolkit automatically redraws the affected parts of the subtree.  In Java Swing, every view in the tree has a paint() method that knows how to draw itself on the screen.  The repaint process is driven by calling paint() on the root of the tree, which recursively calls paint() down through all the descendent nodes of the view tree.
+**Output**.  Views are responsible for displaying themselves, and the view tree directs the display process. GUIs change their output by mutating the view tree.  For example, to show a new set of photos, the current Thumbnails are removed from the tree and a new set of Thumbnails is added in their place.  A redraw algorithm built into the GUI toolkit automatically redraws the affected parts of the subtree.  In Java Swing, every view in the tree has a `paint()` method that knows how to draw itself on the screen.  The repaint process is driven by calling `paint()` on the root of the tree, which recursively calls `paint()` down through all the descendent nodes of the view tree.
 
 **Input**. Views can have input handlers, and the view tree controls how mouse and keyboard input is processed.  More on this in a moment.
 
-**Layout**. The view tree controls how the views are laid out on the screen, i.e. how their bounding boxes are assigned.  An automatic layout algorithm automatically calculates positions and sizes of views.  Specialized containers (like JSplitPane, JScrollPane) do layout themselves.  More generic containers (JPanel, JFrame) delegate layout decisions to a layout manager (e.g. GroupLayout, BorderLayout, BoxLayout, ...).
+**Layout**. The view tree controls how the views are laid out on the screen, i.e. how their bounding boxes are assigned.  An automatic layout algorithm automatically calculates positions and sizes of views.  Specialized containers (like `JSplitPane`, `JScrollPane`) do layout themselves.  More generic containers (`JPanel`, `JFrame`) delegate layout decisions to a layout manager (e.g. `GroupLayout`, `BorderLayout`, `BoxLayout`, ...).
 
 In the Java Tutorials, read:
 
@@ -85,11 +85,11 @@ The last part -- listeners return to the event loop as fast as possible -- is ve
 
 The Listener pattern isn't just used for low-level input events like mouse clicks and keyboard keypresses.  Many GUI objects generate their own higher-level events, often as a result of some combination of low-level input events.  For example:
 
-*   JButton sends an action event when it is pressed (whether by mouse or keyboard)
-*   JList sends a selection event when the selected element changes (whether by mouse or by keyboard)
-*   JTextbox sends change events when the text inside it changes for any reason
+*   `JButton` sends an action event when it is pressed (whether by mouse or keyboard)
+*   `JList` sends a selection event when the selected element changes (whether by mouse or by keyboard)
+*   `JTextbox` sends change events when the text inside it changes for any reason
 
-A button can be pressed either by the mouse (with a mouse down and mouse up event) or by the keyboard (which is important for people who can't use a mouse, like blind users).  So you should always listen for these high-level events, not the low-level input events.  Use an ActionListener to respond to a JButton press, not a mouse listener.
+A button can be pressed either by the mouse (with a mouse down and mouse up event) or by the keyboard (which is important for people who can't use a mouse, like blind users).  So you should always listen for these high-level events, not the low-level input events.  Use an `ActionListener` to respond to a `JButton` press, not a mouse listener.
 
 
 In the Java Tutorials, read:
