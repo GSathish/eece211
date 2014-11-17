@@ -187,8 +187,7 @@ The operating system takes care of the details of delaying that thread until `re
 Blocking happens throughout concurrent programming, not just in [I/O](http://en.wikipedia.org/wiki/Input/output) (communication into and out of a process, perhaps over a network, or to/from a file, or with the user on the command line or a GUI, ...).
 Concurrent modules don't work in lockstep, like sequential programs do, so they typically have to wait for each other to catch up when coordinated action is required.
 
-We'll see in the next reading that this waiting gives rise to the second major kind of bug (the first was race conditions) in concurrent programming: **deadlock**, where modules are waiting for each other to do something, so none of them can make any progress.
-But that's for next time.
+This waiting gives rise to the second major kind of bug (the first was race conditions) in concurrent programming: **deadlock**, where modules are waiting for each other to do something, so none of them can make any progress.
 
 ## Using network sockets
 
