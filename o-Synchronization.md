@@ -683,7 +683,7 @@ What strategies are typically followed in real programs?
   Other threads have to pass messages to that dedicated thread in order to access the tree.
 
 + **Search** often uses immutable datatypes.
-  Our [Boolean formula satisfiability search](../11-recursive-data-types/#another_example_boolean_formulas) would be easy to make multithreaded, because all the datatypes involved were immutable.
+  Our [Boolean formula satisfiability search](../h-RecursiveTypes/) would be easy to make multithreaded, because all the datatypes involved were immutable.
   There would be no risk of either races or deadlocks.
 
 + **Operating systems** often use fine-grained locks in order to get high performance, and use lock ordering to deal with deadlock problems.
