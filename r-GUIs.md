@@ -158,7 +158,7 @@ SwingUtilities.invokeLater(new Runnable() {
 });
 ```
 
-The `invokeLater()` simply drops this `Runnable` object at the end of the queue, and when Swing's event loop reaches it, it simply calls `run()`.  Thus the body of `run()` ends up run by the event-dispatch thread, where it can safely call observers and mutators on the view tree.  
+The `invokeLater()` simply drops this `Runnable` object at the end of the queue, and when Swing's event loop reaches it, it simply calls `run()`.  Thus the body of `run()` ends up being run by the event-dispatch thread, where it can safely call observers and mutators on the view tree.  
 
 In the Java Tutorials, read:
 
