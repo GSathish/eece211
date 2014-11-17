@@ -99,7 +99,7 @@ A [**socket**](http://en.wikipedia.org/wiki/Network_socket) represents one end o
   
   In Java, use [`ServerSocket`](java:java/net/ServerSocket) to make a listening socket, and use its [`accept`](http://docs.oracle.com/javase/8/docs/api/java/net/ServerSocket.html#accept--) method to listen to it.
 
-+ An **connected socket** can send and receive messages to and from the process on the other end of the connection.
++ A **connected socket** can send and receive messages to and from the process on the other end of the connection.
   It is identified by both the local IP address and port number plus the remote address and port, which allows a server to differentiate between concurrent connections from different IPs, or from the same IP on different remote ports.
   
   In Java, clients use a [`Socket`](java:java/net/Socket) constructor to establish a socket connection to a server.
