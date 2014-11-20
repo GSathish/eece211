@@ -214,13 +214,13 @@ The second design choice is the order in which the elements are accumulated. For
 
 `fold-right : (E x F → F) x Seq<E> x F → F`
 
-where `fold-right(f, list, init)` of an `n`-element list produces `resultn` from this pattern:
+where `fold-right(f, list, init)` of an `n`-element list produces *result<sub>n</sub>* from this pattern:
 
-```python
-result<sub>0</sub> = init
-result1 = f(list[n-1], result0) result2 = f(list[n-2], result1) ...
-result_{n} = f(list[0] , result_{n-1})
-```
+- result<sub>0</sub> = init
+- result<sub>1</sub> = f(list[n-1], result<sub>0</sub>) 
+- result<sub>2</sub> = f(list[n-2], result<sub>1</sub>) 
+- …
+- result<sub>n</sub> = f(list[0] , result<sub>n-1</sub>)
 
 Two ways to reduce: from the left or the right
 The return type of the reduce operation doesn’t have to match the type of the list elements. For example, we can use reduce to glue together a sequence into a string:
