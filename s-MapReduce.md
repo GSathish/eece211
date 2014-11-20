@@ -431,17 +431,20 @@ public static <A,B,C> Function<A,C> compose(final Function<A,B> f, final Functio
 ```
 
 It turns out that we can’t write chain() in strongly-typed Java, except in a very restricted form in which all the functions in the chain have the identical input and output types. This is because Lists must be homogeneous – `List<Function<A,A>>`.
+
+```java
 /**
 * Compose a chain of functions.
 * @param list list of functions A->A to compose
 * @return function A->A made by composing list[0] ... list[n-1] */
-public static <A> Function<A,A> chain(List<Function<A,A>> list) { return reduce(
-list,
-new BinOp<Function<A,A>, Function<A,A>, Function<A,A>>() {
-public Function<A, A> apply(Function<A, A> t, Function<A, A> u) {
-return compose(t, u); }
-},
-new Function<A,A>() {
-public A apply(A t) { return t; } }
-); }
+public static <A> Function<A,A> chain(List<Function<A,A>> list) { 
+	return reduce(list, new BinOp<Function<A,A>, Function<A,A>, Function<A,A>>() {
+		public Function<A, A> apply(Function<A, A> t, Function<A, A> u) {
+			return compose(t, u); }
+		},
+		new Function<A,A>() {
+			public A apply(A t) { return t; } 
+		} 
+	); }
 }
+```
