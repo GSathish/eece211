@@ -126,7 +126,7 @@ When you only need the function in one place, however – which often comes up i
 lambda k: 2**k
 ```
 
-This expression represents a function of one argument (called `k`) that returns the value 2<sup>k</sup. You can use it anywhere you would have used `powerOfTwo`:
+This expression represents a function of one argument (called `k`) that returns the value 2<sup>k</sup>. You can use it anywhere you would have used `powerOfTwo`:
 
 ```python
 (lambda k: 2**k) (5) # ==> 32
