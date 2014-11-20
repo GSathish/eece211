@@ -445,6 +445,6 @@ public static <A> Function<A,A> chain(List<Function<A,A>> list) {
 		new Function<A,A>() {
 			public A apply(A t) { return t; } 
 		} 
-	); }
+	); 
 }
 ```
