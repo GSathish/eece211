@@ -106,7 +106,8 @@ Let’s pause here for a second, because we’re doing something unusual with fu
 we didn’t call `sqrt()` (like `sqrt(25)` is a call); instead we just used its name. In Python, the name of a function is a reference to an object representing that function. You can assign that object to another variable if you like, and it still behaves like `sqrt`:
 
 ```python
-mysqrt = sqrt mysqrt(25) # ==> 5.0
+mysqrt = sqrt 
+mysqrt(25) # ==> 5.0
 ```
 
 You can also pass a reference to the function object as a parameter to another function; that’s what we’re doing with map here. You can use function objects the same way you would use any other data value in Python (like numbers or strings or objects).
@@ -139,7 +140,8 @@ Python lambda expressions are unfortunately syntactically limited, to functions 
 Map is useful even if you don’t care about the return value of the function. When you have a sequence of mutable objects, for example, you can map a mutator operation over them:
 
 ```python
-map(IOBase.close, streams) # closes each stream on the list map(Thread.join, threads) # waits for each thread to finish
+map(IOBase.close, streams) # closes each stream on the list 
+map(Thread.join, threads) # waits for each thread to finish
 ```
 
 Some versions of map (including Python’s builtin `map`) also support mapping functions with multiple arguments. For example, you can add two lists of numbers element-wise:
@@ -168,9 +170,12 @@ filter(lambda s: len(s)>0, ['abc', '', 'd']) # ==> ['abc', 'd']
 We can define filter in a straightforward way:
 
 ```python
-def filter(f, seq): result = []
-for x in seq: if f(x):
-result.append(x) return result
+def filter(f, seq): 
+	result = []
+	for x in seq: 
+		if f(x):
+			result.append(x) 
+	return result
 ```
 
 ### Reduce
@@ -203,14 +208,20 @@ result2 = f(result1, list[1])
 resultn = f(resultn-1, list[n-1])
 ```
 
-This makes it easier to use reducers like max, which have no well-defined initial value: `reduce(max, [5,8,3,1]) # ==> 8`
+This makes it easier to use reducers like `max`, which have no well-defined initial value: `reduce(max, [5,8,3,1]) # ==> 8`
 
-The second design choice is the order in which the elements are accumulated. For associative operators like add and max it makes no difference, but for other operators it can. Python’s reduce is also called fold-left in other programming languages, because it combines the sequence starting from the left (the first element). Fold-right goes in the other direction:
-fold-right : (E x F → F) x Seq<E> x F → F
-where fold-right(f, list, init) of an n-element list produces resultn from this pattern:
-result0 = init
+The second design choice is the order in which the elements are accumulated. For associative operators like `add` and `max` it makes no difference, but for other operators it can. Python’s reduce is also called fold-left in other programming languages, because it combines the sequence starting from the left (the first element). Fold-right goes in the other direction:
+
+`fold-right : (E x F → F) x Seq<E> x F → F`
+
+where `fold-right(f, list, init)` of an `n`-element list produces `resultn` from this pattern:
+
+```python
+result<sub>0</sub> = init
 result1 = f(list[n-1], result0) result2 = f(list[n-2], result1) ...
-resultn = f(list[0] , resultn-1)
+result_{n} = f(list[0] , result_{n-1})
+```
+
 Two ways to reduce: from the left or the right
 The return type of the reduce operation doesn’t have to match the type of the list elements. For example, we can use reduce to glue together a sequence into a string:
 reduce(lambda s,x: s+str(x), [1,2,3,4], '') # ==> '1234' Or to flatten out nested sublists into a single list:
