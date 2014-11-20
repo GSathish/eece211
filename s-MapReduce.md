@@ -200,13 +200,11 @@ reduce(operator.add, [1,2,3], 0) # ==> 6
 
 There are two design choices in the reduce operation. First is how to whether to require an initial value. In Python’s `reduce` function, the initial value is optional, and if you omit it, reduce uses the first element of the list as its initial value. So you get behaviour like this instead:
 
-```python
-result0 = undefined # (reduce throws an exception if the list is empty) 
-result1 = list[0]
-result2 = f(result1, list[1])
-...
-resultn = f(resultn-1, list[n-1])
-```
+- result<sub>0</sub> = undefined (`reduce` throws an exception if the list is empty)
+- result<sub>1</sub> = list[0]
+- result<sub>2</sub> = f(result1, list[1])
+- …
+- result<sub>n</sub> = f(result<sub>n-1</sub>, list[n])
 
 This makes it easier to use reducers like `max`, which have no well-defined initial value: `reduce(max, [5,8,3,1]) # ==> 8`
 
@@ -222,20 +220,34 @@ where `fold-right(f, list, init)` of an `n`-element list produces *result<sub>n<
 - …
 - result<sub>n</sub> = f(list[0] , result<sub>n-1</sub>)
 
-Two ways to reduce: from the left or the right
 The return type of the reduce operation doesn’t have to match the type of the list elements. For example, we can use reduce to glue together a sequence into a string:
-reduce(lambda s,x: s+str(x), [1,2,3,4], '') # ==> '1234' Or to flatten out nested sublists into a single list:
-reduce(operator.concat, [[1,2],[3,4],[],[5]], []) # ==> [1,2,3,4,5] This is a useful enough sequence operation that we’ll define it as flatten, although it’s just a reduce
-step inside:
+
+`reduce(lambda s,x: s+str(x), [1,2,3,4], '') # ==> '1234’` 
+
+Or to flatten out nested sublists into a single list:
+
+`reduce(operator.concat, [[1,2],[3,4],[],[5]], []) # ==> [1,2,3,4,5]` 
+
+This is a useful enough sequence operation that we’ll define it as `flatten`, although it’s just a `reduce` step inside:
+
+```python
 def flatten(list):
-return reduce(operator.concat, list, [])
-More Examples
-Suppose we have a polynomial represented as a list of coefficients, a[0], a[1], ..., a[n-1], where a[i] is the coefficient of xi. Then we can evaluate it using map and reduce:
+	return reduce(operator.concat, list, [])
+```
+
+### More Examples
+Suppose we have a polynomial represented as a list of coefficients, a[0], a[1], ..., a[n-1], where a[i] is the coefficient of x<sub>i</sub>. Then we can evaluate it using `map` and `reduce`:
+
+```python
 def evaluate(a, x):
-xi = map(lambda i: x**i, range(0, len(a))) # [x^0, x^1, x^2, ..., x^n-1] axi = map(operator.mul, a, xi) # [a[0]*x^0, a[1]*x^1, ..., a[n-1]*x^n-1] return reduce(operator.add, axi, 0) # sum of axi
-This code uses the convenient Python generator method range(a,b), which generates a list of integers from a to b-1. In map/filter/reduce programming, this kind of method replaces a for loop that indexes from a to b.
+	xi = map(lambda i: x**i, range(0, len(a))) # [x^0, x^1, x^2, ..., x^n-1] 
+	axi = map(operator.mul, a, xi) # [a[0]*x^0, a[1]*x^1, ..., a[n-1]*x^n-1] 
+	return reduce(operator.add, axi, 0) # sum of axi
+```
+
+This code uses the convenient Python generator method `range(a,b)`, which generates a list of integers from a to b-1. In map/filter/reduce programming, this kind of method replaces a `for` loop that uses indices from `a` to `b`.
 ￼￼
-Now let’s look at a typical database query example. Suppose we have a database about digital cameras, in which each object is of type Camera with observer methods for its properties (brand(), pixels(), cost(), etc.). The whole database is in a list called cameras. Then we can describe queries on this database using map/filter/reduce: 
+Now let’s look at a typical database query example. Suppose we have a database about digital cameras, in which each object is of type Camera with observer methods for its properties (`brand()`, `pixels()`, `cost()`, etc.). The whole database is in a list called `cameras`. Then we can describe queries on this database using map/filter/reduce: 
 
 ```python
 # What's the highest resolution Nikon sells?
@@ -243,100 +255,182 @@ reduce(max, map(Camera.pixels, filter(lambda c: c.brand() == "Nikon", cameras)))
 ```
 
 Relational databases use the map/filter/reduce paradigm (where it’s called project/select/aggregate). SQL (Structured Query Language) is the de facto standard language for querying relational databases. A typical SQL query looks like this:
+
+```
 select max(pixels) from cameras where brand = "Nikon"
-cameras is a sequence (a list of rows, where each row has the data for one camera) where brand = "Nikon" is a filter
-pixels is a map (extracting just the pixels field from the row)
-max is a reduce
+```
+
+`cameras` is a sequence (a list of rows, where each row has the data for one camera) where `brand = "Nikon”` is a filter,
+`pixels` is a map (extracting just the pixels field from the row) and `max` is a reduce.
 
 ### Finishing the Example
 
 Going back to the example we started the lecture with, where we want to find the Java files in the project, let’s try creating a useful abstraction for filtering:
+
+```python
 def fileEndsWith(suffix):
-return lambda file: file.getName().endsWith(suffix)
-fileEndsWith returns functions that are useful as filters; it takes a filename suffix like “.java” and dynamically generates a function that you can use with filter to test for that suffix:
+	return lambda file: file.getName().endsWith(suffix)
+```
+
+`fileEndsWith` returns functions that are useful as filters; it takes a filename suffix like `.java` and dynamically generates a function that you can use with filter to test for that suffix:
+
+```
 filter(fileEndsWith(".java"), files)
-fileEndsWith is a different kind of beast than our usual functions. It’s a higher-order function, meaning that it’s a function that takes another function as an argument, or returns another function as its result. Higher-order functions are operations on the datatype of functions; in this case, fileEndsWith is a producer of functions.
+```
+
+`fileEndsWith` is a different kind of beast than our usual functions. It’s a higher-order function, meaning that it’s a function that takes another function as an argument, or returns another function as its result. Higher-order functions are operations on the datatype of functions; in this case, `fileEndsWith` is a producer of functions.
+
 Now let’s use map, filter, and flatten to recursively traverse the folder tree:
+
+```python
 def allFilesIn(folder):
-children = folder.listFiles()
-descendents = flatten(map(allFilesIn, filter(File.isDirectory, children))) return descendents + filter(File.isFile, children)
+	children = folder.listFiles()
+	descendents = flatten(map(allFilesIn, filter(File.isDirectory, children))) 
+	return descendents + filter(File.isFile, children)
+```
+
 The first line gets all the children of the folder, which might look like this:
-["src/client", "src/server", "src/Main.java", ...]
+
+`["src/client", "src/server", "src/Main.java", …]`
+
 The second line is the key bit: it filters the children for just the subfolders, and then recursively maps allFilesIn against this list of subfolders! The result might look like this:
-[["src/client/MyClient.java"], ["src/server/MyServer.java"], ...]
+
+`[[“src/client/MyClient.java"], ["src/server/MyServer.java"], …]`
+
 So we then have to flatten it to remove the nested sublists. Then we add the immediate children which are plain files (not folders), and that’s our result.
+
 We can also do the other pieces of the problem with map/filter/reduce. Once we have the list of files we want to extract words from, we’re ready to load their contents. We can use map to get their pathnames as strings, open them, and then read in each file as a list of lines:
+
+```python
 pathnames = map(File.getPath, files) streams = map(open, pathnames)
 lines = map(list, files)
-This actually looks like a single map() that we want to apply three functions to, so let’s pause to create another useful higher-order function: composing functions together.
+```
+
+This actually looks like a single `map()` that we want to apply three functions to, so let’s pause to create another useful higher-order function: composing functions together.
+
+```python
 def compose(f, g):
-"""Requires that f and g are functions, f:A->B and g:B->C. Returns a function A->C by composing f with g."""
-return lambda x: g(f(x))
+	"""Requires that f and g are functions, f:A->B and g:B->C. Returns a function A->C by composing f with g."""
+
+	return lambda x: g(f(x))
+```
+
 Now we can use a single map:
+
+```python
 lines = map(compose(compose(File.getPath, open), list), files)
+```
+
 Better, since we already have three, let’s design a way to compose an arbitrary chain of functions:
+
+```python
 def chain(funcs):
-"""Requires funcs is a list of functions [A->B, B->C, ..., Y->Z]. Returns a fn A->Z that is the left-to-right composition of funcs.""" return reduce(compose, funcs)
+	"""Requires funcs is a list of functions [A->B, B->C, ..., Y->Z]. Returns a fn A->Z that is the left-to-right composition of funcs.""" 
+	return reduce(compose, funcs)
+```
+
 so that the map operation looks more like this:
-lines = map(chain([File.getPath, open, list]), files)
+
+`lines = map(chain([File.getPath, open, list]), files)`
+
 Now we start to see the power of first-class functions – we can put functions into data structures and use operations on those data structures, like map, reduce, and filter, on the functions themselves!
+
 Since this map will produce a list of lists of lines (one for each file), we need to flatten it to get a single line list, ignoring file boundaries:
+
+```python
 allLines = flatten(map(chain([File.getPath, open, list]), files))
+```
+
 Then we split each line into words similarly:
+
+```python
 words = flatten(map(str.split, lines))
+```
+
 And we’re done. As promised, the control statements have disappeared.
-Benefits of Abstracting Out Control
+
+### Benefits of Abstracting Out Control
+
 Map/filter/reduce can often make code shorter and simpler, and allow the programmer to focus on the heart of the computation rather than on the details of loops, branches, and control flow.
-By arranging our program in terms of map, filter, and reduce, and in particular using immutable datatypes and pure functions (i.e. functions that avoid mutating data) as much as possible, we’ve createdmoreopportunitiesforsafeconcurrency. Mapsandfiltersusingpurefunctionsover immutable datatypes are instantly parallelizable – invocations of the function on different elements of the sequence can be run in different threads, on different processors, even on different machines, and the result will still be the same.
-First-Class Functions in Java
+By arranging our program in terms of map, filter, and reduce, and in particular using immutable datatypes and pure functions (i.e. functions that avoid mutating data) as much as possible, we’ve created more opportunities for safe concurrency. Maps and filters using pure functions over immutable datatypes are instantly parallelizable – invocations of the function on different elements of the sequence can be run in different threads, on different processors, even on different machines, and the result will still be the same.
+
+### First-Class Functions in Java
 We’ve seen what first-class functions look like in Python; how does this all work in Java?
+
 In Java, the only first-class values are primitive values (ints, booleans, characters, etc.) and object references. But objects can carry functions with them, in the form of methods. So it turns out that the way to implement a first-class function, in an object-oriented programming language like Java that doesn’t support first-class functions directly, is to use an object with a method representing the function.
+
 We’ve actually seen this before several times already:
-• The Runnable object that you pass to a Thread is a first-class function, void run().
-• The Comparator<T> object that you pass to a sorted collection (e.g. SortedSet) is a first-
-class function, int compare(T o1, T o2).
-• The KeyListener object that you register with the graphical user interface toolkit to get
-keyboard events is a bundle of several functions, keyPressed(KeyEvent),
-keyReleased(KeyEvent), etc.
-• Visitor objects that implement functions over recursive datatypes do indeed represent a
-function – with several variants, one for each variant of the datatype.
-This design pattern is called a functional object or functor, an object whose purpose is to represent a function.
++ The `Runnable` object that you pass to a `Thread` is a first-class function, `void run()`.
++ The `Comparator<T>` object that you pass to a sorted collection (e.g. `SortedSet`) is a first-class function, `int compare(T o1, T o2)`.
++ The `KeyListener` object that you register with the graphical user interface toolkit to get keyboard events is a bundle of several functions, `keyPressed(KeyEvent)`, `keyReleased(KeyEvent)`, etc.
++ Visitor objects that implement functions over recursive datatypes do indeed represent a function – with several variants, one for each variant of the datatype. This design pattern is called a functional object or *functor*, an object whose purpose is to represent a function.
+
 For the sake of implementing map/filter/reduce in Java, let’s generalize this notion to a generic unary function interface:
+
+```java
 /**
 * A Function<T,U> represents a unary function from T to U, * i.e. f:T->U.
 */
 public interface Function<T,U> { /**
-* Apply this function.
-* @param t object to apply this function to
-* @return the result of applying this function to t. */
-public U apply(T t); }
-Then we can write map() like so:
+    * Apply this function.
+    * @param t object to apply this function to
+    * @return the result of applying this function to t. */
+  public U apply(T t); 
+}
+```
+
+Then we can write `map()` like so:
+
+```java
 /**
 * Apply a function to every element of a list.
 * @param f function to apply
 * @param list list to iterate over
 * @return [f(list[0]), f(list[1]), ..., f(list[n-1])] */
-public static <T,U> List<U> map(Function<T,U> f, List<T> list) { List<U> result = new ArrayList<U>();
-for (T t : list) {
-result.add(f.apply(t)); }
-return result; }
-And here’s an example of using map():
+public static <T,U> List<U> map(Function<T,U> f, List<T> list){ 
+    List<U> result = new ArrayList<U>();
+    for (T t : list) {
+         result.add(f.apply(t)); 
+    }
+    return result; 
+}
+```
+
+And here’s an example of using `map()`:
+
+```java
 // anonymous classes like the one below are effectively lambda expressions
-Function<String,String> toLowerCase = new Function<String,String>() { public String apply(String s) { return s.toLowerCase(); }
+Function<String,String> toLowerCase = new Function<String,String>() { 
+    public String apply(String s) { 
+        return s.toLowerCase(); 
+    }
 };
 map(toLowerCase, Arrays.asList(new String[] {"A", "b", "c"}));
-Obviously verbose, and Java 7 is not practical for functional programming. But the notion of functors is widely used, and useful, as we’ve seen from examples like Runnable and Comparator.
+```
+
+Obviously verbose, and Java 7 is not practical for functional programming. But the notion of functors is widely used, and useful, as we’ve seen from examples like `Runnable` and `Comparator`. 
+
 In Java 8, the language designers have added syntax for lambda expressions and first-class references to methods and constructors. These features are implemented using functors. Along with functional APIs in the collection classes, this change means you should expect to see much more functional programming in future Java projects.
-Higher-Order Functions in Java
-Map/filter/reduce are obviously higher order functions. But let’s look at two others that we introduced in today’s lecture: compose() and chain().
-compose() has a straightforward implementation, and in particular once you get the types of the arguments and return value right, Java’s strong typing makes it pretty much impossible to get the method body wrong:
+
+### Higher-Order Functions in Java
+Map/filter/reduce are obviously higher order functions. But let’s look at two others that we introduced earlier: `compose()` and `chain()`.
+
+`compose()` has a straightforward implementation, and in particular once you get the types of the arguments and return value right, Java’s strong typing makes it pretty much impossible to get the method body wrong:
+
+```java
 /**
 * Compose two functions.
 * @param f function A->B
 * @param g function B->C
 * @return new function A->C formed by composing f with g */
-public static <A,B,C> Function<A,C> compose(final Function<A,B> f,
-It turns out that we can’t write chain() in strongly-typed Java, except in a very restricted form in which all the functions in the chain have the identical input and output types. This is because Lists must be homogeneous – List<Function<A,A>>.
+public static <A,B,C> Function<A,C> compose(final Function<A,B> f, final Function<B,C> g) {
+    return new Function<A,C>() {
+       public C apply(A t) { return g.apply(f.apply(t));
+    }
+}
+```
+
+It turns out that we can’t write chain() in strongly-typed Java, except in a very restricted form in which all the functions in the chain have the identical input and output types. This is because Lists must be homogeneous – `List<Function<A,A>>`.
 /**
 * Compose a chain of functions.
 * @param list list of functions A->A to compose
@@ -351,5 +445,3 @@ new Function<A,A>() {
 public A apply(A t) { return t; } }
 ); }
 }
-return new Function<A,C>() { };
-final Function<B,C> g) { public C apply(A t) { return g.apply(f.apply(t)); }
