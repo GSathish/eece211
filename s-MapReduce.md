@@ -159,7 +159,7 @@ Our next important sequence operation is filter, which tests each element with a
 
 `filter : (E → boolean) x Seq<E> → Seq<E>`
 ￼
-Python examples:
+#### Python examples:
 
 ```python
 filter(str.isalpha, ['x', 'y', '2', '3', 'a']) # ==> ['x', 'y', 'a'] 
