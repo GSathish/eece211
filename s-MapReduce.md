@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Map/Filter/Reduce and Functional Programming
+title: Map-Filter-Reduce and Functional Programming
 ---
 
 ### Topic outline
