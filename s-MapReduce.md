@@ -65,7 +65,7 @@ public static List<File> onlyFilesWithSuffix(List<File> files, String suffix) {
 
 Today we’re going to talk about **map/filter/reduce**, a design pattern that substantially simplifies the implementation of functions that operate over sequences of elements. In this example, we’ll have lots of sequences – lists of files; input streams that are sequences of lines; lines that are sequences of words; frequency tables that are sequences of (word, count) pairs. Map/filter/reduce will enable us to operate on those sequences with no explicit control flow – not a single for loop or if statement.
 
-Along the way, we’ll also see an *important idea*: *functions as “first-class” data values*, meaning that they can be stored in variables, passed as arguments to functions, and created dynamically like other values. This is unfortunately not well-realized in Java, as we’ll see. It’s possible to write first- class functions in Java, and useful at times (we’ve already done it!), but it’s verbose, so it won’t give us the extra simplicity that we want for map/filter/reduce. So to demonstrate the power of map/filter/reduce, we’ll use Python.
+Along the way, we’ll also see an important idea: *functions as “first-class” data values*, meaning that they can be stored in variables, passed as arguments to functions, and created dynamically like other values. This is unfortunately not well-realized in Java, as we’ll see. It’s possible to write first- class functions in Java, and useful at times (we’ve already done it!), but it’s verbose, so it won’t give us the extra simplicity that we want for map/filter/reduce. So to demonstrate the power of map/filter/reduce, we’ll use Python.
 
 ### Abstracting Out Control Flow
 
@@ -128,9 +128,7 @@ map(powerOfTwo, [1,2,3,4]) # ==> [2, 4, 8, 16]
 
 When you only need the function in one place, however – which often comes up in programming with functions – it’s more convenient to use a lambda expression: 
 
-```
-lambda k: 2**k
-```
+`lambda k: 2**k`
 
 This expression represents a function of one argument (called `k`) that returns the value 2<sup>k</sup>. You can use it anywhere you would have used `powerOfTwo`:
 
@@ -360,6 +358,7 @@ Map/filter/reduce can often make code shorter and simpler, and allow the program
 By arranging our program in terms of map, filter, and reduce, and in particular using immutable datatypes and pure functions (i.e. functions that avoid mutating data) as much as possible, we’ve created more opportunities for safe concurrency. Maps and filters using pure functions over immutable datatypes are instantly parallelizable – invocations of the function on different elements of the sequence can be run in different threads, on different processors, even on different machines, and the result will still be the same.
 
 ### First-Class Functions in Java
+
 We’ve seen what first-class functions look like in Python; how does this all work in Java?
 
 In Java, the only first-class values are primitive values (ints, booleans, characters, etc.) and object references. But objects can carry functions with them, in the form of methods. So it turns out that the way to implement a first-class function, in an object-oriented programming language like Java that doesn’t support first-class functions directly, is to use an object with a method representing the function.
@@ -418,6 +417,7 @@ Obviously verbose, and Java 7 is not practical for functional programming. But t
 In Java 8, the language designers have added syntax for lambda expressions and first-class references to methods and constructors. These features are implemented using functors. Along with functional APIs in the collection classes, this change means you should expect to see much more functional programming in future Java projects.
 
 ### Higher-Order Functions in Java
+
 Map/filter/reduce are obviously higher order functions. But let’s look at two others that we introduced earlier: `compose()` and `chain()`.
 
 `compose()` has a straightforward implementation, and in particular once you get the types of the arguments and return value right, Java’s strong typing makes it pretty much impossible to get the method body wrong:
